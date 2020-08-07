@@ -1,3 +1,15 @@
 <resources>
-    <string name="app_name">SendWarmthAttendant</string>
+    <string name="app_name">颂温暖护理员版</string>
+    <string name="title_home">主页</string>
+    <string name="title_map">地图</string>
+    <string name="title_historical_orders">历史订单</string>
+    <string name="title_personal_center">个人中心</string>
+
+    <string name="title_running_orders">当前订单</string>
+    <string name="title_all_orders">全部订单</string>
+
+    <string name="enter_account">手机号</string>
+    <string name="pwd">密码</string>
+    <string name="confirm_pwd">确认密码</string>
+    <string name="nickname">昵称</string>
 </resources>
