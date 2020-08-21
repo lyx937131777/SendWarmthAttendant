@@ -14,15 +14,20 @@ public class MapUtil
     static {
         stateMap.put("running", R.drawable.state_yellow);
         stateMap.put("unstart", R.drawable.state_blue);
+        stateMap.put("canceled",R.drawable.state_red);
         stateMap.put("completed",R.drawable.state_green);
 
         taskTypeStateMap.put("running","进行中");
         taskTypeStateMap.put("unstart","未开始");
+        taskTypeStateMap.put("canceled","已取消");
         taskTypeStateMap.put("completed","已完成");
+
 
         taskTypeMap.put("running","当前任务");
         taskTypeMap.put("unstart","待解决任务");
+        taskTypeMap.put("canceled","已取消任务");
         taskTypeMap.put("completed","已完成任务");
+        taskTypeMap.put("mine","我的订单");
     }
 
     public static int getState(String s){

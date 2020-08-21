@@ -1,6 +1,8 @@
 package com.example.sendwarmthattendant.db;
 
-public class Task
+import java.io.Serializable;
+
+public class Task implements Serializable
 {
     private String number;
     private String customer;

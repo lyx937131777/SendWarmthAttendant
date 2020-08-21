@@ -184,10 +184,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.menu_search2:
                 break;
-            case R.id.menu_new_interesting_activity:
-                Intent intent = new Intent(this,NewInterestingActivityActivity.class);
-                startActivity(intent);
-                break;
         }
         return true;
     }

@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HomeFragment extends Fragment
 {
     private RecyclerView recyclerView;
-    private String[] taskTypes = {"running","unstart"};
+    private String[] taskTypes = {"mine"};
     private List<String> taskTypeList = new ArrayList<>();
     private TaskTypeAdapter taskTypeAdapter;
 

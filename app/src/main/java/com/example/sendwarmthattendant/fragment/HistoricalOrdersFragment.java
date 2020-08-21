@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HistoricalOrdersFragment extends Fragment
 {
     private RecyclerView recyclerView;
-    private String[] taskTypes = {"running","unstart","completed"};
+    private String[] taskTypes = {"running","unstart","canceled","completed"};
     private List<String> taskTypeList = new ArrayList<>();
     private TaskTypeAdapter taskTypeAdapter;
 

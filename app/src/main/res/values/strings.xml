@@ -8,6 +8,12 @@
     <string name="title_running_orders">当前订单</string>
     <string name="title_all_orders">全部订单</string>
 
+    <string name="title_all_tasks">全部</string>
+    <string name="title_running_tasks">进行中</string>
+    <string name="title_unstart_tasks">未开始</string>
+    <string name="title_canceled_tasks">已取消</string>
+    <string name="title_completed_tasks">已完成</string>
+
     <string name="enter_account">手机号</string>
     <string name="pwd">密码</string>
     <string name="confirm_pwd">确认密码</string>

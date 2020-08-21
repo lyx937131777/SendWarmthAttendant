@@ -7,8 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sendwarmthattendant.R;
-import com.example.sendwarmthattendant.db.Goods;
-import com.example.sendwarmthattendant.db.GoodsType;
 import com.example.sendwarmthattendant.db.Task;
 import com.example.sendwarmthattendant.util.MapUtil;
 
@@ -60,12 +58,20 @@ public class TaskTypeAdapter extends RecyclerView.Adapter<TaskTypeAdapter.ViewHo
         String taskType = mList.get(position);
         holder.taskType.setText(MapUtil.getTaskType(taskType));
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        Task[] tasks = {new Task("1","张三","2020-08-07 10:00~14:00",taskType,"理发"),
-                new Task("2","李四","2020-08-07 13:00~15:00",taskType,"修锁"),
-                new Task("3","周五","2020-08-07 12:00~14:00",taskType,"打扫卫生")};
+        Task[] tasks = {new Task("001","张三","2020-08-07 10:00~14:00",taskType,"理发"),
+                new Task("002","李四","2020-08-07 13:00~15:00",taskType,"修锁"),
+                new Task("003","周五","2020-08-07 12:00~14:00",taskType,"打扫卫生")};
         List<Task> taskList = new ArrayList<>();
-        for(int i = 0; i <tasks.length; i++)
-            taskList.add(tasks[i]);
+        if(taskType.equals("mine")){
+            Task[] tasks2 = {new Task("001","张三","2020-08-07 10:00~14:00","running","理发"),
+                    new Task("002","李四","2020-08-07 13:00~15:00","unstart","修锁"),
+                    new Task("003","周五","2020-08-07 12:00~14:00","unstart","打扫卫生")};
+            for(int i = 0; i <tasks2.length; i++)
+                taskList.add(tasks2[i]);
+        }else{
+            for(int i = 0; i <tasks.length; i++)
+                taskList.add(tasks[i]);
+        }
         TaskAdapter taskAdapter = new TaskAdapter(taskList);
         holder.recyclerView.setAdapter(taskAdapter);
     }

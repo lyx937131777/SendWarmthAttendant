@@ -1,11 +1,13 @@
 package com.example.sendwarmthattendant.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sendwarmthattendant.R;
+import com.example.sendwarmthattendant.TaskActivity;
 import com.example.sendwarmthattendant.adapter.MenuAdapter;
 import com.example.sendwarmthattendant.db.Menu;
 
@@ -20,25 +22,24 @@ import androidx.recyclerview.widget.RecyclerView;
 public class PersonalCenterFragment extends Fragment
 {
     private RecyclerView myOrderMenuRecycler;
-    private Menu[] myOrderMenus = {new Menu("toBePaid",R.drawable.to_be_paid,"待付款"),
-            new Menu("toBeReceived",R.drawable.to_be_received,"待收货"),
-            new Menu("toBeEvaluated",R.drawable.to_be_evaluated,"待评价"),
+    private Menu[] myOrderMenus = {new Menu("running",R.drawable.to_be_paid,"进行中"),
+            new Menu("unstart",R.drawable.to_be_received,"未开始"),
+            new Menu("canceled",R.drawable.to_be_evaluated,"已取消"),
             new Menu("completed",R.drawable.completed,"已完成")};
     private List<Menu> myOrderMenuList = new ArrayList<>();
     private MenuAdapter myOrderMenuAdapter;
 
     private RecyclerView mMenuRecycler;
     private Menu[] mMenus = {new Menu("myInformation",R.drawable.my_information,"我的信息"),
-            new Menu("myEvaluate",R.drawable.my_evaluate,"我的评价"),
             new Menu("myStar",R.drawable.my_star,"我的星级"),
-            new Menu("myMessage",R.drawable.my_message,"我的留言"),
-            new Menu("systemMessage",R.drawable.system_message,"系统消息"),
-            new Menu("feedback",R.drawable.feedback,"意见反馈"),
             new Menu("myBusinessCard",R.drawable.my_business_card,"我的名片"),
-            new Menu("hotline",R.drawable.hotline,"热线电话")};
+            new Menu("myEvaluate",R.drawable.my_evaluate,"客户评价"),
+            new Menu("systemMessage",R.drawable.system_message,"系统消息"),
+            new Menu("feedback",R.drawable.feedback,"意见反馈")};
     private List<Menu> mMenuList = new ArrayList<>();
     private MenuAdapter mMenuAdapter;
 
+    private View allTask;
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.fragment_personal_center, container, false);
@@ -51,11 +52,22 @@ public class PersonalCenterFragment extends Fragment
         myOrderMenuRecycler.setAdapter(myOrderMenuAdapter);
 
         mMenuRecycler = root.findViewById(R.id.recycler_menu_me);
-        GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 4);
+        GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 3);
         mMenuRecycler.setLayoutManager(layoutManager2);
         mMenuAdapter = new MenuAdapter(mMenuList);
         mMenuRecycler.setAdapter(mMenuAdapter);
 
+        allTask = root.findViewById(R.id.all_task);
+        allTask.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getContext(), TaskActivity.class);
+                intent.putExtra("index",0);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 
@@ -63,7 +75,7 @@ public class PersonalCenterFragment extends Fragment
     {
         myOrderMenuList.clear();
         for(int i = 0; i < myOrderMenus.length; i++) {
-            myOrderMenus[i].setType("order");
+            myOrderMenus[i].setType("task");
             myOrderMenuList.add(myOrderMenus[i]);
         }
 

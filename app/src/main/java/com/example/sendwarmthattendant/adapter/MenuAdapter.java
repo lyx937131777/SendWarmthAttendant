@@ -9,9 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.sendwarmthattendant.BusinessCardActivity;
+import com.example.sendwarmthattendant.EvaluateActivity;
+import com.example.sendwarmthattendant.FeedbackActivity;
 import com.example.sendwarmthattendant.MyInformationActivity;
+import com.example.sendwarmthattendant.MyStarActivity;
 import com.example.sendwarmthattendant.R;
-import com.example.sendwarmthattendant.ServiceWorkActivity;
+import com.example.sendwarmthattendant.SystemMessageActivity;
+import com.example.sendwarmthattendant.TaskActivity;
 import com.example.sendwarmthattendant.db.Menu;
 import com.example.sendwarmthattendant.util.LogUtil;
 
@@ -60,17 +65,58 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>
                 int position = holder.getAdapterPosition();
                 Menu menu = mList.get(position);
                 switch (menu.getType()){
-                    case "ServiceWork":{
-                        Intent intent = new Intent(mContext, ServiceWorkActivity.class);
-                        intent.putExtra("menuName",menu.getMenuName());
-                        intent.putExtra("type",menu.getName());
+                    case "task":{
+                        Intent intent = new Intent(mContext, TaskActivity.class);
+                        int index = 0;
+                        switch (menu.getName()){
+                            case "running":
+                                index = 1;
+                                break;
+                            case "unstart":
+                                index = 2;
+                                break;
+                            case "canceled":
+                                index = 3;
+                                break;
+                            case "completed":
+                                index = 4;
+                                break;
+                            default:
+                                index = 0;
+                                break;
+                        }
+                        intent.putExtra("index",index);
                         mContext.startActivity(intent);
-                        break;
                     }
                     case "information":{
                         switch (menu.getName()){
                             case "myInformation":{
                                 Intent intent = new Intent(mContext, MyInformationActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            }
+                            case "myStar":{
+                                Intent intent = new Intent(mContext, MyStarActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            }
+                            case "myBusinessCard":{
+                                Intent intent = new Intent(mContext, BusinessCardActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            }
+                            case "myEvaluate":{
+                                Intent intent = new Intent(mContext, EvaluateActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            }
+                            case "systemMessage":{
+                                Intent intent = new Intent(mContext, SystemMessageActivity.class);
+                                mContext.startActivity(intent);
+                                break;
+                            }
+                            case "feedback":{
+                                Intent intent = new Intent(mContext, FeedbackActivity.class);
                                 mContext.startActivity(intent);
                                 break;
                             }

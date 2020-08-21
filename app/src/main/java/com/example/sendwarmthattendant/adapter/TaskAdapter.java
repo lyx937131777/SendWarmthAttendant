@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sendwarmthattendant.R;
+import com.example.sendwarmthattendant.TaskDetailActivity;
 import com.example.sendwarmthattendant.db.Task;
 import com.example.sendwarmthattendant.util.MapUtil;
 
@@ -68,7 +69,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
             public void onClick(View v)
             {
                 int position = holder.getAdapterPosition();
-
+                Task task = mList.get(position);
+                Intent intent = new Intent(mContext, TaskDetailActivity.class);
+                intent.putExtra("task",task);
+                mContext.startActivity(intent);
             }
         });
         return holder;
@@ -79,12 +83,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
     {
         Task task = mList.get(position);
         holder.number.setText(task.getNumber());
-        holder.customer.setText("客户："+task.getCustomer());
+        holder.customer.setText(task.getCustomer());
         long time = System.currentTimeMillis();
         Glide.with(mContext).load(MapUtil.getState(task.getType())).into(holder.state);
         holder.stateText.setText(MapUtil.getTaskTypeState(task.getType()));
-        holder.time.setText("上门时间："+task.getTime());
-        holder.serviceContent.setText("服务内容："+task.getServiceContent());
+        holder.time.setText(task.getTime());
+        holder.serviceContent.setText(task.getServiceContent());
     }
 
     @Override
