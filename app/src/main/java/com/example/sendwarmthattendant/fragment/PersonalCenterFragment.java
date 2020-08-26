@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sendwarmthattendant.R;
-import com.example.sendwarmthattendant.TaskActivity;
+import com.example.sendwarmthattendant.OrderActivity;
 import com.example.sendwarmthattendant.adapter.MenuAdapter;
 import com.example.sendwarmthattendant.db.Menu;
 
@@ -39,7 +39,8 @@ public class PersonalCenterFragment extends Fragment
     private List<Menu> mMenuList = new ArrayList<>();
     private MenuAdapter mMenuAdapter;
 
-    private View allTask;
+    private View allOrder;
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.fragment_personal_center, container, false);
@@ -57,13 +58,13 @@ public class PersonalCenterFragment extends Fragment
         mMenuAdapter = new MenuAdapter(mMenuList);
         mMenuRecycler.setAdapter(mMenuAdapter);
 
-        allTask = root.findViewById(R.id.all_task);
-        allTask.setOnClickListener(new View.OnClickListener()
+        allOrder = root.findViewById(R.id.all_orders);
+        allOrder.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent intent = new Intent(getContext(), TaskActivity.class);
+                Intent intent = new Intent(getContext(), OrderActivity.class);
                 intent.putExtra("index",0);
                 startActivity(intent);
             }
@@ -75,7 +76,7 @@ public class PersonalCenterFragment extends Fragment
     {
         myOrderMenuList.clear();
         for(int i = 0; i < myOrderMenus.length; i++) {
-            myOrderMenus[i].setType("task");
+            myOrderMenus[i].setType("order");
             myOrderMenuList.add(myOrderMenus[i]);
         }
 

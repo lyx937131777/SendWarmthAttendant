@@ -8,8 +8,8 @@ import java.util.Map;
 public class MapUtil
 {
     private static Map<String,Integer> stateMap =new HashMap<>();
-    private static Map<String,String> taskTypeStateMap = new HashMap<>();
-    private static Map<String,String> taskTypeMap = new HashMap<>();
+    private static Map<String,String> orderStateMap = new HashMap<>();
+    private static Map<String,String> orderStateTitleMap = new HashMap<>();
 
     static {
         stateMap.put("running", R.drawable.state_yellow);
@@ -17,28 +17,29 @@ public class MapUtil
         stateMap.put("canceled",R.drawable.state_red);
         stateMap.put("completed",R.drawable.state_green);
 
-        taskTypeStateMap.put("running","进行中");
-        taskTypeStateMap.put("unstart","未开始");
-        taskTypeStateMap.put("canceled","已取消");
-        taskTypeStateMap.put("completed","已完成");
+        orderStateMap.put("running","进行中");
+        orderStateMap.put("unstart","未开始");
+        orderStateMap.put("canceled","已取消");
+        orderStateMap.put("completed","已完成");
+        orderStateMap.put("waiting","等待中");
 
 
-        taskTypeMap.put("running","当前任务");
-        taskTypeMap.put("unstart","待解决任务");
-        taskTypeMap.put("canceled","已取消任务");
-        taskTypeMap.put("completed","已完成任务");
-        taskTypeMap.put("mine","我的订单");
+        orderStateTitleMap.put("running","当前任务");
+        orderStateTitleMap.put("unstart","待解决任务");
+        orderStateTitleMap.put("canceled","已取消任务");
+        orderStateTitleMap.put("completed","已完成任务");
+        orderStateTitleMap.put("mine","我的订单");
     }
 
     public static int getState(String s){
         return stateMap.get(s);
     }
 
-    public static String getTaskTypeState(String s){
-        return taskTypeStateMap.get(s);
+    public static String getOrderState(String s){
+        return orderStateMap.get(s);
     }
 
-    public static String getTaskType(String s){
-        return taskTypeMap.get(s);
+    public static String getOrderStateTitle(String s){
+        return orderStateTitleMap.get(s);
     }
 }

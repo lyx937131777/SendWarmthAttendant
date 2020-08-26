@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sendwarmthattendant.R;
-import com.example.sendwarmthattendant.adapter.TaskTypeAdapter;
+import com.example.sendwarmthattendant.adapter.OrderStateAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,29 +19,29 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HomeFragment extends Fragment
 {
     private RecyclerView recyclerView;
-    private String[] taskTypes = {"mine"};
-    private List<String> taskTypeList = new ArrayList<>();
-    private TaskTypeAdapter taskTypeAdapter;
+    private String[] orderStates = {"mine"};
+    private List<String> orderStateList = new ArrayList<>();
+    private OrderStateAdapter orderStateAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-        initTaskTypes();
+        initOrderStates();
         recyclerView = root.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        taskTypeAdapter = new TaskTypeAdapter(taskTypeList);
-        recyclerView.setAdapter(taskTypeAdapter);
+        orderStateAdapter = new OrderStateAdapter(orderStateList);
+        recyclerView.setAdapter(orderStateAdapter);
         return root;
     }
 
 
-    private void initTaskTypes()
+    private void initOrderStates()
     {
-        taskTypeList.clear();
-        for(int i = 0; i < taskTypes.length; i++){
-            taskTypeList.add(taskTypes[i]);
+        orderStateList.clear();
+        for(int i = 0; i < orderStates.length; i++){
+            orderStateList.add(orderStates[i]);
         }
     }
 

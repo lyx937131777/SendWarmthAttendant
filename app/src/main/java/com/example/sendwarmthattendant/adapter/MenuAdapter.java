@@ -16,7 +16,7 @@ import com.example.sendwarmthattendant.MyInformationActivity;
 import com.example.sendwarmthattendant.MyStarActivity;
 import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.SystemMessageActivity;
-import com.example.sendwarmthattendant.TaskActivity;
+import com.example.sendwarmthattendant.OrderActivity;
 import com.example.sendwarmthattendant.db.Menu;
 import com.example.sendwarmthattendant.util.LogUtil;
 
@@ -65,8 +65,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>
                 int position = holder.getAdapterPosition();
                 Menu menu = mList.get(position);
                 switch (menu.getType()){
-                    case "task":{
-                        Intent intent = new Intent(mContext, TaskActivity.class);
+                    case "order":{
+                        Intent intent = new Intent(mContext, OrderActivity.class);
                         int index = 0;
                         switch (menu.getName()){
                             case "running":
@@ -87,6 +87,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>
                         }
                         intent.putExtra("index",index);
                         mContext.startActivity(intent);
+                        break;
                     }
                     case "information":{
                         switch (menu.getName()){

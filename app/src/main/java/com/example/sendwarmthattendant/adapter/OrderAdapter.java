@@ -7,12 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.sendwarmthattendant.R;
-import com.example.sendwarmthattendant.TaskDetailActivity;
-import com.example.sendwarmthattendant.db.Task;
+import com.example.sendwarmthattendant.OrderDetailActivity;
+import com.example.sendwarmthattendant.db.Order;
 import com.example.sendwarmthattendant.util.MapUtil;
 
 import java.util.List;
@@ -20,10 +19,10 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
+public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
 {
     private Context mContext;
-    private List<Task> mList;
+    private List<Order> mList;
 
     static class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -48,30 +47,30 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
         }
     }
 
-    public TaskAdapter(List<Task> taskList)
+    public OrderAdapter(List<Order> orderList)
     {
-        mList = taskList;
+        mList = orderList;
     }
 
     @NonNull
     @Override
-    public TaskAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
+    public OrderAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType)
     {
         if(mContext == null)
         {
             mContext = parent.getContext();
         }
-        View view = LayoutInflater.from(mContext).inflate(R.layout.item_task,parent,false);
-        final TaskAdapter.ViewHolder holder = new TaskAdapter.ViewHolder(view);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.item_order,parent,false);
+        final OrderAdapter.ViewHolder holder = new OrderAdapter.ViewHolder(view);
         holder.view.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 int position = holder.getAdapterPosition();
-                Task task = mList.get(position);
-                Intent intent = new Intent(mContext, TaskDetailActivity.class);
-                intent.putExtra("task",task);
+                Order order = mList.get(position);
+                Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                intent.putExtra("order", order);
                 mContext.startActivity(intent);
             }
         });
@@ -79,16 +78,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TaskAdapter.ViewHolder holder, int position)
+    public void onBindViewHolder(@NonNull OrderAdapter.ViewHolder holder, int position)
     {
-        Task task = mList.get(position);
-        holder.number.setText(task.getNumber());
-        holder.customer.setText(task.getCustomer());
+        Order order = mList.get(position);
+        holder.number.setText(order.getNumber());
+        holder.customer.setText(order.getCustomer());
         long time = System.currentTimeMillis();
-        Glide.with(mContext).load(MapUtil.getState(task.getType())).into(holder.state);
-        holder.stateText.setText(MapUtil.getTaskTypeState(task.getType()));
-        holder.time.setText(task.getTime());
-        holder.serviceContent.setText(task.getServiceContent());
+        Glide.with(mContext).load(MapUtil.getState(order.getState())).into(holder.state);
+        holder.stateText.setText(MapUtil.getOrderState(order.getState()));
+        holder.time.setText(order.getTime());
+        holder.serviceContent.setText(order.getServiceContent());
     }
 
     @Override

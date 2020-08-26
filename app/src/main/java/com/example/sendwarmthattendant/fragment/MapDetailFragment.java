@@ -1,12 +1,13 @@
 package com.example.sendwarmthattendant.fragment;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.baidu.location.BDAbstractLocationListener;
@@ -21,6 +22,8 @@ import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.example.sendwarmthattendant.R;
+import com.example.sendwarmthattendant.OrderDetailActivity;
+import com.example.sendwarmthattendant.db.Order;
 import com.example.sendwarmthattendant.util.LogUtil;
 import com.example.sendwarmthattendant.util.MyApplication;
 import com.example.sendwarmthattendant.util.Utility;
@@ -97,6 +100,61 @@ public class MapDetailFragment extends Fragment
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
         requestLocation();
+
+        //TODO temp
+        ImageView tempCircle1 = root.findViewById(R.id.temp_circle1);
+        ImageView tempCircle2 = root.findViewById(R.id.temp_circle2);
+        ImageView tempCircle3 = root.findViewById(R.id.temp_circle3);
+        ImageView tempCircle4 = root.findViewById(R.id.temp_circle4);
+        if(getType().equals("running")){
+            tempCircle2.setVisibility(View.GONE);
+            tempCircle3.setVisibility(View.GONE);
+            tempCircle4.setVisibility(View.GONE);
+        }
+        tempCircle1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+                Order order = new Order("007","","","","running","","",0);
+                intent.putExtra("order", order);
+                startActivity(intent);
+            }
+        });
+        tempCircle2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+                Order order = new Order("007","","","","waiting","","",0);
+                intent.putExtra("order", order);
+                startActivity(intent);
+            }
+        });
+        tempCircle3.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+                Order order = new Order("007","","","","waiting","","",0);
+                intent.putExtra("order", order);
+                startActivity(intent);
+            }
+        });
+        tempCircle4.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+                Order order = new Order("007","","","","waiting","","",0);
+                intent.putExtra("order", order);
+                startActivity(intent);
+            }
+        });
         return root;
     }
 
@@ -107,6 +165,7 @@ public class MapDetailFragment extends Fragment
 
     private void initLocation(){
         LocationClientOption option = new LocationClientOption();
+        option.setCoorType("bd09ll");//百度API保护隐私 默认获取火星坐标 加上这一行可直接获得真实坐标
         option.setScanSpan(5000);
         option.setIsNeedAddress(true);
         mLocationClient.setLocOption(option);
@@ -197,5 +256,16 @@ public class MapDetailFragment extends Fragment
             }
         }
 
+    }
+
+    private String getType(){
+        switch (index){
+            case 0:
+                return "running";
+            case 1:
+                return "all";
+            default:
+                return "unknown";
+        }
     }
 }

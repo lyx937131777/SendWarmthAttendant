@@ -3,8 +3,7 @@ package com.example.sendwarmthattendant.fragment.adapter;
 import android.content.Context;
 
 import com.example.sendwarmthattendant.R;
-import com.example.sendwarmthattendant.fragment.MapDetailFragment;
-import com.example.sendwarmthattendant.fragment.TaskFragment;
+import com.example.sendwarmthattendant.fragment.OrderFragment;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -12,13 +11,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class TaskPagerAdapter  extends FragmentStatePagerAdapter
+public class OrderPagerAdapter extends FragmentStatePagerAdapter
 {
     @StringRes
-    private static final int[] TAB_TITLES = new int[] {R.string.title_all_tasks, R.string.title_running_tasks,R.string.title_unstart_tasks,R.string.title_canceled_tasks,R.string.title_completed_tasks};
+    private static final int[] TAB_TITLES = new int[] {R.string.title_all_orders, R.string.title_running_orders,R.string.title_unstart_orders,R.string.title_canceled_orders,R.string.title_completed_orders};
     private final Context mContext;
 
-    public TaskPagerAdapter(Context context, FragmentManager fm)
+    public OrderPagerAdapter(Context context, FragmentManager fm)
     {
         super(fm);
         mContext = context;
@@ -29,7 +28,7 @@ public class TaskPagerAdapter  extends FragmentStatePagerAdapter
     {
         // getItem is called to instantiate the fragment for the given page.
         // Return a EventRecordFragment (defined as a static inner class below).
-        return TaskFragment.newInstance(position);
+        return OrderFragment.newInstance(position);
     }
 
     @Nullable

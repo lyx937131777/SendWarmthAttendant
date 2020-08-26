@@ -1,19 +1,13 @@
 package com.example.sendwarmthattendant.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.sendwarmthattendant.R;
-import com.example.sendwarmthattendant.TaskDetailActivity;
 import com.example.sendwarmthattendant.db.SystemMessage;
-import com.example.sendwarmthattendant.db.Task;
-import com.example.sendwarmthattendant.util.MapUtil;
 
 import java.util.List;
 

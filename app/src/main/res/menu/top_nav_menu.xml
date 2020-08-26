@@ -3,10 +3,10 @@
 
     <item
         android:id="@+id/navigation_running_orders"
-        android:title="@string/title_running_orders" />
+        android:title="@string/title_map_running_orders" />
 
     <item
         android:id="@+id/navigation_all_orders"
-        android:title="@string/title_all_orders" />
+        android:title="@string/title_map_all_orders" />
 
 </menu>

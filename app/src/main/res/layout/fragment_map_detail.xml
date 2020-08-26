@@ -9,4 +9,40 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="true" />
+    <ImageView
+        android:id="@+id/temp_circle1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/shape_circle_red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="150dp"/>
+    <ImageView
+        android:id="@+id/temp_circle2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/shape_circle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="150dp"
+        android:layout_marginRight="100dp"/>
+    <ImageView
+        android:id="@+id/temp_circle3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/shape_circle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="100dp"/>
+    <ImageView
+        android:id="@+id/temp_circle4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/shape_circle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginBottom="200dp"
+        android:layout_marginLeft="150dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

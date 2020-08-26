@@ -5,15 +5,12 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.example.sendwarmthattendant.R;
-import com.example.sendwarmthattendant.TaskDetailActivity;
+import com.example.sendwarmthattendant.OrderDetailActivity;
 import com.example.sendwarmthattendant.db.Evaluate;
-import com.example.sendwarmthattendant.db.Task;
-import com.example.sendwarmthattendant.util.MapUtil;
+import com.example.sendwarmthattendant.db.Order;
 
 import java.util.List;
 
@@ -66,9 +63,9 @@ public class EvaluateAdapter extends RecyclerView.Adapter<EvaluateAdapter.ViewHo
             {
                 int position = holder.getAdapterPosition();
                 Evaluate evaluate = mList.get(position);
-                Intent intent = new Intent(mContext, TaskDetailActivity.class);
-                Task task = new Task(evaluate.getNumber(),"customer","time","complete","");
-                intent.putExtra("task",task);
+                Intent intent = new Intent(mContext, OrderDetailActivity.class);
+                Order order = new Order(evaluate.getNumber(),"customer","","time","complete","","",50);
+                intent.putExtra("order", order);
                 mContext.startActivity(intent);
             }
         });
