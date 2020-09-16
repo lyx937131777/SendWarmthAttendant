@@ -1,188 +1,440 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@android:color/white">
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
-        app:title="注册账户"
-        app:titleTextAppearance="@style/Toolbartile"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:id="@+id/toolbar"
+            app:title="注册账户"
+            app:titleTextAppearance="@style/Toolbartile"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+    </com.google.android.material.appbar.AppBarLayout>
 
-
-    <RelativeLayout
-        android:id="@+id/register_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="60dp"
-        android:gravity="center" >
-
-        <FrameLayout
-            android:id="@+id/username_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="90dp"
-            android:gravity="center" >
-            <!-- android:inputType="number" -->
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:maxLength="20"
-                android:hint="@string/enter_account"
-                android:theme="@style/EditText"
-                android:paddingLeft="55dp"
-                android:paddingRight="60dp"
-                android:inputType="number">
-            </EditText>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="0dp"
-                android:background="@drawable/account"
-                android:visibility="visible" />
-
-            <Button
-                android:id="@+id/bt_username_clear"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_marginBottom="0dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/delete"
-                android:visibility="invisible" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/usercode_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/username_layout"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/register_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
-            android:gravity="center" >
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:inputType="textPassword"
-                android:maxLength="20"
-                android:theme="@style/EditText"
-                android:hint="@string/pwd"
-                android:paddingLeft="55dp"
-                android:paddingRight="60dp" >
-            </EditText>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="2dp"
-                android:background="@drawable/password" />
-            <Button
-                android:id="@+id/bt_pwd_clear"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="0dp"
-                android:background="@drawable/delete"
-                android:visibility="invisible" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/confirmcode_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/usercode_layout"
-            android:layout_marginTop="10dp"
-            android:gravity="center" >
-            <EditText
-                android:id="@+id/confirm_password"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:inputType="textPassword"
-                android:maxLength="20"
-                android:theme="@style/EditText"
-                android:layout_marginTop="5dp"
-                android:hint="@string/confirm_pwd"
-                android:paddingLeft="55dp"
-                android:paddingRight="60dp" >
-            </EditText>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="2dp"
-                android:background="@drawable/password" />
-            <Button
-                android:id="@+id/bt_confirm_pwd_clear"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginRight="10dp"
-                android:layout_marginBottom="0dp"
-                android:background="@drawable/delete"
-                android:visibility="invisible" />
-        </FrameLayout>
-        <FrameLayout
-            android:id="@+id/nickname_layout"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@id/confirmcode_layout"
             android:gravity="center">
-            <!-- android:inputType="number" -->
-            <EditText
-                android:id="@+id/nickname"
-                android:layout_width="fill_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="5dp"
-                android:maxLength="20"
-                android:hint="@string/nickname"
-                android:theme="@style/EditText"
-                android:paddingLeft="55dp"
-                android:paddingRight="60dp" >
-            </EditText>
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="10dp"
-                android:layout_marginBottom="0dp"
-                android:background="@drawable/nickname"
-                android:visibility="visible" />
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/tel_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center" >
+                <!-- android:inputType="number" -->
+                <EditText
+                    android:id="@+id/tel"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    android:maxLines="1"
+                    android:hint="@string/tel"
+                    android:theme="@style/EditText"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="60dp"
+                    android:inputType="number">
+                </EditText>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/account"
+                    android:visibility="visible" />
+
+                <Button
+                    android:id="@+id/tel_clear"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_marginBottom="0dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/delete"
+                    android:visibility="invisible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toBottomOf="@id/tel_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center" >
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:inputType="textPassword"
+                    android:maxLength="20"
+                    android:theme="@style/EditText"
+                    android:hint="@string/pwd"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="60dp" >
+                </EditText>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/password" />
+                <Button
+                    android:id="@+id/password_clear"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/delete"
+                    android:visibility="invisible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/confirm_password_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                app:layout_constraintTop_toBottomOf="@id/password_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="10dp"
+                android:gravity="center" >
+                <EditText
+                    android:id="@+id/confirm_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:inputType="textPassword"
+                    android:maxLength="20"
+                    android:theme="@style/EditText"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:hint="@string/confirm_pwd"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="60dp" >
+                </EditText>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="2dp"
+                    android:background="@drawable/password" />
+                <Button
+                    android:id="@+id/confirm_password_clear"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/delete"
+                    android:visibility="invisible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/user_name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/confirm_password_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center">
+                <!-- android:inputType="number" -->
+                <EditText
+                    android:id="@+id/user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:maxLength="20"
+                    android:hint="@string/user_name"
+                    android:theme="@style/EditText"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="60dp" >
+                </EditText>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/nickname"
+                    android:visibility="visible" />
+                <Button
+                    android:id="@+id/user_name_clear"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/delete"
+                    android:visibility="invisible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/name_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/user_name_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center">
+                <!-- android:inputType="number" -->
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:maxLength="20"
+                    android:hint="@string/name"
+                    android:theme="@style/EditText"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="60dp" >
+                </EditText>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/nickname"
+                    android:visibility="visible" />
+                <Button
+                    android:id="@+id/name_clear"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/delete"
+                    android:visibility="invisible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/work_type_layout_1"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/name_layout"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:maxLength="20"
+                    android:textIsSelectable="false"
+                    android:theme="@style/EditText"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="60dp" >
+                </EditText>
+                <Spinner
+                    android:id="@+id/work_type_1"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="50dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </Spinner>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/nickname"
+                    android:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/work_type_layout_2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/work_type_layout_1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:maxLength="20"
+                    android:textIsSelectable="false"
+                    android:theme="@style/EditText"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="60dp" >
+                </EditText>
+                <Spinner
+                    android:id="@+id/work_type_2"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="50dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+                </Spinner>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/nickname"
+                    android:visibility="visible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/id_layout"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintTop_toBottomOf="@id/work_type_layout_2"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:gravity="center">
+                <!-- android:inputType="number" -->
+                <EditText
+                    android:id="@+id/id"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="5dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:maxLength="20"
+                    android:hint="@string/id"
+                    android:theme="@style/EditText"
+                    android:paddingLeft="55dp"
+                    android:paddingRight="60dp" >
+                </EditText>
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="0dp"
+                    android:background="@drawable/nickname"
+                    android:visibility="visible" />
+                <Button
+                    android:id="@+id/id_clear"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/delete"
+                    android:visibility="invisible" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/id_card_front"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id_layout"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/camera"/>
+            <ImageView
+                android:id="@+id/id_card_back"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintDimensionRatio="4:3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/id_card_front"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:src="@drawable/camera"/>
             <Button
-                android:id="@+id/bt_nickname_clear"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginBottom="0dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/delete"
-                android:visibility="invisible" />
-        </FrameLayout>
-        <Button
-            android:id="@+id/bt_register"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/nickname_layout"
-            android:layout_marginTop="50dp"
-            android:background="@android:color/holo_orange_dark"
-            android:gravity="center"
-            android:text="注册"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"/>
-    </RelativeLayout>
-</RelativeLayout>
+                android:id="@+id/register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/id_card_back"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="20dp"
+                android:background="@android:color/holo_orange_dark"
+                android:gravity="center"
+                android:text="注册"
+                android:textColor="@android:color/white"
+                android:textSize="18sp"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

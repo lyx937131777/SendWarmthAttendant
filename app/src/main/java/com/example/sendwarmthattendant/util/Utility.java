@@ -6,6 +6,8 @@ import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import com.example.sendwarmthattendant.db.Customer;
+import com.example.sendwarmthattendant.db.Helper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,6 +29,72 @@ import java.util.List;
 
 public class Utility
 {
+    public static final String ERROR_CODE = "-1";
+    //返回Json数据的特定string值
+    public static String checkString(String response, String string)
+    {
+        try
+        {
+            JSONObject dataObject = new JSONObject(response);
+            return dataObject.getString(string);
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return ERROR_CODE;
+    }
+
+    public static String getRole(String response){
+        try
+        {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONArray dataArray = jsonObject.getJSONArray("datas");
+            JSONObject dataObject = dataArray.getJSONObject(0);
+            return dataObject.getString("roleType");
+        } catch (JSONException e)
+        {
+            e.printStackTrace();
+        }
+        return ERROR_CODE;
+    }
+
+    public static Customer handleCustomer(String response){
+        if (!TextUtils.isEmpty(response))
+        {
+            try
+            {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray dataArray = jsonObject.getJSONArray("datas");
+                JSONObject dataObject = dataArray.getJSONObject(0);
+                JSONObject customerObject = dataObject.getJSONObject("customerInfo");
+                String jsonString = customerObject.toString();
+                return  new Gson().fromJson(jsonString, Customer.class);
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static Helper handleHelper(String response){
+        if (!TextUtils.isEmpty(response))
+        {
+            try
+            {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray dataArray = jsonObject.getJSONArray("datas");
+                JSONObject dataObject = dataArray.getJSONObject(0);
+                JSONObject customerObject = dataObject.getJSONObject("helperInfo");
+                String jsonString = customerObject.toString();
+                return  new Gson().fromJson(jsonString, Helper.class);
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
     //后台给的日期格式 转化为日期Date
     public static Date stringToDate(String s){
@@ -125,7 +193,7 @@ public class Utility
 
     //将Bitmap类型的图片转化成file类型，便于上传到服务器
     public static File saveFile(Bitmap bm, String fileName) throws IOException {
-        String path = Environment.getExternalStorageDirectory() + "/上海巡检";
+        String path = Environment.getExternalStorageDirectory() + "/颂温暖护理员版";
         File dirFile = new File(path);
         if(!dirFile.exists()){
             dirFile.mkdir();

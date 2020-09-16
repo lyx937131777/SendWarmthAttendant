@@ -53,7 +53,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         button = findViewById(R.id.button);
 
         state.setText(MapUtil.getOrderState(order.getState()));
-        if(order.getState().equals("running")){
+        if(order.getState().equals("arrived")){
             button.setText("完成订单");
         }else if(order.getState().equals("unstart")){
             button.setText("开始订单");

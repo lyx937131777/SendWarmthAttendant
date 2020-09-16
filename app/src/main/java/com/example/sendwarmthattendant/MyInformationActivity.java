@@ -7,9 +7,12 @@ import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.db.User;
+import com.example.sendwarmthattendant.db.Worker;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +22,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MyInformationActivity extends AppCompatActivity
 {
     private User user;
+
+    private CircleImageView profile;
+    private TextView userName;
+    private TextView name;
+    private TextView address;
+    private TextView tel;
+    private TextView id;
+
+    private String role;
+    private Helper helper;
+    private Worker worker;
 
     private Button logoutButton;
 
@@ -68,8 +82,27 @@ public class MyInformationActivity extends AppCompatActivity
 
     private void initUser()
     {
-        CircleImageView profile = findViewById(R.id.profile);
+        role = getIntent().getStringExtra("role");
+        if(role.equals("helper")){
+            helper = (Helper) getIntent().getSerializableExtra("helper");
+        }
+
+        profile = findViewById(R.id.profile);
+        userName = findViewById(R.id.user_name);
+        name = findViewById(R.id.name);
+        address = findViewById(R.id.address);
+        tel = findViewById(R.id.tel);
+        id = findViewById(R.id.id);
+
         Glide.with(this).load(R.drawable.profile_uri).into(profile);
+        if(role.equals("helper")){
+            userName.setText("测试");
+            name.setText(helper.getName());
+            tel.setText(helper.getTel());
+            id.setText(helper.getIdCardNumber());
+        }else{
+
+        }
 
     }
 }

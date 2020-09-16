@@ -24,8 +24,8 @@ public class OrderFragment extends Fragment
     private int index;
 
     private RecyclerView recyclerView;
-    private Order[] orders = {new Order("001","张三","","2020-08-07 10:00~14:00","running","","理发",50),
-            new Order("002","周五","","2020-08-07 12:00~14:00","running","","护理",50),
+    private Order[] orders = {new Order("001","张三","","2020-08-07 10:00~14:00","moving","","理发",50),
+            new Order("002","周五","","2020-08-07 12:00~14:00","arrived","","护理",50),
             new Order("003","李四","","2020-08-07 13:00~15:00","unstart","","修锁",20),
             new Order("004","小红","","2020-08-07 12:00~14:00","unstart","","打扫卫生",50),
             new Order("005","小明","","2020-08-07 11:00~12:00","unstart","","按摩",30),
@@ -76,16 +76,14 @@ public class OrderFragment extends Fragment
 
     private void initOrders()
     {
-        String type = getType();
-        if(type == "all"){
-            for(int i = 0; i < orders.length; i++){
+        String[] types = getTypes();
+        List<String> typeList = new ArrayList<>();
+        for(int i = 0; i < types.length; i++){
+            typeList.add(types[i]);
+        }
+        for(int i = 0; i < orders.length; i++){
+            if(typeList.contains(orders[i].getState())){
                 orderList.add(orders[i]);
-            }
-        }else{
-            for(int i = 0; i < orders.length; i++){
-                if(type.equals(orders[i].getState())){
-                    orderList.add(orders[i]);
-                }
             }
         }
     }
@@ -104,6 +102,23 @@ public class OrderFragment extends Fragment
                 return "completed";
             default:
                 return "unknown";
+        }
+    }
+
+    private String[] getTypes(){
+        switch (index){
+            case 0:
+                return new String[]{"moving","arrived","unstart","canceled","completed"};
+            case 1:
+                return new String[]{"moving","arrived"};
+            case 2:
+                return new String[]{"unstarted"};
+            case 3:
+                return new String[]{"canceled"};
+            case 4:
+                return new String[]{"completed"};
+            default:
+                return new String[]{};
         }
     }
 

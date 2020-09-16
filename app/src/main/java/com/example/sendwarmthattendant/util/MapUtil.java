@@ -16,12 +16,16 @@ public class MapUtil
         stateMap.put("unstart", R.drawable.state_blue);
         stateMap.put("canceled",R.drawable.state_red);
         stateMap.put("completed",R.drawable.state_green);
+        stateMap.put("moving",R.drawable.state_yellow);
+        stateMap.put("arrived",R.drawable.state_yellow);
 
         orderStateMap.put("running","进行中");
         orderStateMap.put("unstart","未开始");
         orderStateMap.put("canceled","已取消");
         orderStateMap.put("completed","已完成");
         orderStateMap.put("waiting","等待中");
+        orderStateMap.put("moving","未到达");
+        orderStateMap.put("arrived","已到达");
 
 
         orderStateTitleMap.put("running","当前任务");

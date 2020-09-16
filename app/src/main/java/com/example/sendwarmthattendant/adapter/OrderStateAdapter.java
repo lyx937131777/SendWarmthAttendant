@@ -63,12 +63,19 @@ public class OrderStateAdapter extends RecyclerView.Adapter<OrderStateAdapter.Vi
                 new Order("003","周五","","2020-08-07 12:00~14:00",orderState,"","打扫卫生",50)};
         List<Order> orderList = new ArrayList<>();
         if(orderState.equals("mine")){
-            Order[] orders2 = {new Order("001","张三","","2020-08-07 10:00~14:00","running","","理发",50),
-                    new Order("002","李四","","2020-08-07 13:00~15:00","unstart","","修锁",50),
-                    new Order("003","周五","","2020-08-07 12:00~14:00","unstart","","打扫卫生",50)};
+            Order[] orders2 = {new Order("001","张三","","2020-08-07 10:00~14:00","arrived","","理发",50),
+                    new Order("002","小李","","2020-08-07 10:00~14:00","moving","","理发",50),
+                    new Order("003","小王","","2020-08-07 13:00~15:00","unstart","","修锁",50),
+                    new Order("004","小白","","2020-08-07 12:00~14:00","unstart","","打扫卫生",50)};
             for(int i = 0; i <orders2.length; i++)
                 orderList.add(orders2[i]);
-        }else{
+        }else if(orderState.equals("running")){
+            Order[] orders3 = {new Order("001","张三","","2020-08-07 10:00~14:00","arrived","","理发",50),
+                    new Order("002","小李","","2020-08-07 10:00~14:00","moving","","理发",50),
+                    new Order("003","小王","","2020-08-07 13:00~15:00","moving","","修锁",50)};
+            for(int i = 0; i <orders3.length; i++)
+                orderList.add(orders3[i]);
+        }else {
             for(int i = 0; i < orders.length; i++)
                 orderList.add(orders[i]);
         }

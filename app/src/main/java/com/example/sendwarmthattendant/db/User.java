@@ -2,48 +2,20 @@ package com.example.sendwarmthattendant.db;
 
 public class User
 {
+    private String internetId;
     private String userId;
+    private String tel;
     private String password;
-    private String nickname;
-    private String realName;
-    private String profileUri;
-    private String profilePath;
-    private String address;
-    private String personalSignature;
+    private String role;
 
-    private String userType;
-    private String title;
-    private String star;
-
-
-    public String getPersonalSignature()
+    public String getInternetId()
     {
-        return personalSignature;
+        return internetId;
     }
 
-    public void setPersonalSignature(String personalSignature)
+    public void setInternetId(String internetId)
     {
-        this.personalSignature = personalSignature;
-    }
-
-    public String getRealName()
-    {
-        return realName;
-    }
-
-    public void setRealName(String realName)
-    {
-        this.realName = realName;
-    }
-
-    public String getAddress()
-    {
-        return address;
-    }
-
-    public void setAddress(String address)
-    {
-        this.address = address;
+        this.internetId = internetId;
     }
 
     public String getUserId()
@@ -56,6 +28,16 @@ public class User
         this.userId = userId;
     }
 
+    public String getTel()
+    {
+        return tel;
+    }
+
+    public void setTel(String tel)
+    {
+        this.tel = tel;
+    }
+
     public String getPassword()
     {
         return password;
@@ -66,63 +48,13 @@ public class User
         this.password = password;
     }
 
-    public String getNickname()
+    public String getRole()
     {
-        return nickname;
+        return role;
     }
 
-    public void setNickname(String nickname)
+    public void setRole(String role)
     {
-        this.nickname = nickname;
-    }
-
-    public String getProfileUri()
-    {
-        return profileUri;
-    }
-
-    public void setProfileUri(String profileUri)
-    {
-        this.profileUri = profileUri;
-    }
-
-    public String getProfilePath()
-    {
-        return profilePath;
-    }
-
-    public void setProfilePath(String profilePath)
-    {
-        this.profilePath = profilePath;
-    }
-
-    public String getUserType()
-    {
-        return userType;
-    }
-
-    public void setUserType(String userType)
-    {
-        this.userType = userType;
-    }
-
-    public String getTitle()
-    {
-        return title;
-    }
-
-    public void setTitle(String title)
-    {
-        this.title = title;
-    }
-
-    public String getStar()
-    {
-        return star;
-    }
-
-    public void setStar(String star)
-    {
-        this.star = star;
+        this.role = role;
     }
 }

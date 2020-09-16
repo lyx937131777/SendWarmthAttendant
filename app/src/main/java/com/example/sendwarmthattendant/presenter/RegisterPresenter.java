@@ -1,14 +1,32 @@
 package com.example.sendwarmthattendant.presenter;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.widget.Toast;
 
+import com.example.sendwarmthattendant.RegisterActivity;
 import com.example.sendwarmthattendant.util.CheckUtil;
+import com.example.sendwarmthattendant.util.HttpUtil;
+import com.example.sendwarmthattendant.util.LogUtil;
+import com.example.sendwarmthattendant.util.Utility;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.io.File;
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class RegisterPresenter
 {
     private Context context;
     private CheckUtil checkUtil;
-
+    private ProgressDialog progressDialog;
 
     public RegisterPresenter(Context context, CheckUtil checkUtil)
     {
@@ -16,90 +34,154 @@ public class RegisterPresenter
         this.checkUtil = checkUtil;
     }
 
-    public void register(String username, String password, String confirm, String nickname)
+    public void register(final String tel, final String password, String confirmPassword, final String userName, final String name, final int workType1, final int workType2, final String id, String idCardFront, final String idCardBack)
     {
-
-        if (!checkUtil.checkRegister(username,password,confirm,nickname))
+        if (!checkUtil.checkRegister(tel,password,confirmPassword,userName,name,workType1,workType2,id,idCardFront,idCardBack))
             return;
-//        ((com.example.sendwarmthattendant.RegisterActivity)context).setSyncFinished(false);
-//        String address = HttpUtil.LocalAddress + "/user/register";
-//        HttpUtil.registerRequest(address, username, password, nickname, new
-//                Callback()
-//                {
-//                    @Override
-//                    public void onFailure(Call call, IOException e)
-//                    {
-//                        e.printStackTrace();
-//                        ((com.example.sendwarmthattendant.RegisterActivity)context).runOnUiThread(new Runnable()
-//                        {
-//                            @Override
-//                            public void run()
-//                            {
-//                                Toast.makeText(context, "服务器连接错误", Toast
-//                                        .LENGTH_LONG).show();
-//                            }
-//                        });
-////                        ((com.example.sendwarmthattendant.RegisterActivity)context).setSyncFinished(true);
-//                    }
-//
-//                    @Override
-//                    public void onResponse(Call call, Response response) throws IOException
-//                    {
-//                        final String responseData = response.body().string();
-//                        LogUtil.e("Register", "源码 : " + responseData);
-//                        if (Utility.checkMessage(responseData).equals("true"))
-//                        {
-//                            ((com.example.sendwarmthattendant.RegisterActivity) context).runOnUiThread(new Runnable()
-//                            {
-//                                @Override
-//                                public void run()
-//                                {
-//                                    new AlertDialog.Builder(context)
-//                                            .setTitle("提示")
-//                                            .setMessage("注册成功！")
-//                                            .setPositiveButton("确定", new
-//                                                    DialogInterface.OnClickListener()
-//                                                    {
-//                                                        @Override
-//                                                        public void onClick(DialogInterface dialog, int
-//                                                                which)
-//                                                        {
-//                                                            ((com.example.sendwarmthattendant.RegisterActivity) context).finish();
-//                                                        }
-//                                                    }).show();
-//                                }
-//                            });
-//                        } else if (Utility.checkErrorType(responseData).equals("userID_repeated"))
-//                        {
-//                            ((com.example.sendwarmthattendant.RegisterActivity) context).runOnUiThread(new Runnable()
-//                            {
-//                                @Override
-//                                public void run()
-//                                {
-//                                    new AlertDialog.Builder(context)
-//                                            .setTitle("提示")
-//                                            .setMessage("该账户已被注册！")
-//                                            .setPositiveButton("确定", null)
-//                                            .show();
-//                                }
-//                            });
-//                        } else
-//                        {
-//                            ((com.example.sendwarmthattendant.RegisterActivity) context).runOnUiThread(new Runnable()
-//                            {
-//                                @Override
-//                                public void run()
-//                                {
-//                                    new AlertDialog.Builder(context)
-//                                            .setTitle("提示")
-//                                            .setMessage("由于未知原因注册失败，请重试！")
-//                                            .setPositiveButton("确定", null)
-//                                            .show();
-//                                }
-//                            });
-//                        }
-////                        ((com.example.sendwarmthattendant.RegisterActivity)context).setSyncFinished(true);
-//                    }
-//                });
+        progressDialog = ProgressDialog.show(context,"","上传中...");
+        String address = HttpUtil.LocalAddress + "/api/file";
+        String idCardFront1 = Utility.compressImagePathToImagePath(idCardFront);
+        HttpUtil.fileRequest(address, new File(idCardFront1), new Callback()
+        {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e)
+            {
+                ((RegisterActivity)context).runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run()
+                    {
+                        Toast.makeText(context, "服务器连接错误", Toast.LENGTH_LONG).show();
+                    }
+                });
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+            {
+                final String responsData = response.body().string();
+                LogUtil.e("RegisterPresenter",responsData);
+                final String photoPathFront = Utility.checkString(responsData,"msg");
+                String address = HttpUtil.LocalAddress + "/api/file";
+                String idCardBack2 = Utility.compressImagePathToImagePath(idCardBack);
+                HttpUtil.fileRequest(address, new File(idCardBack2), new Callback()
+                {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e)
+                    {
+                        ((RegisterActivity)context).runOnUiThread(new Runnable()
+                        {
+                            @Override
+                            public void run()
+                            {
+                                Toast.makeText(context, "服务器连接错误", Toast.LENGTH_LONG).show();
+                            }
+                        });
+                        progressDialog.dismiss();
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                    {
+                        final String responsData = response.body().string();
+                        LogUtil.e("RegisterPresenter",responsData);
+                        final String photoPathBack = Utility.checkString(responsData,"msg");
+                        String address = HttpUtil.LocalAddress + "/api/users/helper";
+                        HttpUtil.registerRequest(address, tel, password, userName, name, workType1, workType2, id, photoPathFront, photoPathBack, new Callback()
+                        {
+                            @Override
+                            public void onFailure(@NotNull Call call, @NotNull IOException e)
+                            {
+                                ((RegisterActivity)context).runOnUiThread(new Runnable()
+                                {
+                                    @Override
+                                    public void run()
+                                    {
+                                        Toast.makeText(context, "服务器连接错误", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                                progressDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+                            {
+                                final String responseData = response.body().string();
+                                LogUtil.e("RegisterPresenter", responseData);
+                                if (Utility.checkString(responseData,"code").equals("000"))
+                                {
+                                    ((RegisterActivity) context).runOnUiThread(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            new AlertDialog.Builder(context)
+                                                    .setTitle("提示")
+                                                    .setMessage("注册成功！")
+                                                    .setPositiveButton("确定", new
+                                                            DialogInterface.OnClickListener()
+                                                            {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialog, int
+                                                                        which)
+                                                                {
+                                                                    ((RegisterActivity) context).finish();
+                                                                }
+                                                            }).show();
+                                        }
+                                    });
+                                } else if (Utility.checkString(responseData,"code").equals("500"))
+                                {
+                                    if(Utility.checkString(responseData,"msg").equals("用户名不能重复。")){
+                                        ((RegisterActivity) context).runOnUiThread(new Runnable()
+                                        {
+                                            @Override
+                                            public void run()
+                                            {
+                                                new AlertDialog.Builder(context)
+                                                        .setTitle("提示")
+                                                        .setMessage("该账户已被注册！")
+                                                        .setPositiveButton("确定", null)
+                                                        .show();
+                                            }
+                                        });
+                                    }else{
+                                        ((RegisterActivity) context).runOnUiThread(new Runnable()
+                                        {
+                                            @Override
+                                            public void run()
+                                            {
+                                                new AlertDialog.Builder(context)
+                                                        .setTitle("提示")
+                                                        .setMessage(Utility.checkString(responseData,"msg"))
+                                                        .setPositiveButton("确定", null)
+                                                        .show();
+                                            }
+                                        });
+                                    }
+
+                                } else {
+                                    ((RegisterActivity) context).runOnUiThread(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            new AlertDialog.Builder(context)
+                                                    .setTitle("提示")
+                                                    .setMessage("由于未知原因注册失败，请重试！")
+                                                    .setPositiveButton("确定", null)
+                                                    .show();
+                                        }
+                                    });
+                                }
+                                progressDialog.dismiss();
+                            }
+                        });
+                    }
+                });
+            }
+        });
+
     }
 }

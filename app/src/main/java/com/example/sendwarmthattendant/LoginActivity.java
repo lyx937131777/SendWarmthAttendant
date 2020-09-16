@@ -23,14 +23,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends AppCompatActivity implements OnClickListener
 {
-    private EditText username, password;
-    private Button bt_username_clear;
-    private Button bt_pwd_clear;
-    private Button bt_pwd_eye;
-    private Button bt_login;
-    private Button bt_go_register;
+    private EditText telText, passwordText;
+    private Button telClearButton;
+    private Button passwordClearButton;
+    private Button passwordEyeButton;
+    private Button loginButton;
+    private Button goRegisterButton;
     private boolean isOpen = false;
-    String username_text, password_text;
+    private String tel, passowrd;
 
     private SharedPreferences pref;
     private SharedPreferences.Editor editor;
@@ -57,9 +57,9 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
         loginPresenter = myComponent.loginPresenter();
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        username_text = pref.getString("userID",null);
-        password_text = pref.getString("password",null);
-        if(username_text != null & password_text != null)
+        tel = pref.getString("userID",null);
+        passowrd = pref.getString("password",null);
+        if(tel != null & passowrd != null)
         {
             Intent intent_login = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent_login);
@@ -82,23 +82,23 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
 
     private void initView()
     {
-        username = (EditText) findViewById(R.id.username);
+        telText = findViewById(R.id.tel);
         // 监听文本框内容变化
-        username.addTextChangedListener(new TextWatcher()
+        telText.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
                 // 获得文本框中的用户
-                username_text = username.getText().toString().trim();
-                if ("".equals(username_text))
+                tel = telText.getText().toString().trim();
+                if (tel.equals(""))
                 {
                     // 用户名为空,设置按钮不可见
-                    bt_username_clear.setVisibility(View.INVISIBLE);
+                    telClearButton.setVisibility(View.INVISIBLE);
                 } else
                 {
                     // 用户名不为空，设置按钮可见
-                    bt_username_clear.setVisibility(View.VISIBLE);
+                    telClearButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -113,23 +113,22 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
             }
         });
 
-        password = (EditText) findViewById(R.id.password);
-        // 监听文本框内容变化
-        password.addTextChangedListener(new TextWatcher()
+        passwordText = findViewById(R.id.password);
+        passwordText.addTextChangedListener(new TextWatcher()
         {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count)
             {
                 // 获得文本框中的用户
-                password_text = password.getText().toString().trim();
-                if ("".equals(password_text))
+                passowrd = passwordText.getText().toString().trim();
+                if (passowrd.equals(""))
                 {
                     // 用户名为空,设置按钮不可见
-                    bt_pwd_clear.setVisibility(View.INVISIBLE);
+                    passwordClearButton.setVisibility(View.INVISIBLE);
                 } else
                 {
                     // 用户名不为空，设置按钮可见
-                    bt_pwd_clear.setVisibility(View.VISIBLE);
+                    passwordClearButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -145,16 +144,16 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
         });
 
         //初始化button
-        bt_username_clear = (Button) findViewById(R.id.bt_username_clear);
-        bt_username_clear.setOnClickListener(this);
-        bt_pwd_clear = (Button) findViewById(R.id.bt_pwd_clear);
-        bt_pwd_clear.setOnClickListener(this);
-        bt_pwd_eye = (Button) findViewById(R.id.bt_pwd_eye);
-        bt_pwd_eye.setOnClickListener(this);
-        bt_login = (Button) findViewById(R.id.bt_login);
-        bt_login.setOnClickListener(this);
-        bt_go_register = (Button) findViewById(R.id.bt_go_register);
-        bt_go_register.setOnClickListener(this);
+        telClearButton = findViewById(R.id.tel_clear);
+        telClearButton.setOnClickListener(this);
+        passwordClearButton = findViewById(R.id.password_clear);
+        passwordClearButton.setOnClickListener(this);
+        passwordEyeButton = findViewById(R.id.password_eye);
+        passwordEyeButton.setOnClickListener(this);
+        loginButton = findViewById(R.id.login);
+        loginButton.setOnClickListener(this);
+        goRegisterButton = findViewById(R.id.go_register);
+        goRegisterButton.setOnClickListener(this);
     }
 
     @Override
@@ -163,17 +162,17 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
         switch (v.getId())
         {
             // 清除登录名
-            case R.id.bt_username_clear:
-                username.setText("");
+            case R.id.tel_clear:
+                telText.setText("");
                 break;
 
             // 清除密码
-            case R.id.bt_pwd_clear:
-                password.setText("");
+            case R.id.password_clear:
+                passwordText.setText("");
                 break;
 
             // 密码可见与不可见的切换
-            case R.id.bt_pwd_eye:
+            case R.id.password_eye:
                 if (isOpen)
                 {
                     isOpen = false;
@@ -186,13 +185,13 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
                 break;
 
             // TODO 登录按钮
-            case R.id.bt_login:
-                username_text = username.getText().toString();
-                password_text = password.getText().toString();
-                loginPresenter.login(username_text,password_text);
+            case R.id.login:
+                tel = telText.getText().toString();
+                passowrd = passwordText.getText().toString();
+                loginPresenter.login(tel, passowrd);
                 break;
             // 注册按钮
-            case R.id.bt_go_register:
+            case R.id.go_register:
                 Intent reg = new Intent();
                 reg.setClass(LoginActivity.this, RegisterActivity.class);
                 startActivity(reg);
@@ -213,15 +212,15 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
         if (flag)
         {
             // 密码可见
-            bt_pwd_eye.setBackgroundResource(R.drawable.pwd_open);
+            passwordEyeButton.setBackgroundResource(R.drawable.pwd_open);
             // 设置EditText的密码可见
-            password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            passwordText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
         } else
         {
             // 密码不可见
-            bt_pwd_eye.setBackgroundResource(R.drawable.pwd_closed);
+            passwordEyeButton.setBackgroundResource(R.drawable.pwd_closed);
             // 设置EditText的密码隐藏
-            password.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            passwordText.setTransformationMethod(PasswordTransformationMethod.getInstance());
         }
     }
 }

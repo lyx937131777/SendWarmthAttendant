@@ -12,42 +12,59 @@ public class CheckUtil
         this.context = context;
     }
 
-    public boolean checkLogin(String username, String password)
+    public boolean checkLogin(String tel, String password)
     {
-        if (username.length() != 11)
-        {
+        if (tel.length() != 11) {
             Toast.makeText(context, "手机号码格式不正确", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (password.length() < 6)
-        {
+        if (password.length() < 6) {
             Toast.makeText(context, "密码位数不正确", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;
     }
 
-    public boolean checkRegister(String username, String password, String confirmPassword, String nickname)
+    public boolean checkRegister(String tel, String password, String confirmPassword, String userName, String name, int workType1, int workType2, String id, String idCardFront, String idCardBack)
     {
-        //确认密码不正确、邮箱格式不正确、昵称已被占用
-        if (username.length() != 11)
-        {
+        if (tel.length() != 11) {
             Toast.makeText(context, "手机号码格式不正确", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (password.length() < 6)
-        {
+        if (password.length() < 6) {
             Toast.makeText(context, "请输入至少6位的密码", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (!password.equals(confirmPassword))
-        {
+        if (!password.equals(confirmPassword)) {
             Toast.makeText(context, "两次密码输入不一致", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (nickname.length() < 1)
-        {
-            Toast.makeText(context, "昵称不得为空", Toast.LENGTH_LONG).show();
+        if (userName.length() < 1) {
+            Toast.makeText(context, "请填写用户名", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(name.length() < 1){
+            Toast.makeText(context, "请填写姓名", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(workType1 == 0){
+            Toast.makeText(context, "请选择工种1", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(workType1 == workType2){
+            Toast.makeText(context, "工种不可选择相同", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(id.length() != 18){
+            Toast.makeText(context, "身份证号格式不正确", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(idCardFront == null){
+            Toast.makeText(context, "请拍摄身份证正面照", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(idCardBack == null){
+            Toast.makeText(context, "请拍摄身份证反面照", Toast.LENGTH_LONG).show();
             return false;
         }
         return true;

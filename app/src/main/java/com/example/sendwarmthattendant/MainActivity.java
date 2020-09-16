@@ -1,19 +1,28 @@
 package com.example.sendwarmthattendant;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.sendwarmthattendant.db.Helper;
+import com.example.sendwarmthattendant.db.Worker;
 import com.example.sendwarmthattendant.fragment.HistoricalOrdersFragment;
 import com.example.sendwarmthattendant.fragment.HomeFragment;
 import com.example.sendwarmthattendant.fragment.MapFragment;
 import com.example.sendwarmthattendant.fragment.PersonalCenterFragment;
 import com.example.sendwarmthattendant.fragment.adapter.MyFragAdapter;
+import com.example.sendwarmthattendant.util.HttpUtil;
+import com.example.sendwarmthattendant.util.Utility;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +32,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -39,6 +51,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int viewPagerSelected = 0;
 
+    private String role;
+    private Helper helper;
+    private Worker worker;
+    private SharedPreferences pref;
+    private String credential;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -47,11 +65,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         instance = this;
 
         CircleImageView profile = findViewById(R.id.profile);
-        TextView nickname = findViewById(R.id.nickname);
-        TextView title = findViewById(R.id.title);
+        final TextView userName = findViewById(R.id.user_name);
+        final TextView title = findViewById(R.id.title);
         profile.setOnClickListener(this);
-        nickname.setOnClickListener(this);
+        userName.setOnClickListener(this);
         title.setOnClickListener(this);
+
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        role = pref.getString("role",role);
+        credential = pref.getString("credential","");
+        String address = HttpUtil.LocalAddress + "/api/users/me";
+        HttpUtil.getHttp(address, credential, new Callback()
+        {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e)
+            {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+            {
+                final String responsData = response.body().string();
+                if(role.equals("helper")){
+                    helper = Utility.handleHelper(responsData);
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run()
+                        {
+                            userName.setText(helper.getName());
+                            title.setText(helper.getTel());
+                        }
+                    });
+                }else{
+
+                }
+
+            }
+        });
 
         navView = findViewById(R.id.nav_view);
         viewPager = findViewById(R.id.view_pager);
@@ -196,6 +248,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.nickname:
             case R.id.title: {
                 Intent intent = new Intent(this, MyInformationActivity.class);
+                intent.putExtra("role",role);
+                if(role.equals("helper")){
+                    intent.putExtra("helper",helper);
+                }else{
+
+                }
                 startActivity(intent);
                 break;
             }
