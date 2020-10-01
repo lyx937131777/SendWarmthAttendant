@@ -44,7 +44,7 @@ public class HttpUtil
         client.newCall(request).enqueue(callback);
     }
 
-    public static void registerRequest(String address, String tel, String password, String userName, String name, int workType1, int workType2, String id, String idCardFront, String idCardBack, Callback callback){
+    public static void registerRequest(String address, String tel, String password, String name, int workType1, int workType2, String id, String idCardFront, String idCardBack, Callback callback){
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         HashMap<String, String> helperMap = new HashMap<>();
@@ -53,7 +53,6 @@ public class HttpUtil
         helperMap.put("workClass2",""+workType2);
         helperMap.put("helperIdCard",id);
         helperMap.put("helperName",name);
-        helperMap.put("userName",userName);
         helperMap.put("idCardFront",idCardFront);
         helperMap.put("idCardBack",idCardBack);
         String helperInfo = new Gson().toJson(helperMap);

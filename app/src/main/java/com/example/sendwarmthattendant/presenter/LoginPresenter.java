@@ -9,12 +9,14 @@ import android.widget.Toast;
 
 import com.example.sendwarmthattendant.LoginActivity;
 import com.example.sendwarmthattendant.MainActivity;
+import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.util.CheckUtil;
 import com.example.sendwarmthattendant.util.HttpUtil;
 import com.example.sendwarmthattendant.util.LogUtil;
 import com.example.sendwarmthattendant.util.Utility;
 
 import org.jetbrains.annotations.NotNull;
+import org.litepal.LitePal;
 
 import java.io.IOException;
 
@@ -55,7 +57,7 @@ public class LoginPresenter
                     @Override
                     public void run()
                     {
-                        Toast.makeText(context, "服务器连接错误", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "网络连接错误", Toast.LENGTH_LONG).show();
 
                     }
                 });
@@ -86,7 +88,7 @@ public class LoginPresenter
                             LogUtil.e("Login",responsData);
                             String role = Utility.getRole(responsData);
                             LogUtil.e("Login",role);
-                            if(role.equals("helper") || role.equals("nurse")){
+                            if(role.equals("helper") || role.equals("nurse") || role.equals("shopManager")){
                                 SharedPreferences.Editor editor = pref.edit();
                                 editor.putString("userID", tel);
                                 editor.putString("password", password);
@@ -94,6 +96,13 @@ public class LoginPresenter
                                 editor.putString("role",role);
                                 editor.putString("latest", String.valueOf(System.currentTimeMillis()));
                                 editor.apply();
+                                if(role.equals("helper")){
+                                    LitePal.deleteAll(Helper.class,"userId = ?",tel);
+                                    Helper helper = Utility.handleHelper(responsData);
+                                    helper.setUserId(tel);
+                                    helper.setCredential(credential);
+                                    helper.save();
+                                }
                                 Intent intent_login = new Intent(context, MainActivity.class);
                                 context.startActivity(intent_login);
                                 ((LoginActivity) context).finish();

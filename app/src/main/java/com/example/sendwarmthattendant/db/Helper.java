@@ -2,12 +2,18 @@ package com.example.sendwarmthattendant.db;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.litepal.crud.LitePalSupport;
+
 import java.io.Serializable;
 
-public class Helper implements Serializable
+public class Helper extends LitePalSupport implements Serializable
 {
     @SerializedName("id")
     private String internetId;
+
+    private String userId;
+    private String credential;
+
     @SerializedName("helperName")
     private String name;
     @SerializedName("helperIdCard")
@@ -122,5 +128,25 @@ public class Helper implements Serializable
     public void setAuditStatus(String auditStatus)
     {
         this.auditStatus = auditStatus;
+    }
+
+    public String getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
+    }
+
+    public String getCredential()
+    {
+        return credential;
+    }
+
+    public void setCredential(String credential)
+    {
+        this.credential = credential;
     }
 }

@@ -8,6 +8,7 @@ import android.util.Base64;
 
 import com.example.sendwarmthattendant.db.Customer;
 import com.example.sendwarmthattendant.db.Helper;
+import com.example.sendwarmthattendant.db.ServiceSubject;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -24,6 +25,7 @@ import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -94,6 +96,25 @@ public class Utility
             }
         }
         return null;
+    }
+
+    public static List<ServiceSubject> handleServiceSubjectList(String response){
+        if (!TextUtils.isEmpty(response))
+        {
+            try
+            {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray dataArray = jsonObject.getJSONArray("datas");
+                JSONObject dataObject = dataArray.getJSONObject(0);
+                JSONArray jsonArray = dataObject.getJSONArray("content");
+                String serviceSubjectJson = jsonArray.toString();
+                return new Gson().fromJson(serviceSubjectJson, new TypeToken<List<ServiceSubject>>() {}.getType());
+            } catch (JSONException e)
+            {
+                e.printStackTrace();
+            }
+        }
+        return new ArrayList<>();
     }
 
     //后台给的日期格式 转化为日期Date

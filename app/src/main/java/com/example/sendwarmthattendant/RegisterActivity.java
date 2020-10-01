@@ -26,12 +26,14 @@ import com.bumptech.glide.Glide;
 import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
 import com.example.sendwarmthattendant.dagger2.MyComponent;
 import com.example.sendwarmthattendant.dagger2.MyModule;
+import com.example.sendwarmthattendant.db.ServiceSubject;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -55,19 +57,19 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
     private ImageView idCardBack;
 
 
-    private EditText telText, passwordText, confirmPasswordText, userNameText,nameText,idText;
-    private Button telClearButton, passwordClearButton, confirmPasswordClearButton, userNameClearButton,nameClearButton,idClearButton;
+    private EditText telText, passwordText, confirmPasswordText,nameText,idText;
+    private Button telClearButton, passwordClearButton, confirmPasswordClearButton,nameClearButton,idClearButton;
     private Button registerButton;
-    private String tel, password, confirmPassword, userName, name, id;
+    private String tel, password, confirmPassword, name, id;
 
     private Spinner workTypeSpinner1;
-    private List<String> workTypeList1 = new ArrayList<>();
-    private ArrayAdapter<String> workTypeArrayAdapter1;
+    private List<ServiceSubject> workTypeList1 = new ArrayList<>();
+    private ArrayAdapter<ServiceSubject> workTypeArrayAdapter1;
     private int workType1;
 
     private Spinner workTypeSpinner2;
-    private List<String> workTypeList2 = new ArrayList<>();
-    private ArrayAdapter<String> workTypeArrayAdapter2;
+    private List<ServiceSubject> workTypeList2 = new ArrayList<>();
+    private ArrayAdapter<ServiceSubject> workTypeArrayAdapter2;
     private int workType2;
 
     private RegisterPresenter registerPresenter;
@@ -77,7 +79,6 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        initView();
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -85,9 +86,10 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
         {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-
         MyComponent myComponent = DaggerMyComponent.builder().myModule(new MyModule(this)).build();
         registerPresenter = myComponent.registerPresenter();
+
+        initView();
 
         idCardFront = findViewById(R.id.id_card_front);
         idCardBack = findViewById(R.id.id_card_back);
@@ -96,10 +98,9 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
             @Override
             public void onClick(View view)
             {
-                if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest
-                        .permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 {
-                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, TAKE_PHOTO_FRONT);
                 } else
                 {
                     takePhotoFront();
@@ -115,7 +116,7 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
                 if (ContextCompat.checkSelfPermission(RegisterActivity.this, Manifest
                         .permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
                 {
-                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+                    ActivityCompat.requestPermissions(RegisterActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, TAKE_PHOTO_BACK);
                 } else
                 {
                     takePhotoBack();
@@ -214,30 +215,30 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
             {
             }
         });
-        userNameText = findViewById(R.id.user_name);
-        userNameText.addTextChangedListener(new TextWatcher()
-        {
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count)
-            {
-                userName = userNameText.getText().toString();
-                if (userName.equals("")) {
-                    userNameClearButton.setVisibility(View.INVISIBLE);
-                } else {
-                    userNameClearButton.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after)
-            {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s)
-            {
-            }
-        });
+//        userNameText = findViewById(R.id.user_name);
+//        userNameText.addTextChangedListener(new TextWatcher()
+//        {
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count)
+//            {
+//                userName = userNameText.getText().toString();
+//                if (userName.equals("")) {
+//                    userNameClearButton.setVisibility(View.INVISIBLE);
+//                } else {
+//                    userNameClearButton.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after)
+//            {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s)
+//            {
+//            }
+//        });
         nameText = findViewById(R.id.name);
         nameText.addTextChangedListener(new TextWatcher()
         {
@@ -298,6 +299,7 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
         workTypeArrayAdapter2 = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,workTypeList2);
         workTypeArrayAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         workTypeSpinner2.setAdapter(workTypeArrayAdapter2);
+        registerPresenter.updateServiceSubject(workTypeArrayAdapter1, workTypeList1, workTypeArrayAdapter2, workTypeList2);
 
         telClearButton = findViewById(R.id.tel_clear);
         telClearButton.setOnClickListener(this);
@@ -305,8 +307,8 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
         passwordClearButton.setOnClickListener(this);
         confirmPasswordClearButton = findViewById(R.id.confirm_password_clear);
         confirmPasswordClearButton.setOnClickListener(this);
-        userNameClearButton = findViewById(R.id.user_name_clear);
-        userNameClearButton.setOnClickListener(this);
+//        userNameClearButton = findViewById(R.id.user_name_clear);
+//        userNameClearButton.setOnClickListener(this);
         nameClearButton = findViewById(R.id.name_clear);
         nameClearButton.setOnClickListener(this);
         idClearButton = findViewById(R.id.id_clear);
@@ -319,18 +321,12 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
     {
         workTypeSpinner1 = findViewById(R.id.work_type_1);
         workTypeSpinner2 = findViewById(R.id.work_type_2);
-        workTypeList1.add("工种1");
-        workTypeList1.add("按摩类");
-        workTypeList1.add("护理类");
-        workTypeList2.add("工种2");
-        workTypeList2.add("按摩类");
-        workTypeList2.add("护理类");
         workTypeSpinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
         {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
-                workType1 = i;
+                workType1 = Integer.parseInt(workTypeList1.get(i).getInternetId());
             }
 
             @Override
@@ -344,7 +340,7 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
             {
-                workType2 = i;
+                workType2 = Integer.parseInt(workTypeList2.get(i).getInternetId());
             }
 
             @Override
@@ -370,9 +366,9 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
             case R.id.confirm_password_clear:
                 confirmPasswordText.setText("");
                 break;
-            case R.id.user_name_clear:
-                userNameText.setText("");
-                break;
+//            case R.id.user_name_clear:
+//                userNameText.setText("");
+//                break;
             case R.id.name_clear:
                 nameText.setText("");
                 break;
@@ -385,10 +381,10 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
                 tel = telText.getText().toString();
                 password = passwordText.getText().toString();
                 confirmPassword = confirmPasswordText.getText().toString();
-                userName = userNameText.getText().toString();
+//                userName = userNameText.getText().toString();
                 name = nameText.getText().toString();
                 id = idText.getText().toString();
-                registerPresenter.register(tel,password,confirmPassword,userName,name,workType1,workType2,id,imagePathFront,imagePathBack);
+                registerPresenter.register(tel,password,confirmPassword,name,workType1,workType2,id,imagePathFront,imagePathBack);
                 break;
 
             default:
@@ -465,14 +461,14 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
     {
         switch (requestCode)
         {
-            case 1:
+            case TAKE_PHOTO_FRONT:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     takePhotoFront();
                 } else {
                     Toast.makeText(this, "你拒绝了权限请求！", Toast.LENGTH_LONG).show();
                 }
                 break;
-            case 2:
+            case TAKE_PHOTO_BACK:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     takePhotoBack();
                 } else {
@@ -489,8 +485,7 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
         switch (requestCode)
         {
             case TAKE_PHOTO_FRONT:
-                if (resultCode == RESULT_OK)
-                {
+                if (resultCode == RESULT_OK) {
                     try
                     {
                         // 将拍摄的照片显示出来
@@ -502,14 +497,12 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
                     {
                         e.printStackTrace();
                     }
-                } else
-                {
+                } else {
                     imagePathFront = null;
                 }
                 break;
             case TAKE_PHOTO_BACK:
-                if (resultCode == RESULT_OK)
-                {
+                if (resultCode == RESULT_OK) {
                     try
                     {
                         // 将拍摄的照片显示出来
@@ -521,8 +514,7 @@ public class RegisterActivity extends AppCompatActivity implements OnClickListen
                     {
                         e.printStackTrace();
                     }
-                } else
-                {
+                } else {
                     imagePathBack = null;
                 }
                 break;

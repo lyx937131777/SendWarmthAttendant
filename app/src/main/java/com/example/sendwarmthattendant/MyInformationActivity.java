@@ -24,7 +24,6 @@ public class MyInformationActivity extends AppCompatActivity
     private User user;
 
     private CircleImageView profile;
-    private TextView userName;
     private TextView name;
     private TextView address;
     private TextView tel;
@@ -88,7 +87,6 @@ public class MyInformationActivity extends AppCompatActivity
         }
 
         profile = findViewById(R.id.profile);
-        userName = findViewById(R.id.user_name);
         name = findViewById(R.id.name);
         address = findViewById(R.id.address);
         tel = findViewById(R.id.tel);
@@ -96,7 +94,6 @@ public class MyInformationActivity extends AppCompatActivity
 
         Glide.with(this).load(R.drawable.profile_uri).into(profile);
         if(role.equals("helper")){
-            userName.setText("测试");
             name.setText(helper.getName());
             tel.setText(helper.getTel());
             id.setText(helper.getIdCardNumber());

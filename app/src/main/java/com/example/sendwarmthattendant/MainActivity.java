@@ -21,6 +21,7 @@ import com.example.sendwarmthattendant.util.Utility;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
+import org.litepal.LitePal;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -72,38 +73,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         title.setOnClickListener(this);
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        role = pref.getString("role",role);
+        role = pref.getString("role","");
         credential = pref.getString("credential","");
-        String address = HttpUtil.LocalAddress + "/api/users/me";
-        HttpUtil.getHttp(address, credential, new Callback()
-        {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e)
-            {
-
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
-            {
-                final String responsData = response.body().string();
-                if(role.equals("helper")){
-                    helper = Utility.handleHelper(responsData);
-                    runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run()
-                        {
-                            userName.setText(helper.getName());
-                            title.setText(helper.getTel());
-                        }
-                    });
-                }else{
-
-                }
-
-            }
-        });
+        if(role.equals("helper")){
+            helper = LitePal.where("credential = ?",credential).findFirst(Helper.class);
+            userName.setText(helper.getName());
+            title.setText(helper.getTel());
+        }
 
         navView = findViewById(R.id.nav_view);
         viewPager = findViewById(R.id.view_pager);

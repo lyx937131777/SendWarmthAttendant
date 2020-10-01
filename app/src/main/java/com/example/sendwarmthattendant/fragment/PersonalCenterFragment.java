@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.OrderActivity;
+import com.example.sendwarmthattendant.adapter.Menu3Adapter;
 import com.example.sendwarmthattendant.adapter.MenuAdapter;
 import com.example.sendwarmthattendant.db.Menu;
 
@@ -37,7 +38,7 @@ public class PersonalCenterFragment extends Fragment
             new Menu("systemMessage",R.drawable.system_message,"系统消息"),
             new Menu("feedback",R.drawable.feedback,"意见反馈")};
     private List<Menu> mMenuList = new ArrayList<>();
-    private MenuAdapter mMenuAdapter;
+    private Menu3Adapter mMenuAdapter;
 
     private View allOrder;
 
@@ -55,7 +56,7 @@ public class PersonalCenterFragment extends Fragment
         mMenuRecycler = root.findViewById(R.id.recycler_menu_me);
         GridLayoutManager layoutManager2 = new GridLayoutManager(getContext(), 3);
         mMenuRecycler.setLayoutManager(layoutManager2);
-        mMenuAdapter = new MenuAdapter(mMenuList);
+        mMenuAdapter = new Menu3Adapter(mMenuList);
         mMenuRecycler.setAdapter(mMenuAdapter);
 
         allOrder = root.findViewById(R.id.all_orders);

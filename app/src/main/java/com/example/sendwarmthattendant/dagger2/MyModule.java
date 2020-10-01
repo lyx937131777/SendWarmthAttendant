@@ -45,9 +45,9 @@ public class MyModule
     }
 
     @Provides
-    public RegisterPresenter provideRegisterPresenter(Context context, CheckUtil checkUtil)
+    public RegisterPresenter provideRegisterPresenter(Context context, CheckUtil checkUtil, SharedPreferences pref)
     {
-        return new RegisterPresenter(context,checkUtil);
+        return new RegisterPresenter(context,checkUtil,pref);
     }
 
 

@@ -25,7 +25,7 @@ public class CheckUtil
         return true;
     }
 
-    public boolean checkRegister(String tel, String password, String confirmPassword, String userName, String name, int workType1, int workType2, String id, String idCardFront, String idCardBack)
+    public boolean checkRegister(String tel, String password, String confirmPassword, String name, int workType1, int workType2, String id, String idCardFront, String idCardBack)
     {
         if (tel.length() != 11) {
             Toast.makeText(context, "手机号码格式不正确", Toast.LENGTH_LONG).show();
@@ -39,10 +39,10 @@ public class CheckUtil
             Toast.makeText(context, "两次密码输入不一致", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (userName.length() < 1) {
-            Toast.makeText(context, "请填写用户名", Toast.LENGTH_LONG).show();
-            return false;
-        }
+//        if (userName.length() < 1) {
+//            Toast.makeText(context, "请填写用户名", Toast.LENGTH_LONG).show();
+//            return false;
+//        }
         if(name.length() < 1){
             Toast.makeText(context, "请填写姓名", Toast.LENGTH_LONG).show();
             return false;
