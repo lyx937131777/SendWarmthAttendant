@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import okhttp3.Callback;
 import okhttp3.Credentials;
+import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -22,7 +23,7 @@ public class HttpUtil
         return LocalAddress + "/resources/" + url;
     }
 
-    //get 登录界面
+    //get 登录界面 获取列表
     public static void getHttp(String address,String credential, Callback callback)
     {
 //        OkHttpClient client = buildBasicAuthClient(userID,"123456");
@@ -32,6 +33,15 @@ public class HttpUtil
         client.newCall(request).enqueue(callback);
     }
 
+    //get 注册界面
+    public static void getHttpWithoutCredential(String address, Callback callback)
+    {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(address).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //登录
     public static void loginRequest(String address, String tel, String password, Callback callback){
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -44,6 +54,7 @@ public class HttpUtil
         client.newCall(request).enqueue(callback);
     }
 
+    //注册
     public static void registerRequest(String address, String tel, String password, String name, int workType1, int workType2, String id, String idCardFront, String idCardBack, Callback callback){
         OkHttpClient client = new OkHttpClient();
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -84,4 +95,35 @@ public class HttpUtil
         client.newCall(request).enqueue(callback);
     }
 
+    //接单
+    public static void acceptOrderRequest(String address, String credential, String orderId, String role, String manId,Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("orderId", orderId)
+                .add("roleType",role)
+                .add("manId",manId)
+                .build();
+        Request request = new Request.Builder().url(address).put(requestBody).addHeader("Authorization",credential).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //开始订单
+    public static void startOrderRequest(String address, String credential, String orderId,Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("orderId", orderId)
+                .build();
+        Request request = new Request.Builder().url(address).put(requestBody).addHeader("Authorization",credential).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //结束订单
+    public static void endOrderRequest(String address, String credential, String orderId,Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("orderId", orderId)
+                .build();
+        Request request = new Request.Builder().url(address).put(requestBody).addHeader("Authorization",credential).build();
+        client.newCall(request).enqueue(callback);
+    }
 }

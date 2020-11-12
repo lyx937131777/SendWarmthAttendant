@@ -7,6 +7,10 @@ import android.view.ViewGroup;
 
 import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.adapter.OrderStateAdapter;
+import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
+import com.example.sendwarmthattendant.dagger2.MyComponent;
+import com.example.sendwarmthattendant.dagger2.MyModule;
+import com.example.sendwarmthattendant.presenter.HomePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +23,19 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HomeFragment extends Fragment
 {
     private RecyclerView recyclerView;
-    private String[] orderStates = {"mine"};
+    private String[] orderStates = {"mine","not_accepted"};
     private List<String> orderStateList = new ArrayList<>();
     private OrderStateAdapter orderStateAdapter;
 
+    private HomePresenter homePresenter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        MyComponent myComponent = DaggerMyComponent.builder().myModule(new MyModule(getContext())).build();
+        homePresenter = myComponent.homePresenter();
+
         initOrderStates();
         recyclerView = root.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -45,4 +53,10 @@ public class HomeFragment extends Fragment
         }
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        homePresenter.updateOrderList(orderStateAdapter);
+    }
 }

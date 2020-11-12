@@ -57,7 +57,7 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
         loginPresenter = myComponent.loginPresenter();
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        tel = pref.getString("userID",null);
+        tel = pref.getString("userId",null);
         passowrd = pref.getString("password",null);
         if(tel != null & passowrd != null)
         {

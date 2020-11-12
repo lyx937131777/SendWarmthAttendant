@@ -16,14 +16,10 @@ import com.example.sendwarmthattendant.fragment.HomeFragment;
 import com.example.sendwarmthattendant.fragment.MapFragment;
 import com.example.sendwarmthattendant.fragment.PersonalCenterFragment;
 import com.example.sendwarmthattendant.fragment.adapter.MyFragAdapter;
-import com.example.sendwarmthattendant.util.HttpUtil;
-import com.example.sendwarmthattendant.util.Utility;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.jetbrains.annotations.NotNull;
 import org.litepal.LitePal;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
@@ -79,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             helper = LitePal.where("credential = ?",credential).findFirst(Helper.class);
             userName.setText(helper.getName());
             title.setText(helper.getTel());
+        } else {
+            worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
+            userName.setText(worker.getWorkerName());
+            title.setText(worker.getWorkerTel());
         }
 
         navView = findViewById(R.id.nav_view);
@@ -228,7 +225,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(role.equals("helper")){
                     intent.putExtra("helper",helper);
                 }else{
-
+                    intent.putExtra("worker",worker);
                 }
                 startActivity(intent);
                 break;

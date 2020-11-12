@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.sendwarmthattendant.RegisterActivity;
 import com.example.sendwarmthattendant.db.ServiceSubject;
 import com.example.sendwarmthattendant.util.CheckUtil;
+import com.example.sendwarmthattendant.util.FileUtil;
 import com.example.sendwarmthattendant.util.HttpUtil;
 import com.example.sendwarmthattendant.util.LogUtil;
 import com.example.sendwarmthattendant.util.Utility;
@@ -32,8 +33,7 @@ public class RegisterPresenter
     private ProgressDialog progressDialog;
     private SharedPreferences pref;
 
-    public RegisterPresenter(Context context, CheckUtil checkUtil, SharedPreferences pref)
-    {
+    public RegisterPresenter(Context context, CheckUtil checkUtil, SharedPreferences pref) {
         this.context = context;
         this.checkUtil = checkUtil;
         this.pref = pref;
@@ -45,7 +45,7 @@ public class RegisterPresenter
             return;
         progressDialog = ProgressDialog.show(context,"","上传中...");
         String address = HttpUtil.LocalAddress + "/api/file";
-        String idCardFront1 = Utility.compressImagePathToImagePath(idCardFront);
+        String idCardFront1 = FileUtil.compressImagePathToImagePath(idCardFront);
         HttpUtil.fileRequest(address, new File(idCardFront1), new Callback()
         {
             @Override
@@ -69,7 +69,7 @@ public class RegisterPresenter
                 LogUtil.e("RegisterPresenter",responsData);
                 final String photoPathFront = Utility.checkString(responsData,"msg");
                 String address = HttpUtil.LocalAddress + "/api/file";
-                String idCardBack2 = Utility.compressImagePathToImagePath(idCardBack);
+                String idCardBack2 = FileUtil.compressImagePathToImagePath(idCardBack);
                 HttpUtil.fileRequest(address, new File(idCardBack2), new Callback()
                 {
                     @Override
@@ -193,8 +193,7 @@ public class RegisterPresenter
     public void updateServiceSubject(final ArrayAdapter<ServiceSubject> arrayAdapter1, final List<ServiceSubject> subjectList1,
                                      final ArrayAdapter<ServiceSubject> arrayAdapter2, final List<ServiceSubject> subjectList2){
         String address = HttpUtil.LocalAddress + "/api/servicesubject/list";
-        String credential = pref.getString("credential",null);
-        HttpUtil.getHttp(address, credential, new Callback()
+        HttpUtil.getHttpWithoutCredential(address, new Callback()
         {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e)

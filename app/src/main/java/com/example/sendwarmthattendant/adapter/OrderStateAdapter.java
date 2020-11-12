@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.db.Order;
+import com.example.sendwarmthattendant.util.LogUtil;
 import com.example.sendwarmthattendant.util.MapUtil;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class OrderStateAdapter extends RecyclerView.Adapter<OrderStateAdapter.Vi
 {
     private Context mContext;
     private List<String> mList;
+    private List<Order> orderList = new ArrayList<>();
 
     static class ViewHolder extends RecyclerView.ViewHolder
     {
@@ -56,35 +58,50 @@ public class OrderStateAdapter extends RecyclerView.Adapter<OrderStateAdapter.Vi
     public void onBindViewHolder(OrderStateAdapter.ViewHolder holder, int position)
     {
         String orderState = mList.get(position);
+        LogUtil.e("OrderStateAdapter","orderState: "+orderState);
         holder.orderStateTitle.setText(MapUtil.getOrderStateTitle(orderState));
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        Order[] orders = {new Order("001","张三","","2020-08-07 10:00~14:00",orderState,"","理发",50),
-                new Order("002","李四","","2020-08-07 13:00~15:00",orderState,"","修锁",50),
-                new Order("003","周五","","2020-08-07 12:00~14:00",orderState,"","打扫卫生",50)};
-        List<Order> orderList = new ArrayList<>();
+        List<Order> mOrderList = new ArrayList<>();
         if(orderState.equals("mine")){
-            Order[] orders2 = {new Order("001","张三","","2020-08-07 10:00~14:00","arrived","","理发",50),
-                    new Order("002","小李","","2020-08-07 10:00~14:00","moving","","理发",50),
-                    new Order("003","小王","","2020-08-07 13:00~15:00","unstart","","修锁",50),
-                    new Order("004","小白","","2020-08-07 12:00~14:00","unstart","","打扫卫生",50)};
-            for(int i = 0; i <orders2.length; i++)
-                orderList.add(orders2[i]);
-        }else if(orderState.equals("running")){
-            Order[] orders3 = {new Order("001","张三","","2020-08-07 10:00~14:00","arrived","","理发",50),
-                    new Order("002","小李","","2020-08-07 10:00~14:00","moving","","理发",50),
-                    new Order("003","小王","","2020-08-07 13:00~15:00","moving","","修锁",50)};
-            for(int i = 0; i <orders3.length; i++)
-                orderList.add(orders3[i]);
+            for(Order order : orderList){
+                if(order.getState().equals("on_going") || order.getState().equals("not_start")){
+                    mOrderList.add(order);
+                }
+            }
         }else {
-            for(int i = 0; i < orders.length; i++)
-                orderList.add(orders[i]);
+            for(Order order : orderList){
+                if(order.getState().equals(orderState)){
+                    mOrderList.add(order);
+                }
+            }
         }
-        OrderAdapter orderAdapter = new OrderAdapter(orderList);
+        LogUtil.e("OrderStateAdapter","size: "+mOrderList.size());
+        OrderAdapter orderAdapter = new OrderAdapter(mOrderList);
         holder.recyclerView.setAdapter(orderAdapter);
     }
     @Override
     public int getItemCount()
     {
         return mList.size();
+    }
+
+    public List<String> getmList()
+    {
+        return mList;
+    }
+
+    public void setmList(List<String> mList)
+    {
+        this.mList = mList;
+    }
+
+    public List<Order> getOrderList()
+    {
+        return orderList;
+    }
+
+    public void setOrderList(List<Order> orderList)
+    {
+        this.orderList = orderList;
     }
 }

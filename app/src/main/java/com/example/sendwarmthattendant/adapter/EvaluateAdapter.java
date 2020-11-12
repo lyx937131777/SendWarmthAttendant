@@ -63,10 +63,11 @@ public class EvaluateAdapter extends RecyclerView.Adapter<EvaluateAdapter.ViewHo
             {
                 int position = holder.getAdapterPosition();
                 Evaluate evaluate = mList.get(position);
-                Intent intent = new Intent(mContext, OrderDetailActivity.class);
-                Order order = new Order(evaluate.getNumber(),"customer","","time","complete","","",50);
-                intent.putExtra("order", order);
-                mContext.startActivity(intent);
+                //TODO
+//                Intent intent = new Intent(mContext, OrderDetailActivity.class);
+//                Order order = new Order(evaluate.getNumber(),"customer","","time","complete","","",50);
+//                intent.putExtra("order", order);
+//                mContext.startActivity(intent);
             }
         });
         return holder;

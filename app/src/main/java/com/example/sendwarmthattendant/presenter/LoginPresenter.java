@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.sendwarmthattendant.LoginActivity;
 import com.example.sendwarmthattendant.MainActivity;
 import com.example.sendwarmthattendant.db.Helper;
+import com.example.sendwarmthattendant.db.Worker;
 import com.example.sendwarmthattendant.util.CheckUtil;
 import com.example.sendwarmthattendant.util.HttpUtil;
 import com.example.sendwarmthattendant.util.LogUtil;
@@ -32,8 +33,7 @@ public class LoginPresenter
     private CheckUtil checkUtil;
     private ProgressDialog progressDialog;
 
-    public LoginPresenter(Context context, SharedPreferences pref, CheckUtil checkUtil)
-    {
+    public LoginPresenter(Context context, SharedPreferences pref, CheckUtil checkUtil) {
         this.context = context;
         this.pref = pref;
         this.checkUtil = checkUtil;
@@ -90,7 +90,7 @@ public class LoginPresenter
                             LogUtil.e("Login",role);
                             if(role.equals("helper") || role.equals("nurse") || role.equals("shopManager")){
                                 SharedPreferences.Editor editor = pref.edit();
-                                editor.putString("userID", tel);
+                                editor.putString("userId", tel);
                                 editor.putString("password", password);
                                 editor.putString("credential",credential);
                                 editor.putString("role",role);
@@ -102,6 +102,12 @@ public class LoginPresenter
                                     helper.setUserId(tel);
                                     helper.setCredential(credential);
                                     helper.save();
+                                }else {
+                                    LitePal.deleteAll(Worker.class,"userId = ?",tel);
+                                    Worker worker = Utility.handleWorker(responsData);
+                                    worker.setUserId(tel);
+                                    worker.setCredential(credential);
+                                    worker.save();
                                 }
                                 Intent intent_login = new Intent(context, MainActivity.class);
                                 context.startActivity(intent_login);

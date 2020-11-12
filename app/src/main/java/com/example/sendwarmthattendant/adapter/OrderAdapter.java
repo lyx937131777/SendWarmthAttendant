@@ -13,6 +13,7 @@ import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.OrderDetailActivity;
 import com.example.sendwarmthattendant.db.Order;
 import com.example.sendwarmthattendant.util.MapUtil;
+import com.example.sendwarmthattendant.util.TimeUtil;
 
 import java.util.List;
 
@@ -31,7 +32,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         TextView stateText;
         TextView number;
         TextView customer;
-        TextView time;
+        TextView startTime;
+        TextView endTime;
         TextView serviceContent;
 
         public  ViewHolder(View view)
@@ -42,7 +44,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
             stateText = view.findViewById(R.id.state_text);
             number = view.findViewById(R.id.number);
             customer = view.findViewById(R.id.customer);
-            time = view.findViewById(R.id.time);
+            startTime = view.findViewById(R.id.start_time);
+            endTime = view.findViewById(R.id.end_time);
             serviceContent = view.findViewById(R.id.service_content);
         }
     }
@@ -81,13 +84,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull OrderAdapter.ViewHolder holder, int position)
     {
         Order order = mList.get(position);
-        holder.number.setText(order.getNumber());
-        holder.customer.setText(order.getCustomer());
-        long time = System.currentTimeMillis();
+        holder.number.setText(order.getOrderNo());
+        holder.customer.setText(order.getCustomerInfo().getName());
         Glide.with(mContext).load(MapUtil.getState(order.getState())).into(holder.state);
         holder.stateText.setText(MapUtil.getOrderState(order.getState()));
-        holder.time.setText(order.getTime());
-        holder.serviceContent.setText(order.getServiceContent());
+        if(order.getState().equals("not_start") || order.getState().equals("not_accepted")){
+            holder.startTime.setText("预计上门："+TimeUtil.timeStampToString(order.getExpectStartTime(),"yyyy-MM-dd HH:mm"));
+            holder.endTime.setText("预计结束：" + TimeUtil.timeStampToString(order.getExpectEndTime(),"yyyy-MM-dd HH:mm"));
+        }else if(order.getState().equals("on_going")){
+            holder.startTime.setText("上门时间："+TimeUtil.timeStampToString(order.getStartTime(),"yyyy-MM-dd HH:mm"));
+            holder.endTime.setText("预计结束：" + TimeUtil.timeStampToString(order.getExpectEndTime(),"yyyy-MM-dd HH:mm"));
+        }else if(order.getState().equals("canceled")){
+            holder.startTime.setText("");
+            holder.endTime.setText("");
+        }else {
+            holder.startTime.setText("上门时间："+TimeUtil.timeStampToString(order.getStartTime(),"yyyy-MM-dd HH:mm"));
+            holder.endTime.setText("结束时间：" + TimeUtil.timeStampToString(order.getEndTime(),"yyyy-MM-dd HH:mm") );
+        }
+        holder.serviceContent.setText(order.getServiceSubjectInfo().getName());
     }
 
     @Override

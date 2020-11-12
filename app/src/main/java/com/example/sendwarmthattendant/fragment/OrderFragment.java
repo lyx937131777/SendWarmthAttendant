@@ -24,17 +24,6 @@ public class OrderFragment extends Fragment
     private int index;
 
     private RecyclerView recyclerView;
-    private Order[] orders = {new Order("001","张三","","2020-08-07 10:00~14:00","moving","","理发",50),
-            new Order("002","周五","","2020-08-07 12:00~14:00","arrived","","护理",50),
-            new Order("003","李四","","2020-08-07 13:00~15:00","unstart","","修锁",20),
-            new Order("004","小红","","2020-08-07 12:00~14:00","unstart","","打扫卫生",50),
-            new Order("005","小明","","2020-08-07 11:00~12:00","unstart","","按摩",30),
-            new Order("006","小王","","2020-08-06 15:00~16:00","canceled","","陪聊",50),
-            new Order("007","小白","","2020-08-06 13:00~15:00","canceled","","修空调",60),
-            new Order("008","小李","","2020-08-07 12:00~14:00","canceled","","修锁",20),
-            new Order("009","小许","","2020-08-06 15:00~16:00","completed","","裁缝",30),
-            new Order("010","小徐","","2020-08-06 14:00~15:00","completed","","打扫卫生",50),
-            new Order("011","小黑","","2020-08-06 11:00~13:00","completed","","理发",60)};
     private List<Order> orderList = new ArrayList<>();
     private OrderAdapter orderAdapter;
 
@@ -81,11 +70,6 @@ public class OrderFragment extends Fragment
         for(int i = 0; i < types.length; i++){
             typeList.add(types[i]);
         }
-        for(int i = 0; i < orders.length; i++){
-            if(typeList.contains(orders[i].getState())){
-                orderList.add(orders[i]);
-            }
-        }
     }
 
     private String getType(){
@@ -108,11 +92,11 @@ public class OrderFragment extends Fragment
     private String[] getTypes(){
         switch (index){
             case 0:
-                return new String[]{"moving","arrived","unstart","canceled","completed"};
+                return new String[]{"on_going","not_start","canceled","completed"};
             case 1:
-                return new String[]{"moving","arrived"};
+                return new String[]{"on_going"};
             case 2:
-                return new String[]{"unstarted"};
+                return new String[]{"not_start"};
             case 3:
                 return new String[]{"canceled"};
             case 4:

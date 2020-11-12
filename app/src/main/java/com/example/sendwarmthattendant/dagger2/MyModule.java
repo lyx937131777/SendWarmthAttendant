@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.sendwarmthattendant.presenter.HistoricalOrdersPresenter;
+import com.example.sendwarmthattendant.presenter.HomePresenter;
 import com.example.sendwarmthattendant.presenter.LoginPresenter;
+import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
 import com.example.sendwarmthattendant.util.CheckUtil;
 
@@ -50,5 +53,18 @@ public class MyModule
         return new RegisterPresenter(context,checkUtil,pref);
     }
 
+    @Provides
+    public HomePresenter provideHomePresenter(Context context, SharedPreferences pref){
+        return new HomePresenter(context, pref);
+    }
 
+    @Provides
+    public HistoricalOrdersPresenter provideHistoricalOrdersPresenter(Context context, SharedPreferences pref){
+        return new HistoricalOrdersPresenter(context, pref);
+    }
+
+    @Provides
+    public OrderDetailPresenter provideOrderDetailPresenter(Context context, SharedPreferences pref){
+        return new OrderDetailPresenter(context,pref);
+    }
 }

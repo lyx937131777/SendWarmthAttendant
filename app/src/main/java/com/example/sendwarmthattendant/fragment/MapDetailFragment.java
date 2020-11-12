@@ -26,6 +26,7 @@ import com.example.sendwarmthattendant.OrderDetailActivity;
 import com.example.sendwarmthattendant.db.Order;
 import com.example.sendwarmthattendant.util.LogUtil;
 import com.example.sendwarmthattendant.util.MyApplication;
+import com.example.sendwarmthattendant.util.TimeUtil;
 import com.example.sendwarmthattendant.util.Utility;
 
 import java.util.ArrayList;
@@ -64,7 +65,7 @@ public class MapDetailFragment extends Fragment
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        LogUtil.e("MapDetailFragment","onCreate"+ Utility.dateToString(new Date(),"HH:mm:ss"));
+        LogUtil.e("MapDetailFragment","onCreate"+ TimeUtil.dateToString(new Date(),"HH:mm:ss"));
         index = 0;
         if (getArguments() != null)
         {
@@ -94,7 +95,7 @@ public class MapDetailFragment extends Fragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        LogUtil.e("MapDetailFragment","onCreateView"+ Utility.dateToString(new Date(),"HH:mm:ss"));
+        LogUtil.e("MapDetailFragment","onCreateView"+ TimeUtil.dateToString(new Date(),"HH:mm:ss"));
         View root = inflater.inflate(R.layout.fragment_map_detail, container, false);
         mapView = root.findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
@@ -111,50 +112,50 @@ public class MapDetailFragment extends Fragment
             tempCircle3.setVisibility(View.GONE);
             tempCircle4.setVisibility(View.GONE);
         }
-        tempCircle1.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-                Order order = new Order("007","","","","running","","",0);
-                intent.putExtra("order", order);
-                startActivity(intent);
-            }
-        });
-        tempCircle2.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-                Order order = new Order("007","","","","waiting","","",0);
-                intent.putExtra("order", order);
-                startActivity(intent);
-            }
-        });
-        tempCircle3.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-                Order order = new Order("007","","","","waiting","","",0);
-                intent.putExtra("order", order);
-                startActivity(intent);
-            }
-        });
-        tempCircle4.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-                Order order = new Order("007","","","","waiting","","",0);
-                intent.putExtra("order", order);
-                startActivity(intent);
-            }
-        });
+//        tempCircle1.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view)
+//            {
+//                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+//                Order order = new Order("007","","","","running","","",0);
+//                intent.putExtra("order", order);
+//                startActivity(intent);
+//            }
+//        });
+//        tempCircle2.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view)
+//            {
+//                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+//                Order order = new Order("007","","","","waiting","","",0);
+//                intent.putExtra("order", order);
+//                startActivity(intent);
+//            }
+//        });
+//        tempCircle3.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view)
+//            {
+//                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+//                Order order = new Order("007","","","","waiting","","",0);
+//                intent.putExtra("order", order);
+//                startActivity(intent);
+//            }
+//        });
+//        tempCircle4.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View view)
+//            {
+//                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
+//                Order order = new Order("007","","","","waiting","","",0);
+//                intent.putExtra("order", order);
+//                startActivity(intent);
+//            }
+//        });
         return root;
     }
 
@@ -174,7 +175,7 @@ public class MapDetailFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        LogUtil.e("MapDetailFragment","onResume"+ Utility.dateToString(new Date(),"HH:mm:ss"));
+        LogUtil.e("MapDetailFragment","onResume"+ TimeUtil.dateToString(new Date(),"HH:mm:ss"));
         mapView.onResume();
         requestLocation();
     }

@@ -4,7 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import org.litepal.crud.LitePalSupport;
 
-public class ServiceClass extends LitePalSupport
+import java.io.Serializable;
+
+public class ServiceClass extends LitePalSupport implements Serializable
 {
     @SerializedName("id")
     private String internetId;

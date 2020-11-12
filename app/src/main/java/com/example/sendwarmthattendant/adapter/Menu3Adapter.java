@@ -21,6 +21,7 @@ import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.SystemMessageActivity;
 import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.db.Menu;
+import com.example.sendwarmthattendant.db.Worker;
 import com.example.sendwarmthattendant.fragment.PersonalCenterFragment;
 import com.example.sendwarmthattendant.util.LogUtil;
 
@@ -83,7 +84,8 @@ public class Menu3Adapter extends RecyclerView.Adapter<Menu3Adapter.ViewHolder>
                                     Helper helper = LitePal.where("credential = ?",credential).findFirst(Helper.class);
                                     intent.putExtra("helper",helper);
                                 }else{
-
+                                    Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
+                                    intent.putExtra("worker",worker);
                                 }
                                 mContext.startActivity(intent);
                                 break;

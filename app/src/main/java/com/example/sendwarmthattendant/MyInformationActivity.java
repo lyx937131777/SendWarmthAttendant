@@ -56,7 +56,7 @@ public class MyInformationActivity extends AppCompatActivity
             public void onClick(View view)
             {
                 SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(MyInformationActivity.this).edit();
-                editor.remove("userID");
+                editor.remove("userId");
                 editor.remove("password");
                 editor.apply();
                 Intent intent_logout = new Intent(MyInformationActivity.this, LoginActivity.class);
@@ -84,6 +84,8 @@ public class MyInformationActivity extends AppCompatActivity
         role = getIntent().getStringExtra("role");
         if(role.equals("helper")){
             helper = (Helper) getIntent().getSerializableExtra("helper");
+        }else{
+            worker = (Worker) getIntent().getSerializableExtra("worker");
         }
 
         profile = findViewById(R.id.profile);
@@ -98,7 +100,9 @@ public class MyInformationActivity extends AppCompatActivity
             tel.setText(helper.getTel());
             id.setText(helper.getIdCardNumber());
         }else{
-
+            name.setText(worker.getWorkerName());
+            tel.setText(worker.getWorkerTel());
+            id.setText(worker.getEmployeeId());
         }
 
     }
