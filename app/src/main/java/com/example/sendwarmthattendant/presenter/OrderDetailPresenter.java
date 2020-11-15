@@ -18,6 +18,7 @@ import org.litepal.LitePal;
 
 import java.io.IOException;
 
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -51,7 +52,7 @@ public class OrderDetailPresenter
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e)
             {
-                ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
+                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(context, "网络连接错误", Toast.LENGTH_LONG).show();
@@ -65,23 +66,15 @@ public class OrderDetailPresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("HomePresenter",responsData);
-                if(Utility.checkString(responsData,"code") != null && Utility.checkString(responsData,"code").equals("000")){
+                if(Utility.checkResponse(responsData,context)){
                     progressDialog.dismiss();
-                    ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
+                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(context, "抢单成功！", Toast.LENGTH_LONG).show();
                         }
                     });
                     ((OrderDetailActivity)context).finish();
-                }else {
-                    ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context, "数据传输错误", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    progressDialog.dismiss();
                 }
             }
         });
@@ -96,7 +89,7 @@ public class OrderDetailPresenter
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e)
             {
-                ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
+                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(context, "网络连接错误", Toast.LENGTH_LONG).show();
@@ -110,23 +103,15 @@ public class OrderDetailPresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("OrderDetailPresenter",responsData);
-                if(Utility.checkString(responsData,"code") != null && Utility.checkString(responsData,"code").equals("000")){
+                if(Utility.checkResponse(responsData,context)){
                     progressDialog.dismiss();
-                    ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
+                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(context, "操作成功！", Toast.LENGTH_LONG).show();
                         }
                     });
                     ((OrderDetailActivity)context).finish();
-                }else {
-                    ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context, "数据传输错误", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    progressDialog.dismiss();
                 }
             }
         });
@@ -141,7 +126,7 @@ public class OrderDetailPresenter
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e)
             {
-                ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
+                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(context, "网络连接错误", Toast.LENGTH_LONG).show();
@@ -155,23 +140,15 @@ public class OrderDetailPresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("OrderDetailPresenter",responsData);
-                if(Utility.checkString(responsData,"code") != null && Utility.checkString(responsData,"code").equals("000")){
+                if(Utility.checkResponse(responsData,context)){
                     progressDialog.dismiss();
-                    ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
+                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Toast.makeText(context, "操作成功！", Toast.LENGTH_LONG).show();
                         }
                     });
                     ((OrderDetailActivity)context).finish();
-                }else {
-                    ((OrderDetailActivity)context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context, "数据传输错误", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    progressDialog.dismiss();
                 }
             }
         });

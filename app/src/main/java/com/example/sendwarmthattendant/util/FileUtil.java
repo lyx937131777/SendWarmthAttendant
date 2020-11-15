@@ -53,7 +53,7 @@ public class FileUtil
 
     //将Bitmap类型的图片转化成file类型，便于上传到服务器
     public static File saveFile(Bitmap bm, String fileName) throws IOException {
-        String path = Environment.getExternalStorageDirectory() + "/颂温暖";
+        String path = Environment.getExternalStorageDirectory() + "/颂温暖护理员版";
         File dirFile = new File(path);
         if(!dirFile.exists()){
             dirFile.mkdir();

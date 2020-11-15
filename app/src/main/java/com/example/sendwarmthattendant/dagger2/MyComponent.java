@@ -6,6 +6,7 @@ import com.example.sendwarmthattendant.presenter.HomePresenter;
 import com.example.sendwarmthattendant.presenter.LoginPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
+import com.example.sendwarmthattendant.presenter.SettingPresenter;
 
 import dagger.Component;
 
@@ -21,4 +22,6 @@ public interface MyComponent
     HistoricalOrdersPresenter historicalOrdersPresenter();
 
     OrderDetailPresenter orderDetailPresenter();
+
+    SettingPresenter settingPresenter();
 }

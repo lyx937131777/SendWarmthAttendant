@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sendwarmthattendant.db.Helper;
@@ -45,6 +46,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private int viewPagerSelected = 0;
 
+    private CircleImageView profile;
+    private TextView userName;
+    private TextView title;
+    private ImageView setting;
+
     private String role;
     private Helper helper;
     private Worker worker;
@@ -58,12 +64,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         instance = this;
 
-        CircleImageView profile = findViewById(R.id.profile);
-        final TextView userName = findViewById(R.id.user_name);
-        final TextView title = findViewById(R.id.title);
+        profile = findViewById(R.id.profile);
+        userName = findViewById(R.id.user_name);
+        title = findViewById(R.id.title);
+        setting = findViewById(R.id.setting);
+
         profile.setOnClickListener(this);
         userName.setOnClickListener(this);
         title.setOnClickListener(this);
+        setting.setOnClickListener(this);
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         role = pref.getString("role","");
@@ -229,6 +238,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 startActivity(intent);
                 break;
+            }
+            case R.id.setting:{
+                Intent intent = new Intent(this, SettingActivity.class);
+                startActivity(intent);
             }
         }
     }

@@ -9,6 +9,7 @@ import com.example.sendwarmthattendant.presenter.HomePresenter;
 import com.example.sendwarmthattendant.presenter.LoginPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
+import com.example.sendwarmthattendant.presenter.SettingPresenter;
 import com.example.sendwarmthattendant.util.CheckUtil;
 
 import dagger.Module;
@@ -66,5 +67,10 @@ public class MyModule
     @Provides
     public OrderDetailPresenter provideOrderDetailPresenter(Context context, SharedPreferences pref){
         return new OrderDetailPresenter(context,pref);
+    }
+
+    @Provides
+    public SettingPresenter provideSettingPresenter(Context context, SharedPreferences pref){
+        return new SettingPresenter(context,pref);
     }
 }

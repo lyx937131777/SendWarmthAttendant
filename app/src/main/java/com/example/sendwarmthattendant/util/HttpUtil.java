@@ -6,7 +6,6 @@ import java.io.File;
 import java.util.HashMap;
 
 import okhttp3.Callback;
-import okhttp3.Credentials;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -19,7 +18,7 @@ public class HttpUtil
     //正式
     public static final String LocalAddress = "http://47.101.68.214:8999";
 
-    public static String getPhotoURL(String url){
+    public static String getResourceURL(String url){
         return LocalAddress + "/resources/" + url;
     }
 

@@ -22,6 +22,7 @@ import org.litepal.LitePal;
 import java.io.IOException;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -43,7 +44,7 @@ public class HomePresenter
         final String credential = pref.getString("credential","");
         if(role.equals("helper")){
             Helper helper = LitePal.where("credential = ?",credential).findFirst(Helper.class);
-            address = address + "/helper/list?helpId="+helper.getInternetId();
+            address = address + "/helper/list?helperId="+helper.getInternetId();
         }else {
             Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
             address = address + "/worker/list?workerId="+worker.getInternetId();
@@ -53,7 +54,7 @@ public class HomePresenter
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e)
             {
-                ((MainActivity)context).runOnUiThread(new Runnable() {
+                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         Toast.makeText(context, "网络连接错误", Toast.LENGTH_LONG).show();
@@ -66,7 +67,7 @@ public class HomePresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("HomePresenter",responsData);
-                if(Utility.checkString(responsData,"code") != null && Utility.checkString(responsData,"code").equals("000")){
+                if(Utility.checkResponse(responsData,context)){
                     List<Order> orderList = Utility.handleOrderList(responsData);
                     orderStateAdapter.setOrderList(orderList);
                     String address = HttpUtil.LocalAddress + "/api/order/unAccept?roleType="+role;
@@ -82,7 +83,7 @@ public class HomePresenter
                         @Override
                         public void onFailure(@NotNull Call call, @NotNull IOException e)
                         {
-                            ((MainActivity)context).runOnUiThread(new Runnable() {
+                            ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
                                     Toast.makeText(context, "网络连接错误", Toast.LENGTH_LONG).show();
@@ -95,34 +96,19 @@ public class HomePresenter
                         {
                             String responsData = response.body().string();
                             LogUtil.e("HomePresenter",responsData);
-                            if(Utility.checkString(responsData,"code") != null && Utility.checkString(responsData,"code").equals("000")){
+                            if(Utility.checkResponse(responsData,context)){
                                 List<Order> unAcceptedOrderList = Utility.handleOrderList(responsData);
                                 List<Order> orderList = orderStateAdapter.getOrderList();
                                 if(unAcceptedOrderList != null){
                                     orderList.addAll(unAcceptedOrderList);
                                 }
-                                ((MainActivity)context).runOnUiThread(new Runnable() {
+                                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         orderStateAdapter.notifyDataSetChanged();
                                     }
                                 });
-                            }else {
-                                ((MainActivity)context).runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(context, "数据传输错误", Toast.LENGTH_LONG).show();
-                                    }
-                                });
                             }
-                        }
-                    });
-
-                }else {
-                    ((MainActivity)context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context, "数据传输错误", Toast.LENGTH_LONG).show();
                         }
                     });
                 }

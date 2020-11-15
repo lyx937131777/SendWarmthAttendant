@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -51,7 +52,7 @@ public class RegisterPresenter
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e)
             {
-                ((RegisterActivity)context).runOnUiThread(new Runnable()
+                ((AppCompatActivity)context).runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run()
@@ -75,7 +76,7 @@ public class RegisterPresenter
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e)
                     {
-                        ((RegisterActivity)context).runOnUiThread(new Runnable()
+                        ((AppCompatActivity)context).runOnUiThread(new Runnable()
                         {
                             @Override
                             public void run()
@@ -98,7 +99,7 @@ public class RegisterPresenter
                             @Override
                             public void onFailure(@NotNull Call call, @NotNull IOException e)
                             {
-                                ((RegisterActivity)context).runOnUiThread(new Runnable()
+                                ((AppCompatActivity)context).runOnUiThread(new Runnable()
                                 {
                                     @Override
                                     public void run()
@@ -116,7 +117,7 @@ public class RegisterPresenter
                                 LogUtil.e("RegisterPresenter", responseData);
                                 if (Utility.checkString(responseData,"code").equals("000"))
                                 {
-                                    ((RegisterActivity) context).runOnUiThread(new Runnable()
+                                    ((AppCompatActivity) context).runOnUiThread(new Runnable()
                                     {
                                         @Override
                                         public void run()
@@ -139,7 +140,7 @@ public class RegisterPresenter
                                 } else if (Utility.checkString(responseData,"code").equals("500"))
                                 {
                                     if(Utility.checkString(responseData,"msg").equals("用户名不能重复。")){
-                                        ((RegisterActivity) context).runOnUiThread(new Runnable()
+                                        ((AppCompatActivity) context).runOnUiThread(new Runnable()
                                         {
                                             @Override
                                             public void run()
@@ -152,7 +153,7 @@ public class RegisterPresenter
                                             }
                                         });
                                     }else{
-                                        ((RegisterActivity) context).runOnUiThread(new Runnable()
+                                        ((AppCompatActivity) context).runOnUiThread(new Runnable()
                                         {
                                             @Override
                                             public void run()
@@ -167,7 +168,7 @@ public class RegisterPresenter
                                     }
 
                                 } else {
-                                    ((RegisterActivity) context).runOnUiThread(new Runnable()
+                                    ((AppCompatActivity) context).runOnUiThread(new Runnable()
                                     {
                                         @Override
                                         public void run()
@@ -198,7 +199,7 @@ public class RegisterPresenter
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e)
             {
-                ((RegisterActivity)context).runOnUiThread(new Runnable()
+                ((AppCompatActivity)context).runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run()
@@ -213,20 +214,21 @@ public class RegisterPresenter
             {
                 final String responsData = response.body().string();
                 LogUtil.e("RegisterPresenter",responsData);
-                subjectList1.clear();
-                subjectList2.clear();
-                subjectList1.addAll(Utility.handleServiceSubjectList(responsData));
-                subjectList2.addAll(Utility.handleServiceSubjectList(responsData));
-                ((RegisterActivity)context).runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
+                if(Utility.checkResponse(responsData,context)){
+                    subjectList1.clear();
+                    subjectList2.clear();
+                    subjectList1.addAll(Utility.handleServiceSubjectList(responsData));
+                    subjectList2.addAll(Utility.handleServiceSubjectList(responsData));
+                    ((AppCompatActivity)context).runOnUiThread(new Runnable()
                     {
-                        arrayAdapter1.notifyDataSetChanged();
-                        arrayAdapter2.notifyDataSetChanged();
-                    }
-                });
-
+                        @Override
+                        public void run()
+                        {
+                            arrayAdapter1.notifyDataSetChanged();
+                            arrayAdapter2.notifyDataSetChanged();
+                        }
+                    });
+                }
             }
         });
     }

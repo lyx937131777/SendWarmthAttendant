@@ -21,6 +21,7 @@ import org.litepal.LitePal;
 
 import java.io.IOException;
 
+import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Credentials;
@@ -52,7 +53,7 @@ public class LoginPresenter
             public void onFailure(@NotNull Call call, @NotNull IOException e)
             {
                 e.printStackTrace();
-                ((LoginActivity)context).runOnUiThread(new Runnable()
+                ((AppCompatActivity)context).runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run()
@@ -113,7 +114,7 @@ public class LoginPresenter
                                 context.startActivity(intent_login);
                                 ((LoginActivity) context).finish();
                             }else{
-                                ((LoginActivity) context).runOnUiThread(new Runnable()
+                                ((AppCompatActivity) context).runOnUiThread(new Runnable()
                                 {
                                     @Override
                                     public void run()
@@ -132,7 +133,7 @@ public class LoginPresenter
 
                 }else if(Utility.checkString(responsData,"code").equals("500")){
                     if(Utility.checkString(responsData,"msg").equals("密码错误。")){
-                        ((LoginActivity) context).runOnUiThread(new Runnable()
+                        ((AppCompatActivity) context).runOnUiThread(new Runnable()
                         {
                             @Override
                             public void run()
@@ -145,7 +146,7 @@ public class LoginPresenter
                             }
                         });
                     }else{
-                        ((LoginActivity) context).runOnUiThread(new Runnable()
+                        ((AppCompatActivity) context).runOnUiThread(new Runnable()
                         {
                             @Override
                             public void run()
