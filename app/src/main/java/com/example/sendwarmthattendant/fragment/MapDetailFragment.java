@@ -19,11 +19,16 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.model.LatLng;
 import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.OrderDetailActivity;
+import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
+import com.example.sendwarmthattendant.dagger2.MyComponent;
+import com.example.sendwarmthattendant.dagger2.MyModule;
 import com.example.sendwarmthattendant.db.Order;
+import com.example.sendwarmthattendant.presenter.MapPresenter;
 import com.example.sendwarmthattendant.util.LogUtil;
 import com.example.sendwarmthattendant.util.MyApplication;
 import com.example.sendwarmthattendant.util.TimeUtil;
@@ -51,6 +56,9 @@ public class MapDetailFragment extends Fragment
 
     private boolean isFirstLocate = true;
     private String[] permissions;
+
+    private List<Order> orderList = new ArrayList<>();
+    private MapPresenter mapPresenter;
 
     public static MapDetailFragment newInstance(int index)
     {
@@ -97,21 +105,36 @@ public class MapDetailFragment extends Fragment
     {
         LogUtil.e("MapDetailFragment","onCreateView"+ TimeUtil.dateToString(new Date(),"HH:mm:ss"));
         View root = inflater.inflate(R.layout.fragment_map_detail, container, false);
+        MyComponent myComponent = DaggerMyComponent.builder().myModule(new MyModule(getContext())).build();
+        mapPresenter = myComponent.mapPresenter();
+
         mapView = root.findViewById(R.id.bmapView);
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
+        baiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener()
+        {
+            @Override
+            public boolean onMarkerClick(Marker marker)
+            {
+                Order order = (Order) marker.getExtraInfo().get("order");
+                Intent intent = new Intent(getContext(),OrderDetailActivity.class);
+                intent.putExtra("order",order);
+                startActivity(intent);
+                return false;
+            }
+        });
         requestLocation();
 
         //TODO temp
-        ImageView tempCircle1 = root.findViewById(R.id.temp_circle1);
-        ImageView tempCircle2 = root.findViewById(R.id.temp_circle2);
-        ImageView tempCircle3 = root.findViewById(R.id.temp_circle3);
-        ImageView tempCircle4 = root.findViewById(R.id.temp_circle4);
-        if(getType().equals("running")){
-            tempCircle2.setVisibility(View.GONE);
-            tempCircle3.setVisibility(View.GONE);
-            tempCircle4.setVisibility(View.GONE);
-        }
+//        ImageView tempCircle1 = root.findViewById(R.id.temp_circle1);
+//        ImageView tempCircle2 = root.findViewById(R.id.temp_circle2);
+//        ImageView tempCircle3 = root.findViewById(R.id.temp_circle3);
+//        ImageView tempCircle4 = root.findViewById(R.id.temp_circle4);
+//        if(getType().equals("running")){
+//            tempCircle2.setVisibility(View.GONE);
+//            tempCircle3.setVisibility(View.GONE);
+//            tempCircle4.setVisibility(View.GONE);
+//        }
 //        tempCircle1.setOnClickListener(new View.OnClickListener()
 //        {
 //            @Override
@@ -119,39 +142,6 @@ public class MapDetailFragment extends Fragment
 //            {
 //                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
 //                Order order = new Order("007","","","","running","","",0);
-//                intent.putExtra("order", order);
-//                startActivity(intent);
-//            }
-//        });
-//        tempCircle2.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-//                Order order = new Order("007","","","","waiting","","",0);
-//                intent.putExtra("order", order);
-//                startActivity(intent);
-//            }
-//        });
-//        tempCircle3.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-//                Order order = new Order("007","","","","waiting","","",0);
-//                intent.putExtra("order", order);
-//                startActivity(intent);
-//            }
-//        });
-//        tempCircle4.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-//                Order order = new Order("007","","","","waiting","","",0);
 //                intent.putExtra("order", order);
 //                startActivity(intent);
 //            }
@@ -230,6 +220,8 @@ public class MapDetailFragment extends Fragment
         locationBuilder.longitude(location.getLongitude());
         MyLocationData locationData = locationBuilder.build();
         baiduMap.setMyLocationData(locationData);
+        LogUtil.e("MapDetailFragment","地图定位");
+
     }
 
     private class MyLocationListener extends BDAbstractLocationListener
@@ -259,10 +251,19 @@ public class MapDetailFragment extends Fragment
 
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        orderList.clear();
+        mapPresenter.updateOrderList(orderList,baiduMap,getType());
+        LogUtil.e("MapDetailFragment","发送请求");
+    }
+
     private String getType(){
         switch (index){
             case 0:
-                return "running";
+                return "mine";
             case 1:
                 return "all";
             default:

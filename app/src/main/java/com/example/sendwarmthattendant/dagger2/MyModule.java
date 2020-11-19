@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import com.example.sendwarmthattendant.presenter.HistoricalOrdersPresenter;
 import com.example.sendwarmthattendant.presenter.HomePresenter;
 import com.example.sendwarmthattendant.presenter.LoginPresenter;
+import com.example.sendwarmthattendant.presenter.MapPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
 import com.example.sendwarmthattendant.presenter.SettingPresenter;
@@ -72,5 +73,10 @@ public class MyModule
     @Provides
     public SettingPresenter provideSettingPresenter(Context context, SharedPreferences pref){
         return new SettingPresenter(context,pref);
+    }
+
+    @Provides
+    public MapPresenter provideMapPresenter(Context context, SharedPreferences pref){
+        return new MapPresenter(context, pref);
     }
 }

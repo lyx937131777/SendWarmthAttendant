@@ -1,11 +1,7 @@
 package com.example.sendwarmthattendant.util;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Environment;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.widget.Toast;
 
 import com.example.sendwarmthattendant.db.Customer;

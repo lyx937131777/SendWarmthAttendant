@@ -20,7 +20,7 @@ import okhttp3.Response;
 
 public class SettingPresenter
 {
-    public static final String LAST_VERSION = "0.0.0";
+    public static final String LAST_VERSION = "0.1.1";
     private Context context;
     private SharedPreferences pref;
 
@@ -70,16 +70,30 @@ public class SettingPresenter
                         editor.putString("latestVersion",latestVersion);
                         editor.putString("latestVersionDownloadUrl",Utility.checkDataString(responseData,"fileAddress"));
                         editor.apply();
-                        ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                new AlertDialog.Builder(context)
-                                        .setTitle("提示")
-                                        .setMessage("检测到有新版本，请及时更新！")
-                                        .setPositiveButton("确定", null)
-                                        .show();
-                            }
-                        });
+                        final String des = Utility.checkDataString(responseData,"des");
+                        if(des != null && !des.equals("null")){
+                            ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    new AlertDialog.Builder(context)
+                                            .setTitle("提示")
+                                            .setMessage("检测到有新版本，请及时更新！\n更新内容：\n" + des)
+                                            .setPositiveButton("确定", null)
+                                            .show();
+                                }
+                            });
+                        }else {
+                            ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    new AlertDialog.Builder(context)
+                                            .setTitle("提示")
+                                            .setMessage("检测到有新版本，请及时更新！")
+                                            .setPositiveButton("确定", null)
+                                            .show();
+                                }
+                            });
+                        }
                     }
                 }
             }

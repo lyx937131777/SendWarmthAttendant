@@ -30,12 +30,12 @@ public class MapUtil
         orderStateMap.put("arrived","已到达");
         //
 
-        stateMap.put("on_going", R.drawable.state_yellow);
-        stateMap.put("not_start", R.drawable.state_blue);
+        stateMap.put("on_going", R.drawable.state_blue);
+        stateMap.put("not_start", R.drawable.state_yellow);
         stateMap.put("canceled",R.drawable.state_red);
         stateMap.put("completed",R.drawable.state_green);
 //        stateMap.put("not_comment",R.drawable.state_yellow);
-        stateMap.put("not_accepted",R.drawable.state_green);
+        stateMap.put("not_accepted",R.drawable.state_red);
 
         orderStateMap.put("on_going","进行中");
         orderStateMap.put("not_start","未开始");
