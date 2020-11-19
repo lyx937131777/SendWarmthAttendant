@@ -125,27 +125,6 @@ public class MapDetailFragment extends Fragment
         });
         requestLocation();
 
-        //TODO temp
-//        ImageView tempCircle1 = root.findViewById(R.id.temp_circle1);
-//        ImageView tempCircle2 = root.findViewById(R.id.temp_circle2);
-//        ImageView tempCircle3 = root.findViewById(R.id.temp_circle3);
-//        ImageView tempCircle4 = root.findViewById(R.id.temp_circle4);
-//        if(getType().equals("running")){
-//            tempCircle2.setVisibility(View.GONE);
-//            tempCircle3.setVisibility(View.GONE);
-//            tempCircle4.setVisibility(View.GONE);
-//        }
-//        tempCircle1.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View view)
-//            {
-//                Intent intent = new Intent(getContext(), OrderDetailActivity.class);
-//                Order order = new Order("007","","","","running","","",0);
-//                intent.putExtra("order", order);
-//                startActivity(intent);
-//            }
-//        });
         return root;
     }
 

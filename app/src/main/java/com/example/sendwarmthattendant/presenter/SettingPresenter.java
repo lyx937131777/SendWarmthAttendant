@@ -20,7 +20,8 @@ import okhttp3.Response;
 
 public class SettingPresenter
 {
-    public static final String LAST_VERSION = "0.1.1";
+    //TODO 上一个在服务器上的版本
+    public static final String LAST_VERSION = "0.2.0";
     private Context context;
     private SharedPreferences pref;
 

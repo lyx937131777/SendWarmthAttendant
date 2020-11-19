@@ -184,7 +184,6 @@ public class LoginActivity extends AppCompatActivity implements OnClickListener
                 changePwdOpenOrClose(isOpen);
                 break;
 
-            // TODO 登录按钮
             case R.id.login:
                 tel = telText.getText().toString();
                 passowrd = passwordText.getText().toString();

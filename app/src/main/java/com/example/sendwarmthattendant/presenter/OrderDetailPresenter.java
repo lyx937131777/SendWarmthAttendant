@@ -66,8 +66,8 @@ public class OrderDetailPresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("HomePresenter",responsData);
+                progressDialog.dismiss();
                 if(Utility.checkResponse(responsData,context)){
-                    progressDialog.dismiss();
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -103,8 +103,8 @@ public class OrderDetailPresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("OrderDetailPresenter",responsData);
+                progressDialog.dismiss();
                 if(Utility.checkResponse(responsData,context)){
-                    progressDialog.dismiss();
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -140,8 +140,8 @@ public class OrderDetailPresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("OrderDetailPresenter",responsData);
+                progressDialog.dismiss();
                 if(Utility.checkResponse(responsData,context)){
-                    progressDialog.dismiss();
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
