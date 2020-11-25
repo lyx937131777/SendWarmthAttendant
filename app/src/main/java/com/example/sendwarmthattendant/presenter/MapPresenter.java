@@ -53,6 +53,7 @@ public class MapPresenter
             Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
             address = address + "/worker/list?workerId="+worker.getInternetId();
         }
+        final String finalAddress = address;
         HttpUtil.getHttp(address, credential, new Callback()
         {
             @Override
@@ -71,7 +72,7 @@ public class MapPresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("MapPresenter",responsData);
-                if(Utility.checkResponse(responsData,context)){
+                if(Utility.checkResponse(responsData,context, finalAddress)){
                     List<Order> myOrderList = Utility.handleOrderList(responsData);
                     if(myOrderList != null){
                         orderList.addAll(myOrderList);
@@ -84,6 +85,7 @@ public class MapPresenter
                         Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
                         address = address + "&id=" + worker.getInternetId();
                     }
+                    final String finalAddress1 = address;
                     HttpUtil.getHttp(address, credential, new Callback()
                     {
                         @Override
@@ -102,7 +104,7 @@ public class MapPresenter
                         {
                             String responsData = response.body().string();
                             LogUtil.e("MapPresenter",responsData);
-                            if(Utility.checkResponse(responsData,context)){
+                            if(Utility.checkResponse(responsData,context, finalAddress1)){
                                 List<Order> unAcceptedOrderList = Utility.handleOrderList(responsData);
                                 if(unAcceptedOrderList != null){
                                     orderList.addAll(unAcceptedOrderList);

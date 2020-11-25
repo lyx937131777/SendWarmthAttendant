@@ -24,75 +24,49 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Utility
 {
     public static final String ERROR_CODE = "-1";
+    public static final String TRUE_CODE = "000";
+    public static final String CODE_500 = "500";
 
     //检查responseData的code是否为000，若不是则Toast问题所在
-    public static boolean checkResponse(String response, final Context context){
+    public static String checkResponse(String response){
         final String code = checkString(response,"code");
         if (code == null){
-            ((AppCompatActivity)(context)).runOnUiThread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    Toast.makeText(context, "后台code为null", Toast.LENGTH_LONG).show();
-                }
-            });
-            return false;
+            return "后台code为null";
         }
-        if(code.equals("000")){
-            return true;
+        if(code.equals(TRUE_CODE)){
+            return TRUE_CODE;
         }
         if(code.equals(ERROR_CODE)){
-            ((AppCompatActivity)(context)).runOnUiThread(new Runnable()
-            {
-                @Override
-                public void run()
-                {
-                    Toast.makeText(context, "数据返回格式有误", Toast.LENGTH_LONG).show();
-                }
-            });
-            return false;
+            return "数据返回格式有误";
         }
-        if(code.equals("500")){
-            final String msg = checkString(response,"msg");
+        if(code.equals(CODE_500)){
+            String msg = checkString(response,"msg");
             if(msg == null){
-                ((AppCompatActivity)(context)).runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        Toast.makeText(context, "code:500,msg为null", Toast.LENGTH_LONG).show();
-                    }
-                });
-            } else if(msg.equals(ERROR_CODE)){
-                ((AppCompatActivity)(context)).runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        Toast.makeText(context, "code:500,msg解析错误", Toast.LENGTH_LONG).show();
-                    }
-                });
-            } else {
-                ((AppCompatActivity)(context)).runOnUiThread(new Runnable()
-                {
-                    @Override
-                    public void run()
-                    {
-                        Toast.makeText(context, "code:500, msg:" + msg, Toast.LENGTH_LONG).show();
-                    }
-                });
+                return "code:500,msg为null";
             }
-            return false;
+            if(msg.equals(ERROR_CODE)){
+                return "code:500,msg解析错误";
+            }
+            return "code:500, msg:" + msg;
         }
-        ((AppCompatActivity)(context)).runOnUiThread(new Runnable()
-        {
+        return "code:" + code;
+    }
+
+    public static boolean checkResponse(String response, final Context context, final String address){
+        final String result = checkResponse(response);
+        final String interfaceName = address.split(HttpUtil.LocalAddress)[1];
+        if(result.equals(TRUE_CODE)){
+            return true;
+        }
+        ((AppCompatActivity)context).runOnUiThread(new Runnable() {
             @Override
-            public void run()
-            {
-                Toast.makeText(context, "code:" + code, Toast.LENGTH_LONG).show();
+            public void run() {
+                Toast.makeText(context, interfaceName +":\n" + result, Toast.LENGTH_LONG).show();
             }
         });
+        LogUtil.e("Utility","interfaceName: " + interfaceName);
+        LogUtil.e("Utility","result: " + result);
+        LogUtil.e("Utility","response:" + response);
         return false;
     }
 

@@ -36,7 +36,7 @@ public class OrderDetailPresenter
 
     public void acceptOrder(String orderId){
         progressDialog = ProgressDialog.show(context,"","操作中...");
-        String address = HttpUtil.LocalAddress + "/api/order/accept";
+        final String address = HttpUtil.LocalAddress + "/api/order/accept";
         String role = pref.getString("role","");
         String credential = pref.getString("credential","");
         String manId;
@@ -67,7 +67,7 @@ public class OrderDetailPresenter
                 String responsData = response.body().string();
                 LogUtil.e("HomePresenter",responsData);
                 progressDialog.dismiss();
-                if(Utility.checkResponse(responsData,context)){
+                if(Utility.checkResponse(responsData,context,address)){
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -82,7 +82,7 @@ public class OrderDetailPresenter
 
     public void startOrder(String orderId){
         progressDialog = ProgressDialog.show(context,"","操作中...");
-        String address = HttpUtil.LocalAddress + "/api/order/start";
+        final String address = HttpUtil.LocalAddress + "/api/order/start";
         String credential = pref.getString("credential","");
         HttpUtil.startOrderRequest(address, credential, orderId, new Callback()
         {
@@ -104,7 +104,7 @@ public class OrderDetailPresenter
                 String responsData = response.body().string();
                 LogUtil.e("OrderDetailPresenter",responsData);
                 progressDialog.dismiss();
-                if(Utility.checkResponse(responsData,context)){
+                if(Utility.checkResponse(responsData,context,address)){
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -119,7 +119,7 @@ public class OrderDetailPresenter
 
     public void endOrder(String orderId){
         progressDialog = ProgressDialog.show(context,"","操作中...");
-        String address = HttpUtil.LocalAddress + "/api/order/end";
+        final String address = HttpUtil.LocalAddress + "/api/order/end";
         String credential = pref.getString("credential","");
         HttpUtil.endOrderRequest(address, credential, orderId, new Callback()
         {
@@ -141,7 +141,7 @@ public class OrderDetailPresenter
                 String responsData = response.body().string();
                 LogUtil.e("OrderDetailPresenter",responsData);
                 progressDialog.dismiss();
-                if(Utility.checkResponse(responsData,context)){
+                if(Utility.checkResponse(responsData,context,address)){
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

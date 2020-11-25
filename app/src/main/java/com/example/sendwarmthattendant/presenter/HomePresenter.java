@@ -49,6 +49,7 @@ public class HomePresenter
             Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
             address = address + "/worker/list?workerId="+worker.getInternetId();
         }
+        final String finalAddress = address;
         HttpUtil.getHttp(address, credential, new Callback()
         {
             @Override
@@ -67,7 +68,7 @@ public class HomePresenter
             {
                 String responsData = response.body().string();
                 LogUtil.e("HomePresenter",responsData);
-                if(Utility.checkResponse(responsData,context)){
+                if(Utility.checkResponse(responsData,context, finalAddress)){
                     List<Order> orderList = Utility.handleOrderList(responsData);
                     orderStateAdapter.setOrderList(orderList);
                     String address = HttpUtil.LocalAddress + "/api/order/unAccept?roleType="+role;
@@ -78,6 +79,7 @@ public class HomePresenter
                         Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
                         address = address + "&id=" + worker.getInternetId();
                     }
+                    final String finalAddress1 = address;
                     HttpUtil.getHttp(address, credential, new Callback()
                     {
                         @Override
@@ -96,7 +98,7 @@ public class HomePresenter
                         {
                             String responsData = response.body().string();
                             LogUtil.e("HomePresenter",responsData);
-                            if(Utility.checkResponse(responsData,context)){
+                            if(Utility.checkResponse(responsData,context, finalAddress1)){
                                 List<Order> unAcceptedOrderList = Utility.handleOrderList(responsData);
                                 List<Order> orderList = orderStateAdapter.getOrderList();
                                 if(unAcceptedOrderList != null){

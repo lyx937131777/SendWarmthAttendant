@@ -31,7 +31,7 @@ public class SettingPresenter
     }
 
     public void getLatestVersion(final String version){
-        String address = HttpUtil.LocalAddress + "/api/version/newest?isTendant=true";
+        final String address = HttpUtil.LocalAddress + "/api/version/newest?isTendant=true";
         String credential = pref.getString("credential",null);
         HttpUtil.getHttp(address, credential, new Callback()
         {
@@ -51,7 +51,7 @@ public class SettingPresenter
             {
                 String responseData = response.body().string();
                 LogUtil.e("SettingPresenter",responseData);
-                if(Utility.checkResponse(responseData,context)){
+                if(Utility.checkResponse(responseData,context,address)){
                     String latestVersion = Utility.checkDataString(responseData,"versionNo");
                     if(latestVersion == null || latestVersion.equals(Utility.ERROR_CODE)){
                         ((AppCompatActivity)context).runOnUiThread(new Runnable() {

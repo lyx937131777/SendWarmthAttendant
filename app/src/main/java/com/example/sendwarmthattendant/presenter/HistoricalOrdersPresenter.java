@@ -47,6 +47,7 @@ public class HistoricalOrdersPresenter
             Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
             address = address + "/worker/list?workerId="+worker.getInternetId();
         }
+        final String finalAddress = address;
         HttpUtil.getHttp(address, credential, new Callback()
         {
             @Override
@@ -65,7 +66,7 @@ public class HistoricalOrdersPresenter
             {
                 final String responsData = response.body().string();
                 LogUtil.e("HistoricalOrdersPresenter",responsData);
-                if(Utility.checkResponse(responsData,context)){
+                if(Utility.checkResponse(responsData,context, finalAddress)){
                     List<Order> orderList = Utility.handleOrderList(responsData);
                     if(orderList != null){
                         LogUtil.e("HistoricalOrdersPresenter","size: "+orderList.size());

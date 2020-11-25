@@ -193,7 +193,7 @@ public class RegisterPresenter
 
     public void updateServiceSubject(final ArrayAdapter<ServiceSubject> arrayAdapter1, final List<ServiceSubject> subjectList1,
                                      final ArrayAdapter<ServiceSubject> arrayAdapter2, final List<ServiceSubject> subjectList2){
-        String address = HttpUtil.LocalAddress + "/api/servicesubject/list";
+        final String address = HttpUtil.LocalAddress + "/api/servicesubject/list";
         HttpUtil.getHttpWithoutCredential(address, new Callback()
         {
             @Override
@@ -214,7 +214,7 @@ public class RegisterPresenter
             {
                 final String responsData = response.body().string();
                 LogUtil.e("RegisterPresenter",responsData);
-                if(Utility.checkResponse(responsData,context)){
+                if(Utility.checkResponse(responsData,context,address)){
                     subjectList1.clear();
                     subjectList2.clear();
                     subjectList1.addAll(Utility.handleServiceSubjectList(responsData));
