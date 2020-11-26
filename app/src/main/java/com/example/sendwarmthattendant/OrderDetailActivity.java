@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
@@ -26,15 +27,17 @@ import com.example.sendwarmthattendant.util.TimeUtil;
 public class OrderDetailActivity extends AppCompatActivity implements View.OnClickListener
 {
     private Order order;
+    private String state;
 
     private TextView numberText,startTimeTypeText, endTimeTypeText,startTimeText,endTimeText,serviceClassText,serviceContentText,priceText,addressText,houseNumText,messageText;
-    private TextView tipText,orderTypeText,appointedPersonText;
-    private CardView customerNameCard;
-    private TextView customerName;
-    private CardView customerTelCard;
-    private TextView customerTel;
-    private TextView state;
+    private TextView tipText,orderTypeText,appointedPersonText,customerCommentText,workerCommentText;
+    private CardView customerNameCard,customerTelCard;
+    private TextView customerName,customerTel;
+    private TextView stateText;
     private Button button;
+    private CardView commentCard,customerCommentCard,workerCommentCard;
+    private EditText commentText;
+
 
     private OrderDetailPresenter orderDetailPresenter;
 
@@ -55,6 +58,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         orderDetailPresenter = myComponent.orderDetailPresenter();
 
         order = (Order) getIntent().getSerializableExtra("order");
+        state = order.getState();
 
         numberText = findViewById(R.id.number);
         appointedPersonText = findViewById(R.id.appointed_person);
@@ -71,22 +75,29 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         orderTypeText =  findViewById(R.id.order_type);
         tipText = findViewById(R.id.tip);
 
+        customerCommentCard = findViewById(R.id.customer_comment_card);
+        customerCommentText = findViewById(R.id.customer_comment);
+        workerCommentCard = findViewById(R.id.worker_comment_card);
+        workerCommentText = findViewById(R.id.worker_comment);
+        commentCard = findViewById(R.id.comment_card);
+        commentText = findViewById(R.id.comment);
+
         customerNameCard = findViewById(R.id.customer_name_card);
         customerName = findViewById(R.id.customer_name);
         customerTelCard = findViewById(R.id.customer_tel_card);
         customerTel = findViewById(R.id.customer_tel);
 
-        state = findViewById(R.id.state);
+        stateText = findViewById(R.id.state);
         button = findViewById(R.id.button);
 
         numberText.setText(order.getOrderNo());
         appointedPersonText.setText(order.getAppointedPerson());
-        if(order.getState().equals("not_start") || order.getState().equals("not_accepted") || order.getState().equals("canceled")){
+        if(state.equals("not_start") || state.equals("not_accepted") || state.equals("canceled")){
             startTimeTypeText.setText("预计上门");
             endTimeTypeText.setText("预计结束");
             startTimeText.setText(TimeUtil.timeStampToString(order.getExpectStartTime(),"yyyy-MM-dd HH:mm"));
             endTimeText.setText(TimeUtil.timeStampToString(order.getExpectEndTime(),"yyyy-MM-dd HH:mm"));
-        }else if(order.getState().equals("on_going")){
+        }else if(state.equals("on_going")){
             startTimeTypeText.setText("上门时间");
             endTimeTypeText.setText("预计结束");
             startTimeText.setText(TimeUtil.timeStampToString(order.getStartTime(),"yyyy-MM-dd HH:mm"));
@@ -108,15 +119,36 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         customerName.setText(order.getCustomerInfo().getName());
         customerTel.setText(order.getDeliveryPhone());
 
-        state.setText(MapUtil.getOrderState(order.getState()));
-        if(order.getState().equals("on_going")){
+        stateText.setText(MapUtil.getOrderState(state));
+        if(state.equals("on_going")){
             button.setText("结束订单");
-        }else if(order.getState().equals("not_start")){
+        }else if(state.equals("not_start")){
             button.setText("开始订单");
-        }else if(order.getState().equals("not_accepted")) {
+        }else if(state.equals("not_accepted")) {
             button.setText("立即抢单");
-        }else {
+        }else if(state.equals("un_evaluated")){
+            customerCommentCard.setVisibility(View.VISIBLE);
+            if(order.getCustomerDes() != null){
+                customerCommentText.setText(order.getCustomerDes());
+            }
+            commentCard.setVisibility(View.VISIBLE);
+            button.setText("评价订单");
+        } else {
+            customerCommentCard.setVisibility(View.VISIBLE);
+            if(order.getCustomerDes() != null){
+                customerCommentText.setText(order.getCustomerDes());
+            }
+            workerCommentCard.setVisibility(View.VISIBLE);
+            if(order.getWorkerDes() != null){
+                workerCommentText.setText(order.getWorkerDes());
+            }
             button.setVisibility(View.GONE);
+        }
+
+        if(state.equals("not_accepted") || state.equals("not_start") || state.equals("on_going") || state.equals("canceled")){
+            priceText.setText(order.getSalaryHourly() + "元/时");
+        }else{
+            priceText.setText(order.getSalarySum() + "元");
         }
 
         customerNameCard.setOnClickListener(this);
@@ -166,12 +198,14 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
                 break;
             }
             case R.id.button:{
-                if(order.getState().equals("on_going")){
+                if(state.equals("on_going")){
                     orderDetailPresenter.endOrder(order.getInternetId());
-                }else if(order.getState().equals("not_start")){
+                }else if(state.equals("not_start")){
                     orderDetailPresenter.startOrder(order.getInternetId());
-                }else if(order.getState().equals("not_accepted")) {
+                }else if(state.equals("not_accepted")) {
                     orderDetailPresenter.acceptOrder(order.getInternetId());
+                } else if(state.equals("un_evaluated")){
+                    orderDetailPresenter.commentOrder(order.getInternetId(),commentText.getText().toString());
                 }
             }
         }

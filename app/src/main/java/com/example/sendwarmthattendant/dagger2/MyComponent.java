@@ -6,6 +6,7 @@ import com.example.sendwarmthattendant.presenter.HomePresenter;
 import com.example.sendwarmthattendant.presenter.LoginPresenter;
 import com.example.sendwarmthattendant.presenter.MapPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
+import com.example.sendwarmthattendant.presenter.OrderPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
 import com.example.sendwarmthattendant.presenter.SettingPresenter;
 
@@ -27,4 +28,6 @@ public interface MyComponent
     SettingPresenter settingPresenter();
 
     MapPresenter mapPresenter();
+
+    OrderPresenter orderPresenter();
 }

@@ -9,6 +9,7 @@ import com.example.sendwarmthattendant.presenter.HomePresenter;
 import com.example.sendwarmthattendant.presenter.LoginPresenter;
 import com.example.sendwarmthattendant.presenter.MapPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
+import com.example.sendwarmthattendant.presenter.OrderPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
 import com.example.sendwarmthattendant.presenter.SettingPresenter;
 import com.example.sendwarmthattendant.util.CheckUtil;
@@ -78,5 +79,10 @@ public class MyModule
     @Provides
     public MapPresenter provideMapPresenter(Context context, SharedPreferences pref){
         return new MapPresenter(context, pref);
+    }
+
+    @Provides
+    public OrderPresenter provedeOrderPresenter(Context context, SharedPreferences pref){
+        return new OrderPresenter(context,pref);
     }
 }

@@ -42,7 +42,7 @@ public class MapPresenter
         this.pref = pref;
     }
 
-    public void updateOrderList(final List<Order> orderList, final BaiduMap baiduMap, final String type){
+    public void updateOrderList(final List<Order> orderList, final List<Marker> markerList,  final BaiduMap baiduMap, final String type){
         String address = HttpUtil.LocalAddress + "/api/order";
         final String role = pref.getString("role","");
         final String credential = pref.getString("credential","");
@@ -119,15 +119,20 @@ public class MapPresenter
                                             bundle.putSerializable("order",order);
                                             if(order.getState().equals("not_accepted") && type.equals("all")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_red)).extraInfo(bundle);
-                                                baiduMap.addOverlay(options);
+                                                Marker marker = (Marker)baiduMap.addOverlay(options);
+                                                markerList.add(marker);
+//                                                order.setMarker(marker);
                                             }else if(order.getState().equals("not_start")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_primary)).extraInfo(bundle);
-                                                baiduMap.addOverlay(options);
+                                                Marker marker = (Marker)baiduMap.addOverlay(options);
+                                                markerList.add(marker);
+//                                                order.setMarker(marker);
                                             }else if(order.getState().equals("on_going")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_blue)).extraInfo(bundle);
-                                                baiduMap.addOverlay(options);
+                                                Marker marker = (Marker)baiduMap.addOverlay(options);
+                                                markerList.add(marker);
+//                                                order.setMarker(marker);
                                             }
-
                                         }
                                     }
                                 });

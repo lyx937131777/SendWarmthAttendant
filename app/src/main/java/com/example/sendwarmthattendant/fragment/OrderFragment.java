@@ -7,7 +7,11 @@ import android.view.ViewGroup;
 
 import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.adapter.OrderAdapter;
+import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
+import com.example.sendwarmthattendant.dagger2.MyComponent;
+import com.example.sendwarmthattendant.dagger2.MyModule;
 import com.example.sendwarmthattendant.db.Order;
+import com.example.sendwarmthattendant.presenter.OrderPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,7 @@ public class OrderFragment extends Fragment
     private List<Order> orderList = new ArrayList<>();
     private OrderAdapter orderAdapter;
 
+    private OrderPresenter orderPresenter;
 
     public static OrderFragment newInstance(int index)
     {
@@ -54,6 +59,8 @@ public class OrderFragment extends Fragment
                              @Nullable Bundle savedInstanceState)
     {
         View root = inflater.inflate(R.layout.fragment_order, container, false);
+        MyComponent myComponent = DaggerMyComponent.builder().myModule(new MyModule(getContext())).build();
+        orderPresenter = myComponent.orderPresenter();
 
         initOrders();
         recyclerView = root.findViewById(R.id.recycler);
@@ -72,16 +79,23 @@ public class OrderFragment extends Fragment
         }
     }
 
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        orderPresenter.updateOrderList(orderAdapter,getType());
+    }
+
     private String getType(){
         switch (index){
             case 0:
                 return "all";
             case 1:
-                return "running";
+                return "on_going";
             case 2:
-                return "unstart";
+                return "not_start";
             case 3:
-                return "canceled";
+                return "un_evaluated";
             case 4:
                 return "completed";
             default:

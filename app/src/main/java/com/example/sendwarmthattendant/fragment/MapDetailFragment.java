@@ -58,6 +58,7 @@ public class MapDetailFragment extends Fragment
     private String[] permissions;
 
     private List<Order> orderList = new ArrayList<>();
+    private List<Marker> markerList = new ArrayList<>();
     private MapPresenter mapPresenter;
 
     public static MapDetailFragment newInstance(int index)
@@ -234,8 +235,12 @@ public class MapDetailFragment extends Fragment
     public void onStart()
     {
         super.onStart();
+        for(Marker marker : markerList){
+            marker.remove();
+        }
+        markerList.clear();
         orderList.clear();
-        mapPresenter.updateOrderList(orderList,baiduMap,getType());
+        mapPresenter.updateOrderList(orderList, markerList, baiduMap, getType());
         LogUtil.e("MapDetailFragment","发送请求");
     }
 

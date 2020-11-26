@@ -19,8 +19,8 @@ public class Order implements Serializable
     private String appointedPerson;
     private String message;
     private double tip;
-    @SerializedName("orderStatus")
-    private String state;//not_accepted, not_start, on_going, completed, canceled
+    @SerializedName("orderStatusWorker")
+    private String state;//not_accepted, not_start, on_going, completed, canceled, un_evaluated
 
     private String serviceClassId;
     private ServiceClass serviceClassInfo;
@@ -53,6 +53,7 @@ public class Order implements Serializable
     private String regionId;
     private String storeId;
 
+
 //    public Order(String orderNo, String customer, String attendant, String time, String state,
 //                 String serviceType, String serviceContent, double salarySum)
 //    {
@@ -65,6 +66,7 @@ public class Order implements Serializable
 //        this.serviceContent = serviceContent;
 //        this.salarySum = salarySum;
 //    }
+
 
     public String getOrderNo()
     {

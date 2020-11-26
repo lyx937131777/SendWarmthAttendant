@@ -27,7 +27,7 @@ public class Utility
     public static final String TRUE_CODE = "000";
     public static final String CODE_500 = "500";
 
-    //检查responseData的code是否为000，若不是则Toast问题所在
+    //检查responseData的code是否为000，若不是则返回问题所在
     public static String checkResponse(String response){
         final String code = checkString(response,"code");
         if (code == null){
@@ -52,6 +52,7 @@ public class Utility
         return "code:" + code;
     }
 
+    //返回responseData的code是否为000，若不是则Toast接口名称和问题所在
     public static boolean checkResponse(String response, final Context context, final String address){
         final String result = checkResponse(response);
         final String interfaceName = address.split(HttpUtil.LocalAddress)[1];

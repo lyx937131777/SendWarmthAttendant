@@ -153,4 +153,41 @@ public class OrderDetailPresenter
             }
         });
     }
+
+    public void commentOrder(String orderId, String comment){
+        progressDialog = ProgressDialog.show(context,"","操作中...");
+        final String address = HttpUtil.LocalAddress + "/api/order/workerComment";
+        String credential = pref.getString("credential","");
+        HttpUtil.commentOrderRequest(address, credential, orderId, comment, new Callback()
+        {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e)
+            {
+                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "网络连接错误", Toast.LENGTH_LONG).show();
+                    }
+                });
+                progressDialog.dismiss();
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+            {
+                String responsData = response.body().string();
+                LogUtil.e("OrderDetailPresenter",responsData);
+                progressDialog.dismiss();
+                if(Utility.checkResponse(responsData,context,address)){
+                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "操作成功！", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                    ((OrderDetailActivity)context).finish();
+                }
+            }
+        });
+    }
 }

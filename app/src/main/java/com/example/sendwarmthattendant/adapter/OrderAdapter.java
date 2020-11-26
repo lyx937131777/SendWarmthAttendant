@@ -109,4 +109,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
     {
         return mList.size();
     }
+
+    public List<Order> getmList()
+    {
+        return mList;
+    }
+
+    public void setmList(List<Order> mList)
+    {
+        this.mList = mList;
+    }
 }

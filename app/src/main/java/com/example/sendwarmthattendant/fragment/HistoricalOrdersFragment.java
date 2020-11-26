@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class HistoricalOrdersFragment extends Fragment
 {
     private RecyclerView recyclerView;
-    private String[] orderStates = {"on_going","not_start","canceled","completed"};
+    private String[] orderStates = {"on_going","not_start","un_evaluated","completed"};
     private List<String> orderStateList = new ArrayList<>();
     private OrderStateAdapter orderStateAdapter;
 
