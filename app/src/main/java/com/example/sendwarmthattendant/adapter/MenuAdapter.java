@@ -75,7 +75,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder>
                             case "unstart":
                                 index = 2;
                                 break;
-                            case "canceled":
+                            case "unevaluated":
                                 index = 3;
                                 break;
                             case "completed":

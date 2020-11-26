@@ -25,7 +25,7 @@ public class PersonalCenterFragment extends Fragment
     private RecyclerView myOrderMenuRecycler;
     private Menu[] myOrderMenus = {new Menu("running",R.drawable.to_be_paid,"进行中"),
             new Menu("unstart",R.drawable.to_be_received,"未开始"),
-            new Menu("canceled",R.drawable.to_be_evaluated,"已取消"),
+            new Menu("unevaluated",R.drawable.to_be_evaluated,"待评价"),
             new Menu("completed",R.drawable.completed,"已完成")};
     private List<Menu> myOrderMenuList = new ArrayList<>();
     private MenuAdapter myOrderMenuAdapter;

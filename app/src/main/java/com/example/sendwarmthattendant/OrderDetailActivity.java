@@ -30,12 +30,12 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     private String state;
 
     private TextView numberText,startTimeTypeText, endTimeTypeText,startTimeText,endTimeText,serviceClassText,serviceContentText,priceText,addressText,houseNumText,messageText;
-    private TextView tipText,orderTypeText,appointedPersonText,customerCommentText,workerCommentText;
+    private TextView tipText,orderTypeText,appointedPersonText,customerCommentText, attendantCommentText;
     private CardView customerNameCard,customerTelCard;
     private TextView customerName,customerTel;
     private TextView stateText;
     private Button button;
-    private CardView commentCard,customerCommentCard,workerCommentCard;
+    private CardView commentCard,customerCommentCard, attendantCommentCard;
     private EditText commentText;
 
 
@@ -77,8 +77,8 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 
         customerCommentCard = findViewById(R.id.customer_comment_card);
         customerCommentText = findViewById(R.id.customer_comment);
-        workerCommentCard = findViewById(R.id.worker_comment_card);
-        workerCommentText = findViewById(R.id.worker_comment);
+        attendantCommentCard = findViewById(R.id.attendant_comment_card);
+        attendantCommentText = findViewById(R.id.attendant_comment);
         commentCard = findViewById(R.id.comment_card);
         commentText = findViewById(R.id.comment);
 
@@ -138,9 +138,9 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
             if(order.getCustomerDes() != null){
                 customerCommentText.setText(order.getCustomerDes());
             }
-            workerCommentCard.setVisibility(View.VISIBLE);
+            attendantCommentCard.setVisibility(View.VISIBLE);
             if(order.getWorkerDes() != null){
-                workerCommentText.setText(order.getWorkerDes());
+                attendantCommentText.setText(order.getWorkerDes());
             }
             button.setVisibility(View.GONE);
         }
