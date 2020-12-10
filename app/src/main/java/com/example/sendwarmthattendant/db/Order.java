@@ -67,6 +67,45 @@ public class Order implements Serializable
 //        this.salarySum = salarySum;
 //    }
 
+    public String getRole(){
+        if(helperId != null){
+            return "helper";
+        }
+        if(workerId != null){
+            return "worker";
+        }
+        return "unknown";
+    }
+
+    public String getAttendantId(){
+        if(helperId != null){
+            return helperId;
+        }
+        if(workerId != null){
+            return workerId;
+        }
+        return "unknown";
+    }
+
+    public String getAttendantName(){
+        if(workerInfo != null){
+            return workerInfo.getWorkerName();
+        }
+        if(helperInfo != null){
+            return helperInfo.getName();
+        }
+        return "无";
+    }
+
+    public String getAttendantTel(){
+        if(workerInfo != null){
+            return workerInfo.getWorkerTel();
+        }
+        if(helperInfo != null){
+            return helperInfo.getTel();
+        }
+        return "无";
+    }
 
     public String getOrderNo()
     {

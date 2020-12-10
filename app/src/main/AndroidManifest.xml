@@ -28,11 +28,11 @@
         android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/logo_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:requestLegacyExternalStorage="true">
-
+        android:theme="@style/AppTheme">
+        <activity android:name=".CustomerHistoryOrderActivity"></activity>
         <activity android:name=".SettingActivity" />
         <activity android:name=".CustomerInformationActivity" />
         <activity android:name=".BusinessCardActivity" />

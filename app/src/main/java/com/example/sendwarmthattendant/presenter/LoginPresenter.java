@@ -72,7 +72,7 @@ public class LoginPresenter
                 final String responsData = response.body().string();
                 LogUtil.e("LoginPresenter", responsData);
                 if(state == 200){
-                    String address = HttpUtil.LocalAddress + "/api/users/me";
+                    final String address = HttpUtil.LocalAddress + "/api/users/me";
                     final String credential = Credentials.basic(tel, password);
                     HttpUtil.getHttp(address, credential, new Callback()
                     {
@@ -87,47 +87,49 @@ public class LoginPresenter
                         {
                             final String responsData = response.body().string();
                             LogUtil.e("Login",responsData);
-                            String role = Utility.getRole(responsData);
-                            LogUtil.e("Login",role);
-                            if(role.equals("helper") || role.equals("nurse") || role.equals("shopManager")){
-                                SharedPreferences.Editor editor = pref.edit();
-                                editor.putString("userId", tel);
-                                editor.putString("password", password);
-                                editor.putString("credential",credential);
-                                editor.putString("role",role);
-                                editor.putString("latest", String.valueOf(System.currentTimeMillis()));
-                                editor.apply();
-                                if(role.equals("helper")){
-                                    LitePal.deleteAll(Helper.class,"userId = ?",tel);
-                                    Helper helper = Utility.handleHelper(responsData);
-                                    helper.setUserId(tel);
-                                    helper.setCredential(credential);
-                                    helper.save();
-                                }else {
-                                    LitePal.deleteAll(Worker.class,"userId = ?",tel);
-                                    Worker worker = Utility.handleWorker(responsData);
-                                    worker.setUserId(tel);
-                                    worker.setCredential(credential);
-                                    worker.save();
-                                }
-                                Intent intent_login = new Intent(context, MainActivity.class);
-                                context.startActivity(intent_login);
-                                ((LoginActivity) context).finish();
-                            }else{
-                                ((AppCompatActivity) context).runOnUiThread(new Runnable()
-                                {
-                                    @Override
-                                    public void run()
-                                    {
-                                        new AlertDialog.Builder(context)
-                                                .setTitle("提示")
-                                                .setMessage("该账号无权登录此APP！")
-                                                .setPositiveButton("确定", null)
-                                                .show();
-                                    }
-                                });
-                            }
                             progressDialog.dismiss();
+                            if(Utility.checkResponse(responsData,context,address)){
+                                String role = Utility.getRole(responsData);
+                                LogUtil.e("Login",role);
+                                if(role.equals("helper") || role.equals("nurse") || role.equals("shopManager")){
+                                    SharedPreferences.Editor editor = pref.edit();
+                                    editor.putString("userId", tel);
+                                    editor.putString("password", password);
+                                    editor.putString("credential",credential);
+                                    editor.putString("role",role);
+                                    editor.putString("latest", String.valueOf(System.currentTimeMillis()));
+                                    editor.apply();
+                                    if(role.equals("helper")){
+                                        LitePal.deleteAll(Helper.class,"userId = ?",tel);
+                                        Helper helper = Utility.handleHelper(responsData);
+                                        helper.setUserId(tel);
+                                        helper.setCredential(credential);
+                                        helper.save();
+                                    }else {
+                                        LitePal.deleteAll(Worker.class,"userId = ?",tel);
+                                        Worker worker = Utility.handleWorker(responsData);
+                                        worker.setUserId(tel);
+                                        worker.setCredential(credential);
+                                        worker.save();
+                                    }
+                                    Intent intent_login = new Intent(context, MainActivity.class);
+                                    context.startActivity(intent_login);
+                                    ((LoginActivity) context).finish();
+                                }else{
+                                    ((AppCompatActivity) context).runOnUiThread(new Runnable()
+                                    {
+                                        @Override
+                                        public void run()
+                                        {
+                                            new AlertDialog.Builder(context)
+                                                    .setTitle("提示")
+                                                    .setMessage("该账号无权登录此APP！")
+                                                    .setPositiveButton("确定", null)
+                                                    .show();
+                                        }
+                                    });
+                                }
+                            }
                         }
                     });
 

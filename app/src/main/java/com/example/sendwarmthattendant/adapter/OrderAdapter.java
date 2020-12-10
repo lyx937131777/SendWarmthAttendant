@@ -32,9 +32,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         TextView stateText;
         TextView number;
         TextView customer;
+        TextView attendant;
         TextView startTime;
         TextView endTime;
         TextView serviceContent;
+        TextView type;
 
         public  ViewHolder(View view)
         {
@@ -44,9 +46,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
             stateText = view.findViewById(R.id.state_text);
             number = view.findViewById(R.id.number);
             customer = view.findViewById(R.id.customer);
+            attendant = view.findViewById(R.id.attendant);
             startTime = view.findViewById(R.id.start_time);
             endTime = view.findViewById(R.id.end_time);
             serviceContent = view.findViewById(R.id.service_content);
+            type = view.findViewById(R.id.type);
         }
     }
 
@@ -86,6 +90,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
         Order order = mList.get(position);
         holder.number.setText(order.getOrderNo());
         holder.customer.setText(order.getCustomerInfo().getName());
+        if(!order.getRole().equals("unknown")){
+            holder.attendant.setText("护："+order.getAttendantName());
+        }else {
+            holder.attendant.setText("");
+        }
         Glide.with(mContext).load(MapUtil.getState(order.getState())).into(holder.state);
         holder.stateText.setText(MapUtil.getOrderState(order.getState()));
         if(order.getState().equals("not_start") || order.getState().equals("not_accepted")){
@@ -102,6 +111,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
             holder.endTime.setText("结束时间：" + TimeUtil.timeStampToString(order.getEndTime(),"yyyy-MM-dd HH:mm") );
         }
         holder.serviceContent.setText(order.getServiceSubjectInfo().getName());
+        if(order.getOrderType().equals("expedited_order")){
+            holder.type.setVisibility(View.VISIBLE);
+        }else {
+            holder.type.setVisibility(View.GONE);
+        }
     }
 
     @Override

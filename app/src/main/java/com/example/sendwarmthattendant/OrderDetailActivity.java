@@ -35,7 +35,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     private TextView customerName,customerTel;
     private TextView stateText;
     private Button button;
-    private CardView commentCard,customerCommentCard, attendantCommentCard;
+    private CardView commentCard,customerCommentCard, attendantCommentCard,appointedPersonCard;
     private EditText commentText;
 
 
@@ -62,6 +62,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 
         numberText = findViewById(R.id.number);
         appointedPersonText = findViewById(R.id.appointed_person);
+        appointedPersonCard = findViewById(R.id.appointed_person_card);
         startTimeTypeText = findViewById(R.id.start_time_type);
         endTimeTypeText = findViewById(R.id.end_time_type);
         startTimeText = findViewById(R.id.start_time);
@@ -92,6 +93,9 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
 
         numberText.setText(order.getOrderNo());
         appointedPersonText.setText(order.getAppointedPerson());
+        if(!order.getServiceClassInfo().getOrderWorkType().equals("worker")){
+            appointedPersonCard.setVisibility(View.GONE);
+        }
         if(state.equals("not_start") || state.equals("not_accepted") || state.equals("canceled")){
             startTimeTypeText.setText("预计上门");
             endTimeTypeText.setText("预计结束");
@@ -114,6 +118,9 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         houseNumText.setText(order.getHouseNum());
         messageText.setText(order.getMessage());
         orderTypeText.setText(MapUtil.getOrderType(order.getOrderType()));
+        if(order.getOrderType().equals("expedited_order")){
+            orderTypeText.setTextColor(getResources().getColor(R.color.red));
+        }
         tipText.setText("" + order.getTip());
 
         customerName.setText(order.getCustomerInfo().getName());
@@ -177,6 +184,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
             case R.id.customer_name_card:
             case R.id.customer_name:{
                 Intent intent = new Intent(OrderDetailActivity.this, CustomerInformationActivity.class);
+                intent.putExtra("customer",order.getCustomerInfo());
                 startActivity(intent);
                 break;
             }

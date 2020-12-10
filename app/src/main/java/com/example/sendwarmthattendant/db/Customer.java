@@ -4,10 +4,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class Customer extends User implements Serializable
+public class Customer implements Serializable
 {
     @SerializedName("id")
     private String internetId;
+    private String accountId;
+
+    private String userId;
+    private String credential;
+
     @SerializedName("customerName")
     private String name;
     @SerializedName("customerAddress")
@@ -20,8 +25,52 @@ public class Customer extends User implements Serializable
     private double balance;
     private int activity;
 
+    private double longitude;
+    private double latitude;
+    private String houseNum;
+
     private int memberLevel;
     private double memberPoints;
+
+    private String roleType;
+
+    public String getNameWithRole(){
+        if(roleType.equals("customer")){
+            return name;
+        }
+        if(roleType.equals("expert")){
+            return name + "（专家）";
+        }
+        return name + "（未知角色）";
+    }
+
+    public String getUserNameWithRole(){
+        if(roleType.equals("customer")){
+            return userName;
+        }
+        if(roleType.equals("expert")){
+            return userName + "（专家）";
+        }
+        return userName + "（未知角色）";
+    }
+
+    public String getRoleType()
+    {
+        return roleType;
+    }
+
+    public void setRoleType(String roleType)
+    {
+        this.roleType = roleType;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
 
     public int getMemberLevel()
     {
@@ -42,13 +91,12 @@ public class Customer extends User implements Serializable
     {
         this.memberPoints = memberPoints;
     }
-    @Override
+
     public String getInternetId()
     {
         return internetId;
     }
 
-    @Override
     public void setInternetId(String internetId)
     {
         this.internetId = internetId;
@@ -74,13 +122,11 @@ public class Customer extends User implements Serializable
         this.address = address;
     }
 
-    @Override
     public String getTel()
     {
         return tel;
     }
 
-    @Override
     public void setTel(String tel)
     {
         this.tel = tel;
@@ -124,5 +170,55 @@ public class Customer extends User implements Serializable
     public void setActivity(int activity)
     {
         this.activity = activity;
+    }
+
+    public String getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
+    }
+
+    public String getCredential()
+    {
+        return credential;
+    }
+
+    public void setCredential(String credential)
+    {
+        this.credential = credential;
+    }
+
+    public double getLongitude()
+    {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude)
+    {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude()
+    {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude)
+    {
+        this.latitude = latitude;
+    }
+
+    public String getHouseNum()
+    {
+        return houseNum;
+    }
+
+    public void setHouseNum(String houseNum)
+    {
+        this.houseNum = houseNum;
     }
 }

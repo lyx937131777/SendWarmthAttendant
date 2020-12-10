@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.sendwarmthattendant.db.Helper;
-import com.example.sendwarmthattendant.db.User;
+import com.example.sendwarmthattendant.db.Account;
 import com.example.sendwarmthattendant.db.Worker;
 
 import androidx.appcompat.app.ActionBar;
@@ -21,7 +21,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyInformationActivity extends AppCompatActivity
 {
-    private User user;
+    private Account account;
 
     private CircleImageView profile;
     private TextView name;
