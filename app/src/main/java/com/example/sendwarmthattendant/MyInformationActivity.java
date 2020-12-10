@@ -33,7 +33,7 @@ public class MyInformationActivity extends AppCompatActivity
     private Helper helper;
     private Worker worker;
 
-    private Button logoutButton;
+    private Button logoutButton,changePasswordButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,6 +48,17 @@ public class MyInformationActivity extends AppCompatActivity
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         initUser();
+
+        changePasswordButton = findViewById(R.id.change_password);
+        changePasswordButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(MyInformationActivity.this,ChangePasswordActivity.class);
+                startActivity(intent);
+            }
+        });
 
         logoutButton = findViewById(R.id.logout);
         logoutButton.setOnClickListener(new View.OnClickListener()

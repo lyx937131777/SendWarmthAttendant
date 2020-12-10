@@ -18,6 +18,9 @@
     <string name="tel">手机号</string>
     <string name="pwd">密码</string>
     <string name="confirm_pwd">确认密码</string>
+    <string name="old_pwd">原密码</string>
+    <string name="new_pwd">新密码</string>
+    <string name="confirm_new_pwd">确认新密码</string>
     <string name="user_name">用户名</string>
     <string name="role">角色</string>
     <string name="name">姓名</string>

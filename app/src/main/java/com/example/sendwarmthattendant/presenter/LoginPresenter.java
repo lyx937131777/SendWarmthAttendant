@@ -42,7 +42,6 @@ public class LoginPresenter
 
     public void login(final String tel, final String password)
     {
-
         if (!checkUtil.checkLogin(tel, password))
             return;
         progressDialog = ProgressDialog.show(context,"","登录中...");

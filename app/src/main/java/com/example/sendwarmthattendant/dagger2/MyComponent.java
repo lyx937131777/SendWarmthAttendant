@@ -1,6 +1,7 @@
 package com.example.sendwarmthattendant.dagger2;
 
 
+import com.example.sendwarmthattendant.presenter.ChangePasswordPresenter;
 import com.example.sendwarmthattendant.presenter.CustomerHistoryOrderPresenter;
 import com.example.sendwarmthattendant.presenter.HistoricalOrdersPresenter;
 import com.example.sendwarmthattendant.presenter.HomePresenter;
@@ -33,4 +34,6 @@ public interface MyComponent
     OrderPresenter orderPresenter();
 
     CustomerHistoryOrderPresenter customerHistoryOrderPresenter();
+
+    ChangePasswordPresenter changePasswordPresenter();
 }

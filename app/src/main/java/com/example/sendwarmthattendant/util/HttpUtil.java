@@ -80,6 +80,40 @@ public class HttpUtil
         client.newCall(request).enqueue(callback);
     }
 
+    //修改密码
+    public static void changePasswordRequest(String address, String credential,String oldPassword, String newPassword, Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("oldPassword", oldPassword)
+                .add("newPassword", newPassword)
+                .build();
+        Request request = new Request.Builder().url(address).put(requestBody).addHeader("Authorization",credential).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //发送验证码
+    public static void sendVerificationCodeRequest(String address,String tel, Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("phoneNum", tel)
+                .build();
+        Request request = new Request.Builder().url(address).put(requestBody).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //通过验证码设置新密码
+    public static void setNewPasswordRequest(String address,String tel, String verificationCode, String newPassword, Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("phoneNum", tel)
+                .add("telCode",verificationCode)
+                .add("newPassword",newPassword)
+                .build();
+        Request request = new Request.Builder().url(address).put(requestBody).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+
     //上传照片
     public static void fileRequest(String address, File file, okhttp3.Callback callback)
     {

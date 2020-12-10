@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.example.sendwarmthattendant.presenter.ChangePasswordPresenter;
 import com.example.sendwarmthattendant.presenter.CustomerHistoryOrderPresenter;
 import com.example.sendwarmthattendant.presenter.HistoricalOrdersPresenter;
 import com.example.sendwarmthattendant.presenter.HomePresenter;
@@ -90,5 +91,10 @@ public class MyModule
     @Provides
     public CustomerHistoryOrderPresenter provideCustomerHistoryOrderPresenter(Context context, SharedPreferences pref){
         return new CustomerHistoryOrderPresenter(context,pref);
+    }
+
+    @Provides
+    ChangePasswordPresenter provideChangePasswordPresenter(Context context, SharedPreferences pref, CheckUtil checkUtil){
+        return new ChangePasswordPresenter(context,pref,checkUtil);
     }
 }
