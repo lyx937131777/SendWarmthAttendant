@@ -13,6 +13,7 @@ import com.example.sendwarmthattendant.presenter.MapPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
 import com.example.sendwarmthattendant.presenter.OrderPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
+import com.example.sendwarmthattendant.presenter.SetNewPasswordPresenter;
 import com.example.sendwarmthattendant.presenter.SettingPresenter;
 import com.example.sendwarmthattendant.util.CheckUtil;
 
@@ -96,5 +97,10 @@ public class MyModule
     @Provides
     ChangePasswordPresenter provideChangePasswordPresenter(Context context, SharedPreferences pref, CheckUtil checkUtil){
         return new ChangePasswordPresenter(context,pref,checkUtil);
+    }
+
+    @Provides
+    SetNewPasswordPresenter provideSetNewPasswordPresenter(Context context, SharedPreferences pref, CheckUtil checkUtil){
+        return new SetNewPasswordPresenter(context,pref,checkUtil);
     }
 }

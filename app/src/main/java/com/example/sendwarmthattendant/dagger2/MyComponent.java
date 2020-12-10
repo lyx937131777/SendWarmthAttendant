@@ -10,6 +10,7 @@ import com.example.sendwarmthattendant.presenter.MapPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
 import com.example.sendwarmthattendant.presenter.OrderPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
+import com.example.sendwarmthattendant.presenter.SetNewPasswordPresenter;
 import com.example.sendwarmthattendant.presenter.SettingPresenter;
 
 import dagger.Component;
@@ -36,4 +37,6 @@ public interface MyComponent
     CustomerHistoryOrderPresenter customerHistoryOrderPresenter();
 
     ChangePasswordPresenter changePasswordPresenter();
+
+    SetNewPasswordPresenter setNewPasswordPresenter();
 }
