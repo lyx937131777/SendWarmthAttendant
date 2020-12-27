@@ -10,6 +10,7 @@ public class Helper extends LitePalSupport implements Serializable
 {
     @SerializedName("id")
     private String internetId;
+    private String accountId;
 
     private String userId;
     private String credential;

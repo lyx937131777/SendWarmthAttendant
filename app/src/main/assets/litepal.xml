@@ -3,9 +3,10 @@
 
     <dbname value="send_warmth_attendant" />
 
-    <version value="3" />
+    <version value="4" />
 
     <list>
+        <mapping class="com.example.sendwarmthattendant.db.Account" />
         <mapping class="com.example.sendwarmthattendant.db.Helper" />
         <mapping class="com.example.sendwarmthattendant.db.Worker" />
         <mapping class="com.example.sendwarmthattendant.db.ServiceClass" />
