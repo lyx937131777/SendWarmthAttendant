@@ -35,7 +35,7 @@ public class Account extends LitePalSupport implements Serializable
             return workerInfo.getWorkerName();
         }
         if(helperInfo != null){
-            return helperInfo.getName();
+            return helperInfo.getHelperName();
         }
         return "未知账户";
     }

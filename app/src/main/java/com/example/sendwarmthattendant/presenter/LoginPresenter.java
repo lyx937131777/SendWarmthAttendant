@@ -68,8 +68,8 @@ public class LoginPresenter
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
                 int state = response.code();
-                final String responsData = response.body().string();
-                LogUtil.e("LoginPresenter", responsData);
+                final String responseData = response.body().string();
+                LogUtil.e("LoginPresenter", responseData);
                 if(state == 200){
                     final String address = HttpUtil.LocalAddress + "/api/users/me";
                     final String credential = Credentials.basic(tel, password);
@@ -84,11 +84,11 @@ public class LoginPresenter
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
                         {
-                            final String responsData = response.body().string();
-                            LogUtil.e("Login",responsData);
+                            final String responseData = response.body().string();
+                            LogUtil.e("Login",responseData);
                             progressDialog.dismiss();
-                            if(Utility.checkResponse(responsData,context,address)){
-                                String role = Utility.getRole(responsData);
+                            if(Utility.checkResponse(responseData,context,address)){
+                                String role = Utility.getRole(responseData);
                                 LogUtil.e("Login",role);
                                 if(role.equals("helper") || role.equals("nurse") || role.equals("shopManager")){
                                     SharedPreferences.Editor editor = pref.edit();
@@ -100,13 +100,13 @@ public class LoginPresenter
                                     editor.apply();
                                     if(role.equals("helper")){
                                         LitePal.deleteAll(Helper.class,"userId = ?",tel);
-                                        Helper helper = Utility.handleHelper(responsData);
+                                        Helper helper = Utility.handleHelper(responseData);
                                         helper.setUserId(tel);
                                         helper.setCredential(credential);
                                         helper.save();
                                     }else {
                                         LitePal.deleteAll(Worker.class,"userId = ?",tel);
-                                        Worker worker = Utility.handleWorker(responsData);
+                                        Worker worker = Utility.handleWorker(responseData);
                                         worker.setUserId(tel);
                                         worker.setCredential(credential);
                                         worker.save();
@@ -132,8 +132,8 @@ public class LoginPresenter
                         }
                     });
 
-                }else if(Utility.checkString(responsData,"code").equals("500")){
-                    if(Utility.checkString(responsData,"msg").equals("密码错误。")){
+                }else if(Utility.checkString(responseData,"code").equals("500")){
+                    if(Utility.checkString(responseData,"msg").equals("密码错误。")){
                         ((AppCompatActivity) context).runOnUiThread(new Runnable()
                         {
                             @Override

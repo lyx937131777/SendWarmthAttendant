@@ -55,7 +55,7 @@ public class CheckUtil
             Toast.makeText(context, "工种不可选择相同", Toast.LENGTH_LONG).show();
             return false;
         }
-        if(id.length() != 18){
+        if(id.length() != 18 || !fixId(id)){
             Toast.makeText(context, "身份证号格式不正确", Toast.LENGTH_LONG).show();
             return false;
         }
@@ -110,6 +110,15 @@ public class CheckUtil
         if (verificationCode.length() < 1) {
             Toast.makeText(context, "请填写验证码", Toast.LENGTH_LONG).show();
             return false;
+        }
+        return true;
+    }
+
+    private boolean fixId(String id){
+        for(int i = 0; i < 17; i++){
+            if(id.charAt(i) < '0' || id.charAt(i) > '9'){
+                return false;
+            }
         }
         return true;
     }

@@ -66,10 +66,10 @@ public class HomePresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                String responsData = response.body().string();
-                LogUtil.e("HomePresenter",responsData);
-                if(Utility.checkResponse(responsData,context, finalAddress)){
-                    List<Order> orderList = Utility.handleOrderList(responsData);
+                String responseData = response.body().string();
+                LogUtil.e("HomePresenter",responseData);
+                if(Utility.checkResponse(responseData,context, finalAddress)){
+                    List<Order> orderList = Utility.handleOrderList(responseData);
                     orderStateAdapter.setOrderList(orderList);
                     String address = HttpUtil.LocalAddress + "/api/order/unAccept?roleType="+role;
                     if(role.equals("helper")){
@@ -96,10 +96,10 @@ public class HomePresenter
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
                         {
-                            String responsData = response.body().string();
-                            LogUtil.e("HomePresenter",responsData);
-                            if(Utility.checkResponse(responsData,context, finalAddress1)){
-                                List<Order> unAcceptedOrderList = Utility.handleOrderList(responsData);
+                            String responseData = response.body().string();
+                            LogUtil.e("HomePresenter",responseData);
+                            if(Utility.checkResponse(responseData,context, finalAddress1)){
+                                List<Order> unAcceptedOrderList = Utility.handleOrderList(responseData);
                                 List<Order> orderList = orderStateAdapter.getOrderList();
                                 if(unAcceptedOrderList != null){
                                     orderList.addAll(unAcceptedOrderList);

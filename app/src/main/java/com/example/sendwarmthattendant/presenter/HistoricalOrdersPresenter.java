@@ -64,10 +64,10 @@ public class HistoricalOrdersPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                final String responsData = response.body().string();
-                LogUtil.e("HistoricalOrdersPresenter",responsData);
-                if(Utility.checkResponse(responsData,context, finalAddress)){
-                    List<Order> orderList = Utility.handleOrderList(responsData);
+                final String responseData = response.body().string();
+                LogUtil.e("HistoricalOrdersPresenter",responseData);
+                if(Utility.checkResponse(responseData,context, finalAddress)){
+                    List<Order> orderList = Utility.handleOrderList(responseData);
                     if(orderList != null){
                         LogUtil.e("HistoricalOrdersPresenter","size: "+orderList.size());
                     }

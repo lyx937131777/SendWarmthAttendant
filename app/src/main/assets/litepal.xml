@@ -3,7 +3,7 @@
 
     <dbname value="send_warmth_attendant" />
 
-    <version value="4" />
+    <version value="9" />
 
     <list>
         <mapping class="com.example.sendwarmthattendant.db.Account" />

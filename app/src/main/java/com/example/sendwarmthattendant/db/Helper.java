@@ -15,21 +15,34 @@ public class Helper extends LitePalSupport implements Serializable
     private String userId;
     private String credential;
 
-    @SerializedName("helperName")
-    private String name;
-    @SerializedName("helperIdCard")
-    private String idCardNumber;
-    @SerializedName("helperTel")
-    private String tel;
+    private String helperName;
+    private String helperIdCard;
+    private String helperTel;
     private String idCardFront;
     private String idCardBack;
-    @SerializedName("workClass1")
-    private int workType1;
-    @SerializedName("workClass2")
-    private int workType2;
+    private int workClass1;
+    private int workClass2;
 
-    private int storeId;
+    private ServiceSubject workerClass1;
+    private ServiceSubject workerClass2;
+
+    private int level;
     private String auditStatus;
+    private double score;
+    private int scoreSum;
+    private double scoreNum;
+    private String roleType;
+    private int points;
+    private int pointsSum;
+    private int orderSum;
+    private int goodScoreSum;
+    private int badScoreSum;
+    private String workingStatus;
+    private String remark;
+
+    private double longitude;
+    private double latitude;
+
 
     public String getInternetId()
     {
@@ -41,34 +54,34 @@ public class Helper extends LitePalSupport implements Serializable
         this.internetId = internetId;
     }
 
-    public String getName()
+    public String getHelperName()
     {
-        return name;
+        return helperName;
     }
 
-    public void setName(String name)
+    public void setHelperName(String helperName)
     {
-        this.name = name;
+        this.helperName = helperName;
     }
 
-    public String getIdCardNumber()
+    public String getHelperIdCard()
     {
-        return idCardNumber;
+        return helperIdCard;
     }
 
-    public void setIdCardNumber(String idCardNumber)
+    public void setHelperIdCard(String helperIdCard)
     {
-        this.idCardNumber = idCardNumber;
+        this.helperIdCard = helperIdCard;
     }
 
-    public String getTel()
+    public String getHelperTel()
     {
-        return tel;
+        return helperTel;
     }
 
-    public void setTel(String tel)
+    public void setHelperTel(String helperTel)
     {
-        this.tel = tel;
+        this.helperTel = helperTel;
     }
 
     public String getIdCardFront()
@@ -91,34 +104,24 @@ public class Helper extends LitePalSupport implements Serializable
         this.idCardBack = idCardBack;
     }
 
-    public int getWorkType1()
+    public int getWorkClass1()
     {
-        return workType1;
+        return workClass1;
     }
 
-    public void setWorkType1(int workType1)
+    public void setWorkClass1(int workClass1)
     {
-        this.workType1 = workType1;
+        this.workClass1 = workClass1;
     }
 
-    public int getWorkType2()
+    public int getWorkClass2()
     {
-        return workType2;
+        return workClass2;
     }
 
-    public void setWorkType2(int workType2)
+    public void setWorkClass2(int workClass2)
     {
-        this.workType2 = workType2;
-    }
-
-    public int getStoreId()
-    {
-        return storeId;
-    }
-
-    public void setStoreId(int storeId)
-    {
-        this.storeId = storeId;
+        this.workClass2 = workClass2;
     }
 
     public String getAuditStatus()
@@ -149,5 +152,141 @@ public class Helper extends LitePalSupport implements Serializable
     public void setCredential(String credential)
     {
         this.credential = credential;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(String accountId) {
+        this.accountId = accountId;
+    }
+
+    public ServiceSubject getWorkerClass1() {
+        return workerClass1;
+    }
+
+    public void setWorkerClass1(ServiceSubject workerClass1) {
+        this.workerClass1 = workerClass1;
+    }
+
+    public ServiceSubject getWorkerClass2() {
+        return workerClass2;
+    }
+
+    public void setWorkerClass2(ServiceSubject workerClass2) {
+        this.workerClass2 = workerClass2;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
+
+    public int getScoreSum() {
+        return scoreSum;
+    }
+
+    public void setScoreSum(int scoreSum) {
+        this.scoreSum = scoreSum;
+    }
+
+    public double getScoreNum() {
+        return scoreNum;
+    }
+
+    public void setScoreNum(double scoreNum) {
+        this.scoreNum = scoreNum;
+    }
+
+    public String getRoleType() {
+        return roleType;
+    }
+
+    public void setRoleType(String roleType) {
+        this.roleType = roleType;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getPointsSum() {
+        return pointsSum;
+    }
+
+    public void setPointsSum(int pointsSum) {
+        this.pointsSum = pointsSum;
+    }
+
+    public int getOrderSum() {
+        return orderSum;
+    }
+
+    public void setOrderSum(int orderSum) {
+        this.orderSum = orderSum;
+    }
+
+    public int getGoodScoreSum() {
+        return goodScoreSum;
+    }
+
+    public void setGoodScoreSum(int goodScoreSum) {
+        this.goodScoreSum = goodScoreSum;
+    }
+
+    public int getBadScoreSum() {
+        return badScoreSum;
+    }
+
+    public void setBadScoreSum(int badScoreSum) {
+        this.badScoreSum = badScoreSum;
+    }
+
+    public String getWorkingStatus() {
+        return workingStatus;
+    }
+
+    public void setWorkingStatus(String workingStatus) {
+        this.workingStatus = workingStatus;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
     }
 }

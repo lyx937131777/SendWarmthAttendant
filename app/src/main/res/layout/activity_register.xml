@@ -53,7 +53,7 @@
                     android:theme="@style/EditText"
                     android:paddingLeft="55dp"
                     android:paddingRight="60dp"
-                    android:inputType="number">
+                    android:inputType="phone">
                 </EditText>
                 <ImageView
                     android:layout_width="20dp"
@@ -360,6 +360,8 @@
                     app:layout_constraintTop_toTopOf="parent"
                     android:maxLength="20"
                     android:hint="@string/id"
+                    android:inputType="numberSigned"
+                    android:digits="0123456789Xx"
                     android:theme="@style/EditText"
                     android:paddingLeft="55dp"
                     android:paddingRight="60dp" >

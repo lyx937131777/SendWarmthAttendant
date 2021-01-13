@@ -3,6 +3,7 @@ package com.example.sendwarmthattendant.presenter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.sendwarmthattendant.MainActivity;
@@ -17,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 import org.litepal.LitePal;
 
 import java.io.IOException;
+import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
@@ -34,18 +36,22 @@ public class OrderDetailPresenter
         this.pref = pref;
     }
 
-    public void acceptOrder(String orderId){
+    public void acceptOrder(String orderId, String workerId){
         progressDialog = ProgressDialog.show(context,"","操作中...");
         final String address = HttpUtil.LocalAddress + "/api/order/accept";
         String role = pref.getString("role","");
         String credential = pref.getString("credential","");
-        String manId;
-        if(role.equals("helper")){
-            Helper helper = LitePal.where("credential = ?",credential).findFirst(Helper.class);
-            manId = helper.getInternetId();
+        String manId = workerId;
+        if(manId != null && manId.equals("0")){
+            if(role.equals("helper")){
+                Helper helper = LitePal.where("credential = ?",credential).findFirst(Helper.class);
+                manId = helper.getInternetId();
+            }else {
+                Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
+                manId = worker.getInternetId();
+            }
         }else {
-            Worker worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
-            manId = worker.getInternetId();
+            role = "nurse";
         }
         HttpUtil.acceptOrderRequest(address, credential, orderId, role, manId, new Callback()
         {
@@ -64,10 +70,10 @@ public class OrderDetailPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                String responsData = response.body().string();
-                LogUtil.e("HomePresenter",responsData);
+                String responseData = response.body().string();
+                LogUtil.e("HomePresenter",responseData);
                 progressDialog.dismiss();
-                if(Utility.checkResponse(responsData,context,address)){
+                if(Utility.checkResponse(responseData,context,address)){
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -101,10 +107,10 @@ public class OrderDetailPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                String responsData = response.body().string();
-                LogUtil.e("OrderDetailPresenter",responsData);
+                String responseData = response.body().string();
+                LogUtil.e("OrderDetailPresenter",responseData);
                 progressDialog.dismiss();
-                if(Utility.checkResponse(responsData,context,address)){
+                if(Utility.checkResponse(responseData,context,address)){
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -138,10 +144,10 @@ public class OrderDetailPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                String responsData = response.body().string();
-                LogUtil.e("OrderDetailPresenter",responsData);
+                String responseData = response.body().string();
+                LogUtil.e("OrderDetailPresenter",responseData);
                 progressDialog.dismiss();
-                if(Utility.checkResponse(responsData,context,address)){
+                if(Utility.checkResponse(responseData,context,address)){
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -175,10 +181,10 @@ public class OrderDetailPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                String responsData = response.body().string();
-                LogUtil.e("OrderDetailPresenter",responsData);
+                String responseData = response.body().string();
+                LogUtil.e("OrderDetailPresenter",responseData);
                 progressDialog.dismiss();
-                if(Utility.checkResponse(responsData,context,address)){
+                if(Utility.checkResponse(responseData,context,address)){
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -186,6 +192,50 @@ public class OrderDetailPresenter
                         }
                     });
                     ((OrderDetailActivity)context).finish();
+                }
+            }
+        });
+    }
+
+    public void updateWorker(double longitude, double latitude, final ArrayAdapter<Worker> workerArrayAdapter, final List<Worker> workerList){
+        final String address = HttpUtil.LocalAddress + "/api/order/storeWorker";
+        final String credential = pref.getString("credential","");
+        LogUtil.e("OrderingPresenter","longitude: " + longitude + "   latitude: " + latitude);
+        HttpUtil.getStoreWorker(address, credential, longitude, latitude, new Callback()
+        {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e)
+            {
+                ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(context, "网络连接错误", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
+            {
+                final String responseData = response.body().string();
+                LogUtil.e("OrderingPresenter",responseData);
+                if(Utility.checkResponse(responseData,context,address)){
+                    workerList.clear();
+                    Worker noWorker = new Worker();
+                    noWorker.setWorkerName("不指定");
+                    noWorker.setInternetId("0");
+                    workerList.add(noWorker);
+                    List<Worker> tempWorkerList = Utility.handleWorkerList(responseData);
+                    if (tempWorkerList != null){
+                        workerList.addAll(tempWorkerList);
+                        LogUtil.e("OrderDetailPresenter",""+tempWorkerList.size());
+                    }
+                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            workerArrayAdapter.notifyDataSetChanged();
+                        }
+                    });
                 }
             }
         });

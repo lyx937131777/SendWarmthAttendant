@@ -200,7 +200,7 @@ public class MapDetailFragment extends Fragment
         locationBuilder.longitude(location.getLongitude());
         MyLocationData locationData = locationBuilder.build();
         baiduMap.setMyLocationData(locationData);
-        LogUtil.e("MapDetailFragment","地图定位");
+//        LogUtil.e("MapDetailFragment","地图定位");
 
     }
 

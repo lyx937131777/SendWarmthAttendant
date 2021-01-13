@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
+import com.example.sendwarmthattendant.dagger2.MyComponent;
+import com.example.sendwarmthattendant.dagger2.MyModule;
 import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.db.Worker;
 import com.example.sendwarmthattendant.fragment.HistoricalOrdersFragment;
@@ -17,6 +20,7 @@ import com.example.sendwarmthattendant.fragment.HomeFragment;
 import com.example.sendwarmthattendant.fragment.MapFragment;
 import com.example.sendwarmthattendant.fragment.PersonalCenterFragment;
 import com.example.sendwarmthattendant.fragment.adapter.MyFragAdapter;
+import com.example.sendwarmthattendant.presenter.MainPresenter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.litepal.LitePal;
@@ -57,11 +61,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private SharedPreferences pref;
     private String credential;
 
+    private MainPresenter mainPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MyComponent myComponent = DaggerMyComponent.builder().myModule(new MyModule(this)).build();
+        mainPresenter = myComponent.mainPresenter();
         instance = this;
 
         profile = findViewById(R.id.profile);
@@ -79,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         credential = pref.getString("credential","");
         if(role.equals("helper")){
             helper = LitePal.where("credential = ?",credential).findFirst(Helper.class);
-            userName.setText(helper.getName());
-            title.setText(helper.getTel());
+            userName.setText(helper.getHelperName());
+            title.setText(helper.getHelperTel());
         } else {
             worker = LitePal.where("credential = ?",credential).findFirst(Worker.class);
             userName.setText(worker.getWorkerName());
@@ -159,6 +167,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
+
 //        setSupportActionBar(homeFragment.getToolbar());
 //        supportInvalidateOptionsMenu();
 
@@ -168,6 +177,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 //        NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mainPresenter.getMe();
     }
 
     @Override
@@ -244,5 +259,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
             }
         }
+    }
+
+    public void setHelper(final Helper helper){
+        this.helper = helper;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                userName.setText(helper.getHelperName());
+                title.setText(helper.getHelperTel());
+            }
+        });
+    }
+
+    public void setWorker(final Worker worker){
+        this.worker = worker;
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                userName.setText(worker.getWorkerName());
+                title.setText(worker.getWorkerTel());
+            }
+        });
     }
 }

@@ -28,7 +28,15 @@ public class HttpUtil
 //        OkHttpClient client = buildBasicAuthClient(userID,"123456");
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder().url(address).addHeader("Authorization",credential).build();
-        LogUtil.e("Login","111111111   " + request.header("Authorization"));
+//        LogUtil.e("Login","111111111   " + request.header("Authorization"));
+        client.newCall(request).enqueue(callback);
+    }
+
+    //根据经纬度获取员工
+    public static void getStoreWorker(String address,String credential, double longitude, double latitude,  Callback callback)
+    {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder().url(address+"?longitude="+longitude+"&latitude="+latitude).addHeader("Authorization",credential).build();
         client.newCall(request).enqueue(callback);
     }
 

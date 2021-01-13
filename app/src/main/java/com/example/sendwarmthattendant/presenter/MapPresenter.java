@@ -70,10 +70,10 @@ public class MapPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                String responsData = response.body().string();
-                LogUtil.e("MapPresenter",responsData);
-                if(Utility.checkResponse(responsData,context, finalAddress)){
-                    List<Order> myOrderList = Utility.handleOrderList(responsData);
+                String responseData = response.body().string();
+                LogUtil.e("MapPresenter",responseData);
+                if(Utility.checkResponse(responseData,context, finalAddress)){
+                    List<Order> myOrderList = Utility.handleOrderList(responseData);
                     if(myOrderList != null){
                         orderList.addAll(myOrderList);
                     }
@@ -102,10 +102,10 @@ public class MapPresenter
                         @Override
                         public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
                         {
-                            String responsData = response.body().string();
-                            LogUtil.e("MapPresenter",responsData);
-                            if(Utility.checkResponse(responsData,context, finalAddress1)){
-                                List<Order> unAcceptedOrderList = Utility.handleOrderList(responsData);
+                            String responseData = response.body().string();
+                            LogUtil.e("MapPresenter",responseData);
+                            if(Utility.checkResponse(responseData,context, finalAddress1)){
+                                List<Order> unAcceptedOrderList = Utility.handleOrderList(responseData);
                                 if(unAcceptedOrderList != null){
                                     orderList.addAll(unAcceptedOrderList);
                                 }

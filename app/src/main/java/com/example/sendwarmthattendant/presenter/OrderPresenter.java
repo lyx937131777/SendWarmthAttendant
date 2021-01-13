@@ -65,10 +65,10 @@ public class OrderPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                final String responsData = response.body().string();
-                LogUtil.e("OrderPresenter",responsData);
-                if(Utility.checkResponse(responsData,context, finalAddress)){
-                    List<Order> orderList = Utility.handleOrderList(responsData);
+                final String responseData = response.body().string();
+                LogUtil.e("OrderPresenter",responseData);
+                if(Utility.checkResponse(responseData,context, finalAddress)){
+                    List<Order> orderList = Utility.handleOrderList(responseData);
                     if(type.equals("all")) {
                         orderAdapter.setmList(orderList);
                     }else {

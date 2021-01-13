@@ -17,6 +17,8 @@ import com.example.sendwarmthattendant.db.Worker;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MyInformationActivity extends AppCompatActivity
@@ -24,10 +26,8 @@ public class MyInformationActivity extends AppCompatActivity
     private Account account;
 
     private CircleImageView profile;
-    private TextView name;
-    private TextView address;
-    private TextView tel;
-    private TextView id;
+    private TextView nameText, addressText, telText, idText, workerClassText1, workerClassText2, levelText;
+    private CardView addressCard, workerClassCard1, workerClassCard2;
 
     private String role;
     private Helper helper;
@@ -100,20 +100,34 @@ public class MyInformationActivity extends AppCompatActivity
         }
 
         profile = findViewById(R.id.profile);
-        name = findViewById(R.id.name);
-        address = findViewById(R.id.address);
-        tel = findViewById(R.id.tel);
-        id = findViewById(R.id.id);
+        nameText = findViewById(R.id.name);
+        addressText = findViewById(R.id.address);
+        addressCard = findViewById(R.id.address_card);
+        telText = findViewById(R.id.tel);
+        idText = findViewById(R.id.id);
+        workerClassText1 = findViewById(R.id.worker_class_1);
+        workerClassText2 = findViewById(R.id.worker_class_2);
+        workerClassCard1 = findViewById(R.id.worker_class_card_1);
+        workerClassCard2 = findViewById(R.id.worker_class_card_2);
+        levelText = findViewById(R.id.title);
 
         Glide.with(this).load(R.drawable.profile_uri).into(profile);
         if(role.equals("helper")){
-            name.setText(helper.getName());
-            tel.setText(helper.getTel());
-            id.setText(helper.getIdCardNumber());
+            nameText.setText(helper.getHelperName());
+            addressCard.setVisibility(View.GONE);
+            telText.setText(helper.getHelperTel());
+            idText.setText(helper.getHelperIdCard());
+            workerClassText1.setText(helper.getWorkerClass1().toString());
+            workerClassText2.setText(helper.getWorkerClass2().toString());
+            levelText.setText(helper.getLevel()+"级助老员");
         }else{
-            name.setText(worker.getWorkerName());
-            tel.setText(worker.getWorkerTel());
-            id.setText(worker.getEmployeeId());
+            nameText.setText(worker.getWorkerName());
+            addressText.setText(worker.getStoreName());
+            telText.setText(worker.getWorkerTel());
+            idText.setText(worker.getEmployeeId());
+            levelText.setText(worker.getLevel()+"级护理员");
+            workerClassCard1.setVisibility(View.GONE);
+            workerClassCard2.setVisibility(View.GONE);
         }
 
     }

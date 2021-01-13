@@ -66,9 +66,9 @@ public class RegisterPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                final String responsData = response.body().string();
-                LogUtil.e("RegisterPresenter",responsData);
-                final String photoPathFront = Utility.checkString(responsData,"msg");
+                final String responseData = response.body().string();
+                LogUtil.e("RegisterPresenter",responseData);
+                final String photoPathFront = Utility.checkString(responseData,"msg");
                 String address = HttpUtil.LocalAddress + "/api/file";
                 String idCardBack2 = FileUtil.compressImagePathToImagePath(idCardBack);
                 HttpUtil.fileRequest(address, new File(idCardBack2), new Callback()
@@ -90,9 +90,9 @@ public class RegisterPresenter
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
                     {
-                        final String responsData = response.body().string();
-                        LogUtil.e("RegisterPresenter",responsData);
-                        final String photoPathBack = Utility.checkString(responsData,"msg");
+                        final String responseData = response.body().string();
+                        LogUtil.e("RegisterPresenter",responseData);
+                        final String photoPathBack = Utility.checkString(responseData,"msg");
                         String address = HttpUtil.LocalAddress + "/api/users/helper";
                         HttpUtil.registerRequest(address, tel, password, name, workType1, workType2, id, photoPathFront, photoPathBack, new Callback()
                         {
@@ -212,13 +212,13 @@ public class RegisterPresenter
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException
             {
-                final String responsData = response.body().string();
-                LogUtil.e("RegisterPresenter",responsData);
-                if(Utility.checkResponse(responsData,context,address)){
+                final String responseData = response.body().string();
+                LogUtil.e("RegisterPresenter",responseData);
+                if(Utility.checkResponse(responseData,context,address)){
                     subjectList1.clear();
                     subjectList2.clear();
-                    subjectList1.addAll(Utility.handleServiceSubjectList(responsData));
-                    subjectList2.addAll(Utility.handleServiceSubjectList(responsData));
+                    subjectList1.addAll(Utility.handleServiceSubjectList(responseData));
+                    subjectList2.addAll(Utility.handleServiceSubjectList(responseData));
                     ((AppCompatActivity)context).runOnUiThread(new Runnable()
                     {
                         @Override

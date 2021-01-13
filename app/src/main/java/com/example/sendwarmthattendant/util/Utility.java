@@ -98,6 +98,20 @@ public class Utility
         return ERROR_CODE;
     }
 
+    //处理员工
+    public static List<Worker> handleWorkerList(String response){
+        if (!TextUtils.isEmpty(response)) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray dataArray = jsonObject.getJSONArray("datas");
+                String workerJson = dataArray.toString();
+                return new Gson().fromJson(workerJson, new TypeToken<List<Worker>>() {}.getType());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 
     //登录界面 获取角色
     public static String getRole(String response){
