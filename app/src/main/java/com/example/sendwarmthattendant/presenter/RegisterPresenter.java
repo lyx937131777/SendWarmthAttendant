@@ -193,7 +193,7 @@ public class RegisterPresenter
 
     public void updateServiceSubject(final ArrayAdapter<ServiceSubject> arrayAdapter1, final List<ServiceSubject> subjectList1,
                                      final ArrayAdapter<ServiceSubject> arrayAdapter2, final List<ServiceSubject> subjectList2){
-        final String address = HttpUtil.LocalAddress + "/api/servicesubject/list";
+        final String address = HttpUtil.LocalAddress + "/api/servicesubject/list?isHelper=true";
         HttpUtil.getHttpWithoutCredential(address, new Callback()
         {
             @Override

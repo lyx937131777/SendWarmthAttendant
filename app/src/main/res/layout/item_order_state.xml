@@ -6,7 +6,7 @@
     android:orientation="vertical">
     <TextView
         android:id="@+id/order_state_title"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:layout_marginLeft="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
