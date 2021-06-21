@@ -3,10 +3,14 @@ package com.example.sendwarmthattendant.presenter;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.example.sendwarmthattendant.MainActivity;
+import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.adapter.OrderStateAdapter;
 import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.db.Order;
@@ -101,8 +105,9 @@ public class HomePresenter
                             if(Utility.checkResponse(responseData,context, finalAddress1)){
                                 List<Order> unAcceptedOrderList = Utility.handleOrderList(responseData);
                                 List<Order> orderList = orderStateAdapter.getOrderList();
-                                if(unAcceptedOrderList != null){
+                                if(unAcceptedOrderList != null && unAcceptedOrderList.size() != 0){
                                     orderList.addAll(unAcceptedOrderList);
+                                    ((MainActivity)context).playSound();
                                 }
                                 ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                                     @Override

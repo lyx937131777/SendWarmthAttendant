@@ -18,15 +18,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
 import com.example.sendwarmthattendant.dagger2.MyComponent;
 import com.example.sendwarmthattendant.dagger2.MyModule;
 import com.example.sendwarmthattendant.db.Order;
+import com.example.sendwarmthattendant.db.ServiceSubject;
 import com.example.sendwarmthattendant.db.Worker;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
+import com.example.sendwarmthattendant.util.HttpUtil;
+import com.example.sendwarmthattendant.util.LogUtil;
 import com.example.sendwarmthattendant.util.MapUtil;
 import com.example.sendwarmthattendant.util.TimeUtil;
 
@@ -38,10 +43,12 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
     private Order order;
     private String state;
 
+    private ServiceSubject serviceSubject;
+
     private SharedPreferences pref;
     private String role;
 
-    private TextView numberText,startTimeTypeText, endTimeTypeText,startTimeText,endTimeText,serviceClassText,serviceContentText,priceText,addressText,houseNumText,messageText;
+    private TextView numberText,startTimeTypeText, endTimeTypeText,startTimeText,endTimeText,priceText,addressText,houseNumText,messageText;
     private TextView tipText,orderTypeText,appointedPersonText,customerCommentText, attendantCommentText;
     private CardView customerNameCard,customerTelCard;
     private TextView customerName,customerTel;
@@ -76,6 +83,8 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         order = (Order) getIntent().getSerializableExtra("order");
         state = order.getState();
 
+        initServiceWork();
+
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         role = pref.getString("role","");
 
@@ -92,9 +101,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         endTimeTypeText = findViewById(R.id.end_time_type);
         startTimeText = findViewById(R.id.start_time);
         endTimeText = findViewById(R.id.end_time);
-        serviceClassText = findViewById(R.id.service_type);
-        serviceContentText = findViewById(R.id.service_content);
-        priceText = findViewById(R.id.price);
+        priceText = findViewById(R.id.service_price);
         addressText = findViewById(R.id.address);
         houseNumText = findViewById(R.id.house_num);
         messageText = findViewById(R.id.message);
@@ -137,8 +144,7 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
             startTimeText.setText(TimeUtil.timeStampToString(order.getStartTime(),"yyyy-MM-dd HH:mm"));
             endTimeText.setText(TimeUtil.timeStampToString(order.getEndTime(),"yyyy-MM-dd HH:mm"));
         }
-        serviceClassText.setText(order.getServiceClassInfo().getName());
-        serviceContentText.setText(order.getServiceSubjectInfo().getName());
+
         addressText.setText(order.getDeliveryDetail());
         houseNumText.setText(order.getHouseNum());
         messageText.setText(order.getMessage());
@@ -154,9 +160,11 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         stateText.setText(MapUtil.getOrderState(state));
         changeButton();
 
-        if(state.equals("not_accepted") || state.equals("not_start") || state.equals("on_going") || state.equals("canceled")){
+        if(state.equals("unpaid") || state.equals("not_accepted") || state.equals("not_start") || state.equals("on_going") || state.equals("canceled")){
+            LogUtil.e("OrderDetailActivity","时薪： " + order.getSalaryHourly());
             priceText.setText(order.getSalaryHourly() + "元/时");
         }else{
+            LogUtil.e("OrderDetailActivity","总价： " + order.getSalarySum());
             priceText.setText(order.getSalarySum() + "元");
         }
 
@@ -167,6 +175,22 @@ public class OrderDetailActivity extends AppCompatActivity implements View.OnCli
         button.setOnClickListener(this);
 
         orderDetailPresenter.updateWorker(order.getLongitude(),order.getLatitude(),workerArraryAdapter,workerList);
+    }
+
+    private void initServiceWork()
+    {
+        serviceSubject = order.getServiceSubjectInfo();
+        View serviceWorkView = findViewById(R.id.service_work);
+        ImageView picture = serviceWorkView.findViewById(R.id.picture);
+        TextView title = serviceWorkView.findViewById(R.id.title);
+        TextView description = serviceWorkView.findViewById(R.id.description);
+        TextView pricePerUnit = serviceWorkView.findViewById(R.id.price);
+
+        Glide.with(this).load(HttpUtil.getResourceURL(serviceSubject.getImage())).into(picture);
+        title.setText(serviceSubject.getSubjectName());
+        description.setText(serviceSubject.getSubjectDes());
+        pricePerUnit.setText(serviceSubject.getSalaryPerHour() +"（加急："+serviceSubject.getHurrySalaryPerHour()+"）元/单价");
+
     }
 
     private void initWorkerList(){

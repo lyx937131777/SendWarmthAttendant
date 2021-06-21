@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
+import com.example.sendwarmthattendant.db.Account;
 import com.example.sendwarmthattendant.db.Customer;
 import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.db.Order;
@@ -162,6 +163,21 @@ public class Utility
                 return  new Gson().fromJson(jsonString, Helper.class);
             } catch (JSONException e)
             {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static Account handleAccount(String response){
+        if (!TextUtils.isEmpty(response)) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONArray dataArray = jsonObject.getJSONArray("datas");
+                JSONObject dataObject = dataArray.getJSONObject(0);
+                String jsonString = dataObject.toString();
+                return new Gson().fromJson(jsonString, Account.class);
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }

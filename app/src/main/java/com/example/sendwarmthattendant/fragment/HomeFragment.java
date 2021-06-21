@@ -1,5 +1,8 @@
 package com.example.sendwarmthattendant.fragment;
 
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
 import com.example.sendwarmthattendant.dagger2.MyComponent;
 import com.example.sendwarmthattendant.dagger2.MyModule;
 import com.example.sendwarmthattendant.presenter.HomePresenter;
+import com.example.sendwarmthattendant.util.LogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +31,8 @@ public class HomeFragment extends Fragment
     private List<String> orderStateList = new ArrayList<>();
     private OrderStateAdapter orderStateAdapter;
 
+    private SoundPool soundPool;
+    private MediaPlayer mediaPlayer;
     private HomePresenter homePresenter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -41,9 +47,18 @@ public class HomeFragment extends Fragment
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         orderStateAdapter = new OrderStateAdapter(orderStateList);
         recyclerView.setAdapter(orderStateAdapter);
+
+//        soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC,5);
+//        soundPool.load(getContext(), R.raw.new_order,1);
+        mediaPlayer = MediaPlayer.create(getContext(),R.raw.new_order);
         return root;
     }
 
+    public void playSound(){
+        LogUtil.e("HomeFragment","playSound!");
+//        soundPool.play(1,1,1,0,0,1);
+        mediaPlayer.start();
+    }
 
     private void initOrderStates()
     {

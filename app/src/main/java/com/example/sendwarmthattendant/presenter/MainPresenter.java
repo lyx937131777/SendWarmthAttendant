@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sendwarmthattendant.LoginActivity;
 import com.example.sendwarmthattendant.MainActivity;
+import com.example.sendwarmthattendant.db.Account;
 import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.db.Worker;
 import com.example.sendwarmthattendant.util.HttpUtil;
@@ -61,6 +62,8 @@ public class MainPresenter {
                 final String responseData = response.body().string();
                 LogUtil.e("MainPresenter",responseData);
                 if(Utility.checkResponse(responseData,context,address)){
+                    Account account = Utility.handleAccount(responseData);
+                    ((MainActivity) context).setAccount(account);
                     String role = Utility.getRole(responseData);
                     LogUtil.e("MainPresenter",role);
                     if(role.equals("helper") || role.equals("nurse") || role.equals("shopManager")){

@@ -1,7 +1,10 @@
 package com.example.sendwarmthattendant;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -10,9 +13,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.sendwarmthattendant.dagger2.DaggerMyComponent;
 import com.example.sendwarmthattendant.dagger2.MyComponent;
 import com.example.sendwarmthattendant.dagger2.MyModule;
+import com.example.sendwarmthattendant.db.Account;
 import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.db.Worker;
 import com.example.sendwarmthattendant.fragment.HistoricalOrdersFragment;
@@ -21,6 +26,8 @@ import com.example.sendwarmthattendant.fragment.MapFragment;
 import com.example.sendwarmthattendant.fragment.PersonalCenterFragment;
 import com.example.sendwarmthattendant.fragment.adapter.MyFragAdapter;
 import com.example.sendwarmthattendant.presenter.MainPresenter;
+import com.example.sendwarmthattendant.presenter.SettingPresenter;
+import com.example.sendwarmthattendant.util.HttpUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.litepal.LitePal;
@@ -47,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private BottomNavigationView navView;
 
     public static MainActivity instance = null;
+    public Context context;
 
     private int viewPagerSelected = 0;
 
@@ -62,6 +70,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String credential;
 
     private MainPresenter mainPresenter;
+    private SettingPresenter settingPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -70,7 +79,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         MyComponent myComponent = DaggerMyComponent.builder().myModule(new MyModule(this)).build();
         mainPresenter = myComponent.mainPresenter();
+        settingPresenter = myComponent.settingPresenter();
         instance = this;
+        context = this;
 
         profile = findViewById(R.id.profile);
         userName = findViewById(R.id.user_name);
@@ -177,6 +188,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 //        NavigationUI.setupWithNavController(navView, navController);
+
+        PackageManager manager = getPackageManager();
+        String version = "未知";
+        try {
+            PackageInfo info = manager.getPackageInfo(getPackageName(), 0);
+            version = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        settingPresenter.getLatestVersionMain(version);
     }
 
     @Override
@@ -281,5 +302,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 title.setText(worker.getWorkerTel());
             }
         });
+    }
+
+    public void setAccount(Account account){
+        String proFile = account.getProFile();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if(proFile != null){
+                    Glide.with(context).load(HttpUtil.getResourceURL(proFile)).into(profile);
+                }else {
+                    Glide.with(context).load(R.drawable.profile_uri).into(profile);
+                }
+            }
+        });
+    }
+
+    public void playSound(){
+        homeFragment.playSound();
     }
 }

@@ -14,41 +14,42 @@ public class ServiceSubject implements Serializable
     private String internetId;
     @SerializedName("classId")
     private String serviceClassId;
-    @SerializedName("subjectName")
-    private String name;
+    private String subjectName;
     private String type;
-    @SerializedName("subjectDes")
-    private String description;
-    @SerializedName("salaryPerHour")
+    private String subjectDes;
     private double salaryPerHour;
-
-    private String image;
-
     private double hurrySalaryPerHour;
-    private String unit;
-    private int picture;
+    private String image;
+    private String remarkImg;
+
+    private boolean fixed;
+
+    public String getRemarkImg() {
+        return remarkImg;
+    }
+
+    public void setRemarkImg(String remarkImg) {
+        this.remarkImg = remarkImg;
+    }
+
+    public boolean isFixed() {
+        return fixed;
+    }
+
+    public void setFixed(boolean fixed) {
+        this.fixed = fixed;
+    }
 
     private ServiceClass serviceClassInfo;
 
-    public ServiceSubject(String name, String type, String description, double salaryPerHour, String unit,
-                          int picture)
+    public String getSubjectName()
     {
-        this.name = name;
-        this.type = type;
-        this.description = description;
-        this.salaryPerHour = salaryPerHour;
-        this.unit = unit;
-        this.picture = picture;
+        return subjectName;
     }
 
-    public String getName()
+    public void setSubjectName(String subjectName)
     {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
+        this.subjectName = subjectName;
     }
 
     public String getType()
@@ -61,14 +62,14 @@ public class ServiceSubject implements Serializable
         this.type = type;
     }
 
-    public String getDescription()
+    public String getSubjectDes()
     {
-        return description;
+        return subjectDes;
     }
 
-    public void setDescription(String description)
+    public void setSubjectDes(String subjectDes)
     {
-        this.description = description;
+        this.subjectDes = subjectDes;
     }
 
     public double getSalaryPerHour()
@@ -79,26 +80,6 @@ public class ServiceSubject implements Serializable
     public void setSalaryPerHour(double salaryPerHour)
     {
         this.salaryPerHour = salaryPerHour;
-    }
-
-    public String getUnit()
-    {
-        return unit;
-    }
-
-    public void setUnit(String unit)
-    {
-        this.unit = unit;
-    }
-
-    public int getPicture()
-    {
-        return picture;
-    }
-
-    public void setPicture(int picture)
-    {
-        this.picture = picture;
     }
 
     public String getInternetId()
@@ -156,12 +137,12 @@ public class ServiceSubject implements Serializable
     public String toString()
     {
         if(serviceClassInfo != null){
-            return serviceClassInfo.getName() + "-" + name;
+            return serviceClassInfo.getName() + "-" + subjectName;
         }
         ServiceClass serviceClass = LitePal.where("internetId = ?",serviceClassId).findFirst(ServiceClass.class);
         if(serviceClass == null){
             return "无";
         }
-        return serviceClass.getName() + "-" + name;
+        return serviceClass.getName() + "-" + subjectName;
     }
 }

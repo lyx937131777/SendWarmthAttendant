@@ -43,6 +43,7 @@ public class MapPresenter
     }
 
     public void updateOrderList(final List<Order> orderList, final List<Marker> markerList,  final BaiduMap baiduMap, final String type){
+        LogUtil.e("MapPresenter","startUpdateOrderList");
         String address = HttpUtil.LocalAddress + "/api/order";
         final String role = pref.getString("role","");
         final String credential = pref.getString("credential","");
@@ -119,21 +120,22 @@ public class MapPresenter
                                             bundle.putSerializable("order",order);
                                             if(order.getState().equals("not_accepted") && type.equals("all")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_red)).extraInfo(bundle);
-                                                Marker marker = (Marker)baiduMap.addOverlay(options);
-                                                markerList.add(marker);
-//                                                order.setMarker(marker);
+//                                                Marker marker = (Marker)baiduMap.addOverlay(options);//TODO
+//                                                markerList.add(marker);
+//                                                order.setMarker(marker);不要取消注释
                                             }else if(order.getState().equals("not_start")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_primary)).extraInfo(bundle);
-                                                Marker marker = (Marker)baiduMap.addOverlay(options);
-                                                markerList.add(marker);
-//                                                order.setMarker(marker);
+//                                                Marker marker = (Marker)baiduMap.addOverlay(options);
+//                                                markerList.add(marker);
+//                                                order.setMarker(marker);不要取消注释
                                             }else if(order.getState().equals("on_going")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_blue)).extraInfo(bundle);
-                                                Marker marker = (Marker)baiduMap.addOverlay(options);
-                                                markerList.add(marker);
-//                                                order.setMarker(marker);
+//                                                Marker marker = (Marker)baiduMap.addOverlay(options);
+//                                                markerList.add(marker);
+//                                                order.setMarker(marker);不要取消注释
                                             }
                                         }
+                                        LogUtil.e("MapPresenter","endUpdateOrderList");
                                     }
                                 });
                             }

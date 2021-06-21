@@ -136,6 +136,19 @@ public class HttpUtil
         client.newCall(request).enqueue(callback);
     }
 
+    //更换头像
+    public static void resetProfileRequest(String address, String accountId, File file, okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();//创建OkHttpClient对象。
+        MediaType fileType = MediaType.parse("image/jpeg");//数据类型为File格式，
+        RequestBody fileBody = RequestBody.create(file, fileType);
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("file", file.getName(), fileBody)
+                .build();
+        Request request = new Request.Builder().url(address + "?accountId=" + accountId).put(requestBody).build();
+        client.newCall(request).enqueue(callback);
+    }
+
     //接单
     public static void acceptOrderRequest(String address, String credential, String orderId, String role, String manId,Callback callback){
         OkHttpClient client = new OkHttpClient();

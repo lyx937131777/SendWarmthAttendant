@@ -110,7 +110,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>
             holder.startTime.setText("上门时间："+TimeUtil.timeStampToString(order.getStartTime(),"yyyy-MM-dd HH:mm"));
             holder.endTime.setText("结束时间：" + TimeUtil.timeStampToString(order.getEndTime(),"yyyy-MM-dd HH:mm") );
         }
-        holder.serviceContent.setText(order.getServiceSubjectInfo().getName());
+        holder.serviceContent.setText(order.getServiceSubjectInfo().getSubjectName());
         if(order.getOrderType().equals("expedited_order")){
             holder.type.setVisibility(View.VISIBLE);
         }else {

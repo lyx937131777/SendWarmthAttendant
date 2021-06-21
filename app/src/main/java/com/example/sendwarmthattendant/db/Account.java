@@ -12,7 +12,7 @@ public class Account extends LitePalSupport implements Serializable
     private String internetId;
     private boolean activated;
 
-    private String profile;
+    private String proFile;
 
     private String loginName;
     private String password;
@@ -40,14 +40,14 @@ public class Account extends LitePalSupport implements Serializable
         return "未知账户";
     }
 
-    public String getProfile()
+    public String getProFile()
     {
-        return profile;
+        return proFile;
     }
 
-    public void setProfile(String profile)
+    public void setProFile(String proFile)
     {
-        this.profile = profile;
+        this.proFile = proFile;
     }
 
     public String getInternetId() {

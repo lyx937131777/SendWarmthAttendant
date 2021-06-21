@@ -44,7 +44,6 @@
                 android:layout_marginLeft="10dp" />
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile"
-                android:src="@drawable/profile_uri"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginRight="10dp"

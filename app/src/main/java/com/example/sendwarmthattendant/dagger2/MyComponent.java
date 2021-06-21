@@ -8,6 +8,7 @@ import com.example.sendwarmthattendant.presenter.HomePresenter;
 import com.example.sendwarmthattendant.presenter.LoginPresenter;
 import com.example.sendwarmthattendant.presenter.MainPresenter;
 import com.example.sendwarmthattendant.presenter.MapPresenter;
+import com.example.sendwarmthattendant.presenter.MyInformationPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
 import com.example.sendwarmthattendant.presenter.OrderPresenter;
 import com.example.sendwarmthattendant.presenter.RegisterPresenter;
@@ -42,4 +43,6 @@ public interface MyComponent
     SetNewPasswordPresenter setNewPasswordPresenter();
 
     MainPresenter mainPresenter();
+
+    MyInformationPresenter myInformationPresenter();
 }
