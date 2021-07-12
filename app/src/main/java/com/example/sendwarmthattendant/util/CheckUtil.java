@@ -114,6 +114,18 @@ public class CheckUtil
         return true;
     }
 
+    public boolean checkWorkerClass(int oldWorkerClass1, int oldWorkerClass2, int newWorkerClass1, int newWorkerClass2){
+        if(oldWorkerClass1 == newWorkerClass1 && oldWorkerClass2 == newWorkerClass2){
+            Toast.makeText(context, "您未作任何修改", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        if(newWorkerClass1 == newWorkerClass2){
+            Toast.makeText(context, "工种不可选择相同", Toast.LENGTH_LONG).show();
+            return false;
+        }
+        return true;
+    }
+
     private boolean fixId(String id){
         for(int i = 0; i < 17; i++){
             if(id.charAt(i) < '0' || id.charAt(i) > '9'){

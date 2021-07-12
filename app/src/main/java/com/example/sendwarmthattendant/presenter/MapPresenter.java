@@ -120,18 +120,18 @@ public class MapPresenter
                                             bundle.putSerializable("order",order);
                                             if(order.getState().equals("not_accepted") && type.equals("all")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_red)).extraInfo(bundle);
-//                                                Marker marker = (Marker)baiduMap.addOverlay(options);//TODO
-//                                                markerList.add(marker);
+                                                Marker marker = (Marker)baiduMap.addOverlay(options);//TODO 注释123-124，128-129，133-134
+                                                markerList.add(marker);
 //                                                order.setMarker(marker);不要取消注释
                                             }else if(order.getState().equals("not_start")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_primary)).extraInfo(bundle);
-//                                                Marker marker = (Marker)baiduMap.addOverlay(options);
-//                                                markerList.add(marker);
+                                                Marker marker = (Marker)baiduMap.addOverlay(options);
+                                                markerList.add(marker);
 //                                                order.setMarker(marker);不要取消注释
                                             }else if(order.getState().equals("on_going")){
                                                 MarkerOptions options = new MarkerOptions().position(ll).icon(BitmapDescriptorFactory.fromResource(R.drawable.location_blue)).extraInfo(bundle);
-//                                                Marker marker = (Marker)baiduMap.addOverlay(options);
-//                                                markerList.add(marker);
+                                                Marker marker = (Marker)baiduMap.addOverlay(options);
+                                                markerList.add(marker);
 //                                                order.setMarker(marker);不要取消注释
                                             }
                                         }

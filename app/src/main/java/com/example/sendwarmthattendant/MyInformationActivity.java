@@ -59,7 +59,7 @@ import java.io.InputStream;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MyInformationActivity extends AppCompatActivity
+public class MyInformationActivity extends AppCompatActivity implements View.OnClickListener
 {
     public static final int TAKE_PHOTO = 1;
     public static final int CHOOSE_PHOTO = 2;
@@ -213,24 +213,10 @@ public class MyInformationActivity extends AppCompatActivity
         workerClassCard2 = findViewById(R.id.worker_class_card_2);
         levelText = findViewById(R.id.title);
 
-        Glide.with(this).load(R.drawable.profile_uri).into(profile);
-        if(role.equals("helper")){
-            nameText.setText(helper.getHelperName());
-            addressCard.setVisibility(View.GONE);
-            telText.setText(helper.getHelperTel());
-            idText.setText(helper.getHelperIdCard());
-            workerClassText1.setText(helper.getWorkerClass1().toString());
-            workerClassText2.setText(helper.getWorkerClass2().toString());
-            levelText.setText(helper.getLevel()+"级助老员");
-        }else{
-            nameText.setText(worker.getWorkerName());
-            addressText.setText(worker.getStoreName());
-            telText.setText(worker.getWorkerTel());
-            idText.setText(worker.getEmployeeId());
-            levelText.setText(worker.getLevel()+"级护理员");
-            workerClassCard1.setVisibility(View.GONE);
-            workerClassCard2.setVisibility(View.GONE);
-        }
+        refresh();
+
+        workerClassCard1.setOnClickListener(this);
+        workerClassCard2.setOnClickListener(this);
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -248,8 +234,33 @@ public class MyInformationActivity extends AppCompatActivity
 
     }
 
+    private void refresh() {
+        if(role.equals("helper")){
+            nameText.setText(helper.getHelperName());
+            addressCard.setVisibility(View.GONE);
+            telText.setText(helper.getHelperTel());
+            idText.setText(helper.getHelperIdCard());
+            workerClassText1.setText(helper.getWorkerClass1().toString());
+            workerClassText2.setText(helper.getWorkerClass2().toString());
+            levelText.setText(helper.getLevel()+"级助老员");
+        }else{
+            nameText.setText(worker.getWorkerName());
+            addressText.setText(worker.getStoreName());
+            telText.setText(worker.getWorkerTel());
+            idText.setText(worker.getEmployeeId());
+            levelText.setText(worker.getLevel()+"级护理员");
+            workerClassCard1.setVisibility(View.GONE);
+            workerClassCard2.setVisibility(View.GONE);
+        }
+    }
+
     public void setAccount(Account account){
         this.account = account;
+        if(role.equals("helper")){
+            helper = account.getHelperInfo();
+        }else {
+            worker = account.getWorkerInfo();
+        }
         String proFile = account.getProFile();
         runOnUiThread(new Runnable() {
             @Override
@@ -261,6 +272,7 @@ public class MyInformationActivity extends AppCompatActivity
                     Glide.with(context).load(R.drawable.profile_uri).into(profile);
                     Glide.with(context).load(R.drawable.profile_uri).into(image);
                 }
+                refresh();
             }
         });
     }
@@ -504,4 +516,11 @@ public class MyInformationActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        if(role.equals("helper")){
+            Intent intent = new Intent(this, ModifyWorkerClassActivity.class);
+            startActivity(intent);
+        }
+    }
 }

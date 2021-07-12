@@ -53,20 +53,6 @@ public class Order implements Serializable
     private String regionId;
     private String storeId;
 
-
-//    public Order(String orderNo, String customer, String attendant, String time, String state,
-//                 String serviceType, String serviceContent, double salarySum)
-//    {
-//        this.orderNo = orderNo;
-//        this.customer = customer;
-//        this.attendant = attendant;
-//        this.time = time;
-//        this.state = state;
-//        this.serviceType = serviceType;
-//        this.serviceContent = serviceContent;
-//        this.salarySum = salarySum;
-//    }
-
     public String getRole(){
         if(helperId != null){
             return "helper";

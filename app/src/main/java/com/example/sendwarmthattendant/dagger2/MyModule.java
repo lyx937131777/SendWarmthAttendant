@@ -11,6 +11,7 @@ import com.example.sendwarmthattendant.presenter.HomePresenter;
 import com.example.sendwarmthattendant.presenter.LoginPresenter;
 import com.example.sendwarmthattendant.presenter.MainPresenter;
 import com.example.sendwarmthattendant.presenter.MapPresenter;
+import com.example.sendwarmthattendant.presenter.ModifyWorkerClassPresenter;
 import com.example.sendwarmthattendant.presenter.MyInformationPresenter;
 import com.example.sendwarmthattendant.presenter.OrderDetailPresenter;
 import com.example.sendwarmthattendant.presenter.OrderPresenter;
@@ -114,5 +115,10 @@ public class MyModule
     @Provides
     MyInformationPresenter provideMyInformationPresenter(Context context, SharedPreferences pref){
         return new MyInformationPresenter(context,pref);
+    }
+
+    @Provides
+    ModifyWorkerClassPresenter provideModifyWorkerClassPresenter(Context context, CheckUtil checkUtil, SharedPreferences pref){
+        return new ModifyWorkerClassPresenter(context, checkUtil, pref);
     }
 }

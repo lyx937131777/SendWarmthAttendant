@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.sendwarmthattendant.MainActivity;
 import com.example.sendwarmthattendant.MyInformationActivity;
 import com.example.sendwarmthattendant.db.Account;
 import com.example.sendwarmthattendant.db.Helper;
@@ -39,6 +40,7 @@ public class MyInformationPresenter {
     }
 
     public void updateAccount(){
+        final String tel = pref.getString("userId","");
         final String address = HttpUtil.LocalAddress + "/api/users/me";
         final String credential = pref.getString("credential","");
         HttpUtil.getHttp(address, credential, new Callback()
@@ -64,6 +66,23 @@ public class MyInformationPresenter {
                 LogUtil.e("MyInformationPresenter",responseData);
                 if(Utility.checkResponse(responseData,context,address)){
                     Account account = Utility.handleAccount(responseData);
+                    String role = Utility.getRole(responseData);
+                    LogUtil.e("MainPresenter",role);
+                    if(role.equals("helper") || role.equals("nurse") || role.equals("shopManager")){
+                        if(role.equals("helper")){
+                            Helper helper = Utility.handleHelper(responseData);
+                            LitePal.deleteAll(Helper.class,"userId = ?",tel);
+                            helper.setUserId(tel);
+                            helper.setCredential(credential);
+                            helper.save();
+                        }else {
+                            Worker worker = Utility.handleWorker(responseData);
+                            LitePal.deleteAll(Worker.class,"userId = ?",tel);
+                            worker.setUserId(tel);
+                            worker.setCredential(credential);
+                            worker.save();
+                        }
+                    }
                     ((MyInformationActivity)context).setAccount(account);
                 }
             }

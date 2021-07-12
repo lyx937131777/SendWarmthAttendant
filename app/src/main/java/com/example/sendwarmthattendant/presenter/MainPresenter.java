@@ -69,13 +69,17 @@ public class MainPresenter {
                     if(role.equals("helper") || role.equals("nurse") || role.equals("shopManager")){
                         if(role.equals("helper")){
                             Helper helper = Utility.handleHelper(responseData);
+//                            LitePal.deleteAll(Helper.class,"userId = ?",tel);
                             helper.setUserId(tel);
                             helper.setCredential(credential);
+//                            helper.save();
                             ((MainActivity) context).setHelper(helper);
                         }else {
                             Worker worker = Utility.handleWorker(responseData);
+//                            LitePal.deleteAll(Worker.class,"userId = ?",tel);
                             worker.setUserId(tel);
                             worker.setCredential(credential);
+//                            worker.save();
                             ((MainActivity) context).setWorker(worker);
                         }
                     }else{

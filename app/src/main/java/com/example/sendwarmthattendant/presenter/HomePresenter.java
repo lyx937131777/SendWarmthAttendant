@@ -14,6 +14,7 @@ import com.example.sendwarmthattendant.R;
 import com.example.sendwarmthattendant.adapter.OrderStateAdapter;
 import com.example.sendwarmthattendant.db.Helper;
 import com.example.sendwarmthattendant.db.Order;
+import com.example.sendwarmthattendant.db.SoundedOrder;
 import com.example.sendwarmthattendant.db.Worker;
 import com.example.sendwarmthattendant.util.CheckUtil;
 import com.example.sendwarmthattendant.util.HttpUtil;
@@ -107,7 +108,19 @@ public class HomePresenter
                                 List<Order> orderList = orderStateAdapter.getOrderList();
                                 if(unAcceptedOrderList != null && unAcceptedOrderList.size() != 0){
                                     orderList.addAll(unAcceptedOrderList);
-                                    ((MainActivity)context).playSound();
+                                    boolean toSound = false;
+                                    for(Order order : unAcceptedOrderList){
+                                        String orderId = order.getInternetId();
+                                        int count =LitePal.where("orderId = ?",orderId).count(SoundedOrder.class);
+                                        if(count == 0){
+                                            toSound = true;
+                                            SoundedOrder soundedOrder = new SoundedOrder(orderId);
+                                            soundedOrder.save();
+                                        }
+                                    }
+                                    if(toSound){
+                                        ((MainActivity)context).playSound();
+                                    }
                                 }
                                 ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                                     @Override

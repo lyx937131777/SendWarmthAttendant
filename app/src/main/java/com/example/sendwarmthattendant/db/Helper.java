@@ -29,8 +29,8 @@ public class Helper extends LitePalSupport implements Serializable
     private int level;
     private String auditStatus;
     private double score;
-    private int scoreSum;
-    private double scoreNum;
+    private double scoreSum;
+    private int scoreNum;
     private String roleType;
     private int points;
     private int pointsSum;
@@ -39,10 +39,35 @@ public class Helper extends LitePalSupport implements Serializable
     private int badScoreSum;
     private String workingStatus;
     private String remark;
+    private String workerSkill;
 
     private double longitude;
     private double latitude;
 
+
+    public String getWorkerSkill() {
+        return workerSkill;
+    }
+
+    public void setWorkerSkill(String workerSkill) {
+        this.workerSkill = workerSkill;
+    }
+
+    public double getScoreSum() {
+        return scoreSum;
+    }
+
+    public void setScoreSum(double scoreSum) {
+        this.scoreSum = scoreSum;
+    }
+
+    public int getScoreNum() {
+        return scoreNum;
+    }
+
+    public void setScoreNum(int scoreNum) {
+        this.scoreNum = scoreNum;
+    }
 
     public String getInternetId()
     {
@@ -192,22 +217,6 @@ public class Helper extends LitePalSupport implements Serializable
 
     public void setScore(double score) {
         this.score = score;
-    }
-
-    public int getScoreSum() {
-        return scoreSum;
-    }
-
-    public void setScoreSum(int scoreSum) {
-        this.scoreSum = scoreSum;
-    }
-
-    public double getScoreNum() {
-        return scoreNum;
-    }
-
-    public void setScoreNum(double scoreNum) {
-        this.scoreNum = scoreNum;
     }
 
     public String getRoleType() {

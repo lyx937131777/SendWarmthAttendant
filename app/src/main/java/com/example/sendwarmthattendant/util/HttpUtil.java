@@ -1,5 +1,6 @@
 package com.example.sendwarmthattendant.util;
 
+import com.example.sendwarmthattendant.db.Helper;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -146,6 +147,16 @@ public class HttpUtil
                 .addFormDataPart("file", file.getName(), fileBody)
                 .build();
         Request request = new Request.Builder().url(address + "?accountId=" + accountId).put(requestBody).build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    //修改个人信息
+    public static void modifyHelperRequest(String address, String credential, Helper helper, okhttp3.Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        String jsonStr = new Gson().toJson(helper);
+        RequestBody requestBody = RequestBody.create(jsonStr, JSON);
+        Request request = new Request.Builder().url(address).put(requestBody).addHeader("Authorization",credential).build();
         client.newCall(request).enqueue(callback);
     }
 
