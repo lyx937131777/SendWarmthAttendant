@@ -21,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.litepal.LitePal;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -70,16 +71,24 @@ public class MainPresenter {
                         if(role.equals("helper")){
                             Helper helper = Utility.handleHelper(responseData);
 //                            LitePal.deleteAll(Helper.class,"userId = ?",tel);
+                            List<Helper> helperList = LitePal.where("userId = ?", tel).find(Helper.class);
                             helper.setUserId(tel);
                             helper.setCredential(credential);
-//                            helper.save();
+                            helper.saveAll();
+                            for(Helper helperToDelete : helperList){
+                                helperToDelete.delete();
+                            }
                             ((MainActivity) context).setHelper(helper);
                         }else {
                             Worker worker = Utility.handleWorker(responseData);
 //                            LitePal.deleteAll(Worker.class,"userId = ?",tel);
+                            List<Worker> workerList = LitePal.where("userId = ?", tel).find(Worker.class);
                             worker.setUserId(tel);
                             worker.setCredential(credential);
-//                            worker.save();
+                            worker.save();
+                            for(Worker workerToDelete : workerList){
+                                workerToDelete.delete();
+                            }
                             ((MainActivity) context).setWorker(worker);
                         }
                     }else{

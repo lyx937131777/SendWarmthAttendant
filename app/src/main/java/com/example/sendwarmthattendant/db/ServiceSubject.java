@@ -1,14 +1,16 @@
 package com.example.sendwarmthattendant.db;
 
+import com.example.sendwarmthattendant.util.LogUtil;
 import com.google.gson.annotations.SerializedName;
 
 import org.litepal.LitePal;
+import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
 
 import androidx.annotation.NonNull;
 
-public class ServiceSubject implements Serializable
+public class ServiceSubject extends LitePalSupport implements Serializable
 {
     @SerializedName("id")
     private String internetId;
@@ -144,5 +146,10 @@ public class ServiceSubject implements Serializable
             return "无";
         }
         return serviceClass.getName() + "-" + subjectName;
+    }
+
+    public void saveAll(){
+        serviceClassInfo.save();
+        save();
     }
 }

@@ -103,7 +103,7 @@ public class LoginPresenter
                                         Helper helper = Utility.handleHelper(responseData);
                                         helper.setUserId(tel);
                                         helper.setCredential(credential);
-                                        helper.save();
+                                        helper.saveAll();
                                     }else {
                                         LitePal.deleteAll(Worker.class,"userId = ?",tel);
                                         Worker worker = Utility.handleWorker(responseData);

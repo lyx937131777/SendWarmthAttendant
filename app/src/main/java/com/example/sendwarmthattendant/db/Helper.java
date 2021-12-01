@@ -2,6 +2,7 @@ package com.example.sendwarmthattendant.db;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.litepal.LitePal;
 import org.litepal.crud.LitePalSupport;
 
 import java.io.Serializable;
@@ -188,7 +189,9 @@ public class Helper extends LitePalSupport implements Serializable
     }
 
     public ServiceSubject getWorkerClass1() {
-        return workerClass1;
+        if(workerClass1 != null)
+            return workerClass1;
+        return LitePal.where("internetId = ?",String.valueOf(workClass1)).findFirst(ServiceSubject.class);
     }
 
     public void setWorkerClass1(ServiceSubject workerClass1) {
@@ -196,7 +199,10 @@ public class Helper extends LitePalSupport implements Serializable
     }
 
     public ServiceSubject getWorkerClass2() {
-        return workerClass2;
+        if(workerClass2 != null)
+            return workerClass2;
+        return LitePal.where("internetId = ?",String.valueOf(workClass2)).findFirst(ServiceSubject.class, true);
+
     }
 
     public void setWorkerClass2(ServiceSubject workerClass2) {
@@ -297,5 +303,11 @@ public class Helper extends LitePalSupport implements Serializable
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public void saveAll(){
+        workerClass1.saveAll();
+        workerClass2.saveAll();
+        save();
     }
 }

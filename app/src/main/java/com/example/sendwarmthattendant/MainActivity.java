@@ -28,6 +28,7 @@ import com.example.sendwarmthattendant.fragment.adapter.MyFragAdapter;
 import com.example.sendwarmthattendant.presenter.MainPresenter;
 import com.example.sendwarmthattendant.presenter.SettingPresenter;
 import com.example.sendwarmthattendant.util.HttpUtil;
+import com.example.sendwarmthattendant.util.LogUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.litepal.LitePal;
@@ -269,6 +270,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra("role",role);
                 if(role.equals("helper")){
                     intent.putExtra("helper",helper);
+                    if(helper.getWorkerClass1() == null){
+                        LogUtil.e("MainActivity","helper workerClass1 == null");
+                    }else {
+                        LogUtil.e("MainActivity","03: " + helper.getWorkerClass1().toString());
+                    }
                 }else{
                     intent.putExtra("worker",worker);
                 }

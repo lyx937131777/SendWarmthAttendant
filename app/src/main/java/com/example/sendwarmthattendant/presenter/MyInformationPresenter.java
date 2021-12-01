@@ -74,7 +74,7 @@ public class MyInformationPresenter {
                             LitePal.deleteAll(Helper.class,"userId = ?",tel);
                             helper.setUserId(tel);
                             helper.setCredential(credential);
-                            helper.save();
+                            helper.saveAll();
                         }else {
                             Worker worker = Utility.handleWorker(responseData);
                             LitePal.deleteAll(Worker.class,"userId = ?",tel);

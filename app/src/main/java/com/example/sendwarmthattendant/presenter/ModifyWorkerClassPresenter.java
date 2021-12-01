@@ -119,7 +119,7 @@ public class ModifyWorkerClassPresenter {
                 final String responseData = response.body().string();
                 LogUtil.e("ModifyWorkerClassPresenter",responseData);
                 if(Utility.checkResponse(responseData,context,address)){
-                    helper.save();
+                    helper.saveAll();
                     ((ModifyWorkerClassActivity)context).finish();
                     ((AppCompatActivity)context).runOnUiThread(new Runnable() {
                         @Override

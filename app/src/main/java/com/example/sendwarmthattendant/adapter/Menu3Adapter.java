@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,7 +121,7 @@ public class Menu3Adapter extends RecyclerView.Adapter<Menu3Adapter.ViewHolder>
                         break;
                     }
                 }
-                LogUtil.e("MenuAdapter", menu.getName() + "  " + menu.getMenuName());
+                LogUtil.e("Menu3Adapter", menu.getName() + "  " + menu.getMenuName());
             }
         });
         return holder;
