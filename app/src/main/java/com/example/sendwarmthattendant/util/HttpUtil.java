@@ -17,7 +17,7 @@ import okhttp3.RequestBody;
 public class HttpUtil
 {
     //正式
-    public static final String LocalAddress = "http://47.101.68.214:8999";
+    public static final String LocalAddress = "http://47.100.247.8:8090";
 
     public static String getResourceURL(String url){
         return LocalAddress + "/resources/" + url;
